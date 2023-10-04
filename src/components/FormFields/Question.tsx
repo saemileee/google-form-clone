@@ -30,6 +30,10 @@ const Question = () => {
         setOptions
     );
 
+    const toggleRequired = () => {
+        setIsRequired(prev => !prev);
+    };
+
     return (
         <section>
             <div>
@@ -96,8 +100,8 @@ const Question = () => {
             <div>
                 <button>Duplicate</button>
                 <button>Delete</button>
-                <div>
-                    Required <p>{isRequired}</p>
+                <div onClick={toggleRequired}>
+                    Required <button>{isRequired.toString()}</button>
                 </div>
             </div>
         </section>
