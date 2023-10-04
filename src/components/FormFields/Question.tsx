@@ -1,23 +1,14 @@
-import {useState} from 'react';
 import {DEFAULT_VALUES, PLACEHOLDERS} from '../../constants/Form';
-import useTextInputField from '../../hooks/useTextInputField';
 import {QuestionType} from '../../interface/Form';
-import useDragNDrop from '../../hooks/useDragNDrop';
 import useQuestionForm from '../../hooks/useQuestionForm';
 
 const MIN_OPTION_LENGTH = 1;
 const Question = () => {
-    const [isActive, setIsActive] = useState(false);
-    const [type, setType] = useState<string>(DEFAULT_VALUES.QUESTION_TYPE);
-    const [isRequired, setIsRequired] = useState(false);
+    const {formData, titleHandlers, changeType, optionHandlers, toggleRequired} = useQuestionForm();
+    const {isActive, title, type, options, isRequired} = formData;
 
-    const {value: title, isFocused, onChange, onFocus, onBlur} = useTextInputField();
+    const {isTitleFocused, changeTitle, focusTitle, blurTitle} = titleHandlers;
 
-    const toggleRequired = () => {
-        setIsRequired(prev => !prev);
-    };
-
-    const {options, optionHandlers} = useQuestionForm();
     const {addOption, removeOption, changeOptionValue, dragNDropOption} = optionHandlers;
     const {isDraggable, startDrag, enterTarget, endDrag, mouseDown, mouseUp} = dragNDropOption;
 
@@ -25,16 +16,16 @@ const Question = () => {
         <section>
             <div>
                 <input
-                    style={isFocused ? {outlineColor: 'red'} : undefined}
+                    style={isTitleFocused ? {outlineColor: 'red'} : undefined}
                     type='text'
                     value={title}
                     placeholder={PLACEHOLDERS.QUESTION}
-                    onChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onChange={changeTitle}
+                    onFocus={focusTitle}
+                    onBlur={blurTitle}
                 />
                 <select
-                    onChange={e => setType(e.target.value)}
+                    onChange={e => changeType(e.target.value)}
                     defaultValue={DEFAULT_VALUES.QUESTION_TYPE}
                 >
                     {Object.entries(QuestionType).map(([key, value]) => (
