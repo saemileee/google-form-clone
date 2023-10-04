@@ -4,14 +4,20 @@ type FormDescription = string;
 
 type QuestionTitle = string;
 
-type QuestionType = 'ShortAnswer' | 'Paragraph' | 'MultipleChoice' | 'Checkboxes' | 'DropDown';
+export enum QuestionType {
+    shortAnswer = 'ShortAnswer',
+    paragraph = 'Paragraph',
+    multipleChoice = 'MultipleChoice',
+    checkboxes = 'Checkboxes',
+    dropDown = 'DropDown',
+}
 
 type Answer = string | null;
 
 export interface Question {
     id: number;
     title: QuestionTitle;
-    type: QuestionType;
+    type: keyof typeof QuestionType;
     options: Answer[];
     isRequired: boolean;
 }
