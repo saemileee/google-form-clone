@@ -3,36 +3,23 @@ import {DEFAULT_VALUES, PLACEHOLDERS} from '../../constants/Form';
 import useTextInputField from '../../hooks/useTextInputField';
 import {QuestionType} from '../../interface/Form';
 import useDragNDrop from '../../hooks/useDragNDrop';
+import useQuestionForm from '../../hooks/useQuestionForm';
 
 const MIN_OPTION_LENGTH = 1;
 const Question = () => {
     const [isActive, setIsActive] = useState(false);
     const [type, setType] = useState<string>(DEFAULT_VALUES.QUESTION_TYPE);
-    const {value: title, isFocused, onChange, onFocus, onBlur} = useTextInputField();
     const [isRequired, setIsRequired] = useState(false);
-    const [options, setOptions] = useState<string[]>(['Option 1']);
 
-    const addOption = () => {
-        const nextOptionNumber = options.length + 1;
-        setOptions(prev => [...prev, `Option ${nextOptionNumber}`]);
-    };
-
-    const removeOption = (idx: number) => {
-        setOptions(prev => prev.filter((_, prevIdx) => prevIdx !== idx));
-    };
-
-    const changeOptionValue = (idx: number, value: string) => {
-        setOptions(prev => prev.map((prevValue, prevIdx) => (prevIdx === idx ? value : prevValue)));
-    };
-
-    const {isDraggable, startDrag, enterTarget, endDrag, mouseDown, mouseUp} = useDragNDrop(
-        options,
-        setOptions
-    );
+    const {value: title, isFocused, onChange, onFocus, onBlur} = useTextInputField();
 
     const toggleRequired = () => {
         setIsRequired(prev => !prev);
     };
+
+    const {options, optionHandlers} = useQuestionForm();
+    const {addOption, removeOption, changeOptionValue, dragNDropOption} = optionHandlers;
+    const {isDraggable, startDrag, enterTarget, endDrag, mouseDown, mouseUp} = dragNDropOption;
 
     return (
         <section>
