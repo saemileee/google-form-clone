@@ -2,8 +2,12 @@ import {useState} from 'react';
 import useDragNDrop from './useDragNDrop';
 import useTextInputField from './useTextInputField';
 import {DEFAULT_VALUES} from '../constants/Form';
+import {useDispatch} from 'react-redux';
+import {deleteQuestion, duplicateQuestion} from '../features/questionFormSlice';
 
 const useQuestionForm = () => {
+    const dispatch = useDispatch();
+
     const [isActive, setIsActive] = useState(false);
 
     const {value: title, isFocused, onChange, onFocus, onBlur} = useTextInputField();
@@ -12,6 +16,15 @@ const useQuestionForm = () => {
         changeTitle: onChange,
         focusTitle: onFocus,
         blurTitle: onBlur,
+    };
+
+    const sectionHandlers = {
+        duplicateSection: (questionIdx: number) => {
+            dispatch(duplicateQuestion(questionIdx));
+        },
+        deleteSection: (questionIdx: number) => {
+            dispatch(deleteQuestion(questionIdx));
+        },
     };
 
     const [type, setType] = useState<string>(DEFAULT_VALUES.QUESTION_TYPE);
@@ -56,7 +69,7 @@ const useQuestionForm = () => {
         isRequired,
     };
 
-    return {formData, titleHandlers, changeType, optionHandlers, toggleRequired};
+    return {formData, titleHandlers, changeType, optionHandlers, toggleRequired, sectionHandlers};
 };
 
 export default useQuestionForm;

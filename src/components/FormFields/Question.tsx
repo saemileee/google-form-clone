@@ -3,12 +3,14 @@ import {QuestionType} from '../../interface/Form';
 import useQuestionForm from '../../hooks/useQuestionForm';
 
 const MIN_OPTION_LENGTH = 1;
-const Question = () => {
-    const {formData, titleHandlers, changeType, optionHandlers, toggleRequired} = useQuestionForm();
+const Question = ({idx}: {idx: number}) => {
+    const {formData, titleHandlers, changeType, optionHandlers, toggleRequired, sectionHandlers} =
+        useQuestionForm();
+
+    const {duplicateSection, deleteSection} = sectionHandlers;
     const {isActive, title, type, options, isRequired} = formData;
 
     const {isTitleFocused, changeTitle, focusTitle, blurTitle} = titleHandlers;
-
     const {addOption, removeOption, changeOptionValue, dragNDropOption} = optionHandlers;
     const {isDraggable, startDrag, enterTarget, endDrag, mouseDown, mouseUp} = dragNDropOption;
 
@@ -76,8 +78,8 @@ const Question = () => {
                 )}
             </div>
             <div>
-                <button>Duplicate</button>
-                <button>Delete</button>
+                <button onClick={() => duplicateSection(idx)}>Duplicate</button>
+                <button onClick={() => deleteSection(idx)}>Delete</button>
                 <div onClick={toggleRequired}>
                     Required <button>{isRequired.toString()}</button>
                 </div>
