@@ -15,7 +15,6 @@ export enum QuestionType {
 type Answer = string | null;
 
 export interface Question {
-    id: number;
     title: QuestionTitle;
     type: keyof typeof QuestionType;
     options: Answer[];
