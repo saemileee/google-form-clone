@@ -1,7 +1,20 @@
+import {PLACEHOLDERS} from '../../constants/Form';
+import useTextInputField from '../../hooks/useTextInputField';
+
 const Description = () => {
+    const {value, isFocused, onChange, onFocus, onBlur} = useTextInputField();
+
     return (
         <>
-            <h1>Description</h1>
+            <input
+                style={isFocused ? {outlineColor: 'red'} : undefined}
+                type='text'
+                value={value}
+                placeholder={PLACEHOLDERS.DESCRIPTION}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            />
         </>
     );
 };
