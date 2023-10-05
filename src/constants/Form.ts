@@ -1,13 +1,28 @@
-import {QuestionType} from '../interface/Form';
+import {Option, FormDescription, FormTitle, QuestionType} from '../interface/Form';
 
-export const DEFAULT_VALUES = {
+interface DefaultValues {
+    TITLE: FormTitle;
+    QUESTION_TITLE: FormDescription;
+    QUESTION_TYPE: QuestionType;
+    QUESTION_OPTION: Option;
+}
+
+export const DEFAULT_VALUES: DefaultValues = {
     TITLE: 'Untitled form',
     QUESTION_TITLE: 'Untitled Question',
-    QUESTION_TYPE: QuestionType.multipleChoice,
+    QUESTION_TYPE: 'MultipleChoice',
     QUESTION_OPTION: 'Option 1',
 };
 
 export const PLACEHOLDERS = {
     DESCRIPTION: 'Form description',
     QUESTION: 'Question',
+};
+
+export const QUESTION_TYPES = {
+    shortAnswer: 'ShortAnswer',
+    paragraph: 'Paragraph',
+    multipleChoice: 'MultipleChoice',
+    checkboxes: 'Checkboxes',
+    dropDown: 'DropDown',
 };
