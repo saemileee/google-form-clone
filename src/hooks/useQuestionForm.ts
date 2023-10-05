@@ -2,10 +2,18 @@ import {useState} from 'react';
 import useDragNDrop from './useDragNDrop';
 import useTextInputField from './useTextInputField';
 import {DEFAULT_VALUES} from '../constants/Form';
-import {useDispatch} from 'react-redux';
-import {deleteQuestion, duplicateQuestion} from '../features/questionFormSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    addQuestionOption,
+    changeOptionValue,
+    deleteQuestion,
+    duplicateQuestion,
+    removeQuestionOption,
+} from '../features/questionFormSlice';
+import {RootState} from '../store/store';
 
 const useQuestionForm = () => {
+    const questions = useSelector((state: RootState) => state.questionForm.questions);
     const dispatch = useDispatch();
 
     const [isActive, setIsActive] = useState(false);
@@ -38,20 +46,18 @@ const useQuestionForm = () => {
     const dragNDropOption = useDragNDrop(options, setOptions);
 
     const optionHandlers = {
-        addOption: () => {
-            const nextOptionNumber = options.length + 1;
-            setOptions(prev => [...prev, `Option ${nextOptionNumber}`]);
+        addOption: (questionIdx: number) => {
+            dispatch(addQuestionOption(questionIdx));
         },
 
-        removeOption: (idx: number) => {
-            setOptions(prev => prev.filter((_, prevIdx) => prevIdx !== idx));
+        removeOption: (questionIdx: number, optionIdx: number) => {
+            dispatch(removeQuestionOption({questionIdx, optionIdx}));
         },
 
-        changeOptionValue: (idx: number, value: string) => {
-            setOptions(prev =>
-                prev.map((prevValue, prevIdx) => (prevIdx === idx ? value : prevValue))
-            );
+        changeOptionValue: (questionIdx: number, optionIdx: number, value: string) => {
+            dispatch(changeOptionValue({questionIdx, optionIdx, value}));
         },
+
         dragNDropOption,
     };
 
