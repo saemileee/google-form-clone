@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 
-const useDragNDrop = <T>(list: T[], setList: (newList: T[]) => void) => {
+const useSortableDragNDrop = <T>(list: T[]) => {
     const source = useRef<number | null>(null);
     const target = useRef<number | null>(null);
 
@@ -14,7 +14,7 @@ const useDragNDrop = <T>(list: T[], setList: (newList: T[]) => void) => {
         target.current = idx;
     };
 
-    const endDrag = () => {
+    const getResortedList = () => {
         const sourceIdx = source.current;
         const targetIdx = target.current;
 
@@ -25,8 +25,9 @@ const useDragNDrop = <T>(list: T[], setList: (newList: T[]) => void) => {
             newList.splice(targetIdx, 0, sourceValue);
             source.current = null;
             target.current = null;
-            setList(newList);
+            return newList;
         }
+        return list;
     };
 
     const mouseDown = () => {
@@ -37,7 +38,7 @@ const useDragNDrop = <T>(list: T[], setList: (newList: T[]) => void) => {
         setIsDraggable(false);
     };
 
-    return {isDraggable, startDrag, enterTarget, endDrag, mouseDown, mouseUp};
+    return {isDraggable, startDrag, enterTarget, getResortedList, mouseDown, mouseUp};
 };
 
-export default useDragNDrop;
+export default useSortableDragNDrop;
