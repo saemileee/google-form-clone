@@ -18,6 +18,13 @@ const questionFormSlice = createSlice({
     name: 'questionForm',
     initialState,
     reducers: {
+        changeTitle: (state, action: PayloadAction<string>) => {
+            state.title = action.payload;
+        },
+        changeDescription: (state, action: PayloadAction<string>) => {
+            state.description = action.payload;
+        },
+
         addQuestion: state => {
             state.questions.push(initialQuestion);
         },
@@ -55,6 +62,8 @@ const questionFormSlice = createSlice({
 });
 
 export const {
+    changeTitle,
+    changeDescription,
     addQuestion,
     deleteQuestion,
     duplicateQuestion,
