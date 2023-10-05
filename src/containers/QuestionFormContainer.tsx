@@ -2,10 +2,10 @@ import Description from '../components/FormFields/Description';
 import QuestionList from '../components/FormFields/QuestionList';
 import Title from '../components/FormFields/Title';
 
-const QuestionsFormContainer = () => {
+const QuestionFormContainer = () => {
     return (
         <>
-            <h1>QuestionsFormContainer</h1>
+            <h1>QuestionFormContainer</h1>
             <Title />
             <Description />
             <QuestionList />
@@ -13,4 +13,4 @@ const QuestionsFormContainer = () => {
     );
 };
 
-export default QuestionsFormContainer;
+export default QuestionFormContainer;
