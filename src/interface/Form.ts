@@ -11,6 +11,7 @@ export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES];
 export type OptionType = string;
 
 export interface Question {
+    isSelected: boolean;
     title: QuestionTitle;
     type: QuestionType;
     options: OptionType[];
