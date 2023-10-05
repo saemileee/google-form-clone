@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Question from '../FormFields/Question';
 import {RootState} from '../../store/store';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
-import {resortQuestions} from '../../features/questionFormSlice';
+import {resortQuestions, selectQuestion} from '../../features/questionFormSlice';
 import QuestionAddButton from './QuestionAddButton';
 
 const QuestionList = () => {
@@ -13,8 +13,10 @@ const QuestionList = () => {
     return (
         <>
             <QuestionAddButton />
-            {questions.map((_, idx) => (
+            {questions.map((question, idx) => (
                 <div
+                    key={idx}
+                    onClick={() => dispatch(selectQuestion({questionIdx: idx}))}
                     draggable={isDraggable}
                     onDragStart={() => startDrag(idx)}
                     onDragEnter={() => enterTarget(idx)}
@@ -23,11 +25,12 @@ const QuestionList = () => {
                         dispatch(resortQuestions({questions}));
                     }}
                 >
+                    <p>{question.isSelected && 'selected'}</p>
                     <button onMouseDown={mouseDown} onMouseUp={mouseUp}>
                         drag section
                     </button>
                     <div>
-                        <Question key={idx} questionIdx={idx} />
+                        <Question questionIdx={idx} />
                     </div>
                 </div>
             ))}
