@@ -3,6 +3,7 @@ import Question from '../FormFields/Question';
 import {RootState} from '../../store/store';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
 import {resortQuestions} from '../../features/questionFormSlice';
+import QuestionAddButton from './QuestionAddButton';
 
 const QuestionList = () => {
     const questions = useSelector((state: RootState) => state.questionForm.questions);
@@ -11,6 +12,7 @@ const QuestionList = () => {
         useSortableDragNDrop(questions);
     return (
         <>
+            <QuestionAddButton />
             {questions.map((_, idx) => (
                 <div
                     draggable={isDraggable}
