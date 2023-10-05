@@ -1,14 +1,18 @@
 import {DEFAULT_VALUES, PLACEHOLDERS} from '../../constants/Form';
-import {QuestionType} from '../../interface/Form';
+import * as I from '../../interface/Form';
 import useQuestionForm from '../../hooks/useQuestionForm';
+import {RootState} from '../../store/store';
+import {useSelector} from 'react-redux';
 
 const MIN_OPTION_LENGTH = 1;
 const Question = ({idx}: {idx: number}) => {
-    const {formData, titleHandlers, changeType, optionHandlers, toggleRequired, sectionHandlers} =
+    const formData = useSelector((state: RootState) => state.questionForm.questions[idx]);
+
+    const {titleHandlers, changeType, optionHandlers, toggleRequired, sectionHandlers} =
         useQuestionForm();
 
     const {duplicateSection, deleteSection} = sectionHandlers;
-    const {isActive, title, type, options, isRequired} = formData;
+    const {title, type, options, isRequired} = formData;
 
     const {isTitleFocused, changeTitle, focusTitle, blurTitle} = titleHandlers;
     const {addOption, removeOption, changeOptionValue, dragNDropOption} = optionHandlers;
@@ -30,7 +34,7 @@ const Question = ({idx}: {idx: number}) => {
                     onChange={e => changeType(e.target.value)}
                     defaultValue={DEFAULT_VALUES.QUESTION_TYPE}
                 >
-                    {Object.entries(QuestionType).map(([key, value]) => (
+                    {Object.entries(I.QuestionType).map(([key, value]) => (
                         <option key={key} value={value}>
                             {value}
                         </option>
@@ -38,15 +42,15 @@ const Question = ({idx}: {idx: number}) => {
                 </select>
             </div>
             <div>
-                {type === QuestionType.shortAnswer && <p>Short answer text</p>}
-                {type === QuestionType.paragraph && <p>Long answer text</p>}
-                {(type === QuestionType.multipleChoice ||
-                    type === QuestionType.checkboxes ||
-                    type === QuestionType.dropDown) && (
+                {type === I.QuestionType.shortAnswer && <p>Short answer text</p>}
+                {type === I.QuestionType.paragraph && <p>Long answer text</p>}
+                {(type === I.QuestionType.multipleChoice ||
+                    type === I.QuestionType.checkboxes ||
+                    type === I.QuestionType.dropDown) && (
                     <div>
-                        {options.map((value, idx) => (
+                        {options.map((value, optionIdx) => (
                             <div
-                                key={`option-${idx}`}
+                                key={`option-${optionIdx}`}
                                 draggable={isDraggable}
                                 onDragStart={() => startDrag(idx)}
                                 onDragEnter={() => enterTarget(idx)}
@@ -57,23 +61,27 @@ const Question = ({idx}: {idx: number}) => {
                                     drag
                                 </button>
                                 <div>
-                                    <p>{type === QuestionType.dropDown && idx + 1}</p>
+                                    <p>{type === I.QuestionType.dropDown && optionIdx + 1}</p>
                                 </div>
                                 <input
                                     type='text'
                                     value={value}
-                                    onChange={e => changeOptionValue(idx, e.target.value)}
+                                    onChange={e =>
+                                        changeOptionValue(idx, optionIdx, e.target.value)
+                                    }
                                 />
                                 {options.length > MIN_OPTION_LENGTH ? (
-                                    <button onClick={() => removeOption(idx)}>X</button>
+                                    <button onClick={() => removeOption(idx, optionIdx)}>X</button>
                                 ) : (
                                     idx >= MIN_OPTION_LENGTH && (
-                                        <button onClick={() => removeOption(idx)}>X</button>
+                                        <button onClick={() => removeOption(idx, optionIdx)}>
+                                            X
+                                        </button>
                                     )
                                 )}
                             </div>
                         ))}
-                        <button onClick={addOption}>Add option</button>
+                        <button onClick={() => addOption(idx)}>Add option</button>
                     </div>
                 )}
             </div>

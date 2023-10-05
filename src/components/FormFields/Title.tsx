@@ -1,16 +1,22 @@
+import {useDispatch, useSelector} from 'react-redux';
 import {DEFAULT_VALUES} from '../../constants/Form';
 import useTextInputField from '../../hooks/useTextInputField';
+import {changeTitle} from '../../features/questionFormSlice';
+import {RootState} from '../../store/store';
 
 const Title = () => {
-    const {value, isFocused, onChange, onFocus, onBlur} = useTextInputField(DEFAULT_VALUES.TITLE);
+    const title = useSelector((state: RootState) => state.questionForm.title);
+    const dispatch = useDispatch();
+
+    const {isFocused, onFocus, onBlur} = useTextInputField(DEFAULT_VALUES.TITLE);
 
     return (
         <>
             <input
                 style={isFocused ? {outlineColor: 'red'} : undefined}
                 type='text'
-                value={value}
-                onChange={onChange}
+                value={title}
+                onChange={e => dispatch(changeTitle(e.target.value))}
                 onFocus={onFocus}
                 onBlur={onBlur}
             />
