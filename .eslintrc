@@ -1,20 +1,17 @@
 {
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "extends": [
-    "prettier",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "rules": {
-    "no-var": "error",
-    "no-multiple-empty-lines": "error",
-    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
-    "eqeqeq": "error",
-    "dot-notation": "error",
-    "no-unused-vars": "error",
-    "func-style": ["error", "expression"]
-  }
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": ["prettier", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "rules": {
+        "no-var": "error",
+        "no-multiple-empty-lines": "error",
+        "no-console": ["error", {"allow": ["warn", "error", "info"]}],
+        "eqeqeq": "error",
+        "dot-notation": "error",
+        "no-unused-vars": "off",
+        "func-style": ["error", "expression"]
+    }
 }
