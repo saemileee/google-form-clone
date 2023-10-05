@@ -6,6 +6,7 @@ import {
     QuestionTitle,
     QuestionType,
     OptionType,
+    Question,
 } from '../interface/Form';
 
 const initialQuestion = {
@@ -68,6 +69,10 @@ const questionFormSlice = createSlice({
             const newIsRequired = !state.questions[questionIdx].isRequired;
             state.questions[questionIdx].isRequired = newIsRequired;
         },
+        resortQuestions: (state, action: PayloadAction<{questions: Question[]}>) => {
+            const {questions} = action.payload;
+            state.questions = questions;
+        },
 
         addQuestionOption: (state, action: PayloadAction<{questionIdx: number}>) => {
             const {questionIdx} = action.payload;
@@ -111,10 +116,11 @@ export const {
     deleteQuestion,
     duplicateQuestion,
     toggleRequired,
-    resortQuestionOptions,
+    resortQuestions,
 
     addQuestionOption,
     removeQuestionOption,
     changeOptionValue,
+    resortQuestionOptions,
 } = questionFormSlice.actions;
 export default questionFormSlice.reducer;
