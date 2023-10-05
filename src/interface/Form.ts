@@ -12,7 +12,7 @@ export type OptionType = string;
 
 export interface Question {
     title: QuestionTitle;
-    type: keyof QuestionType;
+    type: QuestionType;
     options: OptionType[];
     isRequired: boolean;
 }
