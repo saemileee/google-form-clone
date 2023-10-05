@@ -16,7 +16,10 @@ const Title = () => {
                 style={isFocused ? {outlineColor: 'red'} : undefined}
                 type='text'
                 value={title}
-                onChange={e => dispatch(changeTitle(e.target.value))}
+                onChange={e => {
+                    const value = e.target.value;
+                    dispatch(changeTitle({value}));
+                }}
                 onFocus={onFocus}
                 onBlur={onBlur}
             />

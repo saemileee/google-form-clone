@@ -1,5 +1,4 @@
-import {DEFAULT_VALUES, PLACEHOLDERS} from '../../constants/Form';
-import * as I from '../../interface/Form';
+import {PLACEHOLDERS, QUESTION_TYPES} from '../../constants/Form';
 import {RootState} from '../../store/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -49,9 +48,9 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
                         const value = e.target.value;
                         dispatch(changeQuestionType({questionIdx, value}));
                     }}
-                    defaultValue={DEFAULT_VALUES.QUESTION_TYPE}
+                    defaultValue={type}
                 >
-                    {Object.entries(I.QuestionType).map(([key, value]) => (
+                    {Object.entries(QUESTION_TYPES).map(([key, value]) => (
                         <option key={key} value={value}>
                             {value}
                         </option>
@@ -59,11 +58,11 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
                 </select>
             </div>
             <div>
-                {type === I.QuestionType.shortAnswer && <p>Short answer text</p>}
-                {type === I.QuestionType.paragraph && <p>Long answer text</p>}
-                {(type === I.QuestionType.multipleChoice ||
-                    type === I.QuestionType.checkboxes ||
-                    type === I.QuestionType.dropDown) && (
+                {type === QUESTION_TYPES.shortAnswer && <p>Short answer text</p>}
+                {type === QUESTION_TYPES.paragraph && <p>Long answer text</p>}
+                {(type === QUESTION_TYPES.multipleChoice ||
+                    type === QUESTION_TYPES.checkboxes ||
+                    type === QUESTION_TYPES.dropDown) && (
                     <div>
                         {options.map((value, optionIdx) => (
                             <div
@@ -81,7 +80,7 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
                                     drag
                                 </button>
                                 <div>
-                                    <p>{type === I.QuestionType.dropDown && optionIdx + 1}</p>
+                                    <p>{type === QUESTION_TYPES.dropDown && optionIdx + 1}</p>
                                 </div>
                                 <input
                                     type='text'
@@ -116,15 +115,17 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
                                 )}
                             </div>
                         ))}
-                        <button onClick={() => dispatch(addQuestionOption(questionIdx))}>
+                        <button onClick={() => dispatch(addQuestionOption({questionIdx}))}>
                             Add option
                         </button>
                     </div>
                 )}
             </div>
             <div>
-                <button onClick={() => dispatch(duplicateQuestion(questionIdx))}>Duplicate</button>
-                <button onClick={() => dispatch(deleteQuestion(questionIdx))}>Delete</button>
+                <button onClick={() => dispatch(duplicateQuestion({questionIdx}))}>
+                    Duplicate
+                </button>
+                <button onClick={() => dispatch(deleteQuestion({questionIdx}))}>Delete</button>
                 <div onClick={() => dispatch(toggleRequired({questionIdx}))}>
                     Required <button>{isRequired.toString()}</button>
                 </div>

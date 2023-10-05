@@ -17,7 +17,10 @@ const Description = () => {
                 type='text'
                 value={description}
                 placeholder={PLACEHOLDERS.DESCRIPTION}
-                onChange={e => dispatch(changeDescription(e.target.value))}
+                onChange={e => {
+                    const value = e.target.value;
+                    dispatch(changeDescription({value}));
+                }}
                 onFocus={onFocus}
                 onBlur={onBlur}
             />
