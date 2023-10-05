@@ -37,21 +37,14 @@ const questionFormSlice = createSlice({
             state.description = value;
         },
 
-        changeQuestionTitle: (
-            state,
-            action: PayloadAction<{questionIdx: number; value: QuestionTitle}>
-        ) => {
-            const {questionIdx, value} = action.payload;
-            state.questions[questionIdx].title = value;
+        selectQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
+            const prevSelectedQuestionIdx = state.questions.findIndex(
+                question => question.isSelected === true
+            );
+            state.questions[prevSelectedQuestionIdx].isSelected = false;
+            state.questions[questionIdx].isSelected = true;
         },
-        changeQuestionType: (
-            state,
-            action: PayloadAction<{questionIdx: number; value: QuestionType}>
-        ) => {
-            const {questionIdx, value} = action.payload;
-            state.questions[questionIdx].type = value;
-        },
-
         addQuestion: state => {
             const targetIdx = state.questions.findIndex(question => question.isSelected === true);
             state.questions.splice(targetIdx, 0, initialQuestion);
@@ -74,6 +67,21 @@ const questionFormSlice = createSlice({
         resortQuestions: (state, action: PayloadAction<{questions: Question[]}>) => {
             const {questions} = action.payload;
             state.questions = questions;
+        },
+
+        changeQuestionTitle: (
+            state,
+            action: PayloadAction<{questionIdx: number; value: QuestionTitle}>
+        ) => {
+            const {questionIdx, value} = action.payload;
+            state.questions[questionIdx].title = value;
+        },
+        changeQuestionType: (
+            state,
+            action: PayloadAction<{questionIdx: number; value: QuestionType}>
+        ) => {
+            const {questionIdx, value} = action.payload;
+            state.questions[questionIdx].type = value;
         },
 
         addQuestionOption: (state, action: PayloadAction<{questionIdx: number}>) => {
@@ -114,6 +122,7 @@ export const {
     changeQuestionTitle,
     changeQuestionType,
 
+    selectQuestion,
     addQuestion,
     deleteQuestion,
     duplicateQuestion,
