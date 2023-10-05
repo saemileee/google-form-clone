@@ -1,39 +1,51 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {DEFAULT_VALUES} from '../constants/Form';
+import {
+    FormDescription,
+    FormTitle,
+    QuestionTitle,
+    QuestionType,
+    OptionType,
+} from '../interface/Form';
 
 const initialQuestion = {
     title: DEFAULT_VALUES.QUESTION_TITLE,
     type: DEFAULT_VALUES.QUESTION_TYPE,
-    options: [DEFAULT_VALUES.QUESTION_OPTION],
+    options: [`${DEFAULT_VALUES.QUESTION_OPTION} 1`],
     isRequired: false,
 };
 
+// questionLength 추가
 const initialState = {
     title: DEFAULT_VALUES.TITLE,
     description: '',
     questions: [initialQuestion],
 };
 
-// title, value, idx 타입 지정 && 객체로파라미터 받아오기 필요
 const questionFormSlice = createSlice({
     name: 'questionForm',
     initialState,
     reducers: {
-        changeTitle: (state, action: PayloadAction<string>) => {
-            state.title = action.payload;
+        changeTitle: (state, action: PayloadAction<{value: FormTitle}>) => {
+            const {value} = action.payload;
+            state.title = value;
         },
-        changeDescription: (state, action: PayloadAction<string>) => {
-            state.description = action.payload;
+        changeDescription: (state, action: PayloadAction<{value: FormDescription}>) => {
+            const {value} = action.payload;
+            state.description = value;
         },
 
         changeQuestionTitle: (
             state,
-            action: PayloadAction<{questionIdx: number; value: string}>
+            action: PayloadAction<{questionIdx: number; value: QuestionTitle}>
         ) => {
             const {questionIdx, value} = action.payload;
             state.questions[questionIdx].title = value;
         },
-        changeQuestionType: (state, action: PayloadAction<{questionIdx: number; value: any}>) => {
+        changeQuestionType: (
+            state,
+            action: PayloadAction<{questionIdx: number; value: QuestionType}>
+        ) => {
             const {questionIdx, value} = action.payload;
             state.questions[questionIdx].type = value;
         },
@@ -41,12 +53,12 @@ const questionFormSlice = createSlice({
         addQuestion: state => {
             state.questions.push(initialQuestion);
         },
-        deleteQuestion: (state, action: PayloadAction<number>) => {
-            const questionIdx = action.payload;
+        deleteQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
             state.questions.splice(questionIdx, 1);
         },
-        duplicateQuestion: (state, action: PayloadAction<number>) => {
-            const questionIdx = action.payload;
+        duplicateQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
             const {questions} = state;
             const newQuestion = questions[questionIdx];
             state.questions.splice(questionIdx, 0, newQuestion);
@@ -57,10 +69,12 @@ const questionFormSlice = createSlice({
             state.questions[questionIdx].isRequired = newIsRequired;
         },
 
-        addQuestionOption: (state, action: PayloadAction<number>) => {
-            const questionIdx = action.payload;
+        addQuestionOption: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
             const newOptionLength = state.questions[questionIdx].options.length + 1;
-            state.questions[questionIdx].options.push(`Option ${newOptionLength}`);
+            state.questions[questionIdx].options.push(
+                `${DEFAULT_VALUES.QUESTION_OPTION} ${newOptionLength}`
+            );
         },
         removeQuestionOption: (
             state,
@@ -71,14 +85,14 @@ const questionFormSlice = createSlice({
         },
         changeOptionValue: (
             state,
-            action: PayloadAction<{questionIdx: number; optionIdx: number; value: string}>
+            action: PayloadAction<{questionIdx: number; optionIdx: number; value: OptionType}>
         ) => {
             const {questionIdx, optionIdx, value} = action.payload;
             state.questions[questionIdx].options[optionIdx] = value;
         },
         resortQuestionOptions: (
             state,
-            action: PayloadAction<{questionIdx: number; options: any}>
+            action: PayloadAction<{questionIdx: number; options: OptionType[]}>
         ) => {
             const {options, questionIdx} = action.payload;
             state.questions[questionIdx].options = options;
