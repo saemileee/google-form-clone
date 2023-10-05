@@ -1,23 +1,19 @@
-type FormTitle = string;
+import {QUESTION_TYPES} from '../constants/Form';
 
-type FormDescription = string;
+export type FormTitle = string;
 
-type QuestionTitle = string;
+export type FormDescription = string;
 
-export enum QuestionType {
-    shortAnswer = 'ShortAnswer',
-    paragraph = 'Paragraph',
-    multipleChoice = 'MultipleChoice',
-    checkboxes = 'Checkboxes',
-    dropDown = 'DropDown',
-}
+export type QuestionTitle = string;
 
-type Answer = string;
+export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES];
+
+export type Option = string;
 
 export interface Question {
     title: QuestionTitle;
-    type: QuestionType;
-    options: Answer[];
+    type: keyof QuestionType;
+    options: Option[];
     isRequired: boolean;
 }
 
