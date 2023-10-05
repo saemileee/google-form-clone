@@ -12,11 +12,11 @@ export enum QuestionType {
     dropDown = 'DropDown',
 }
 
-type Answer = string | null;
+type Answer = string;
 
 export interface Question {
     title: QuestionTitle;
-    type: keyof typeof QuestionType;
+    type: QuestionType;
     options: Answer[];
     isRequired: boolean;
 }
