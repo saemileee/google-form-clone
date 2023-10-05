@@ -17,7 +17,6 @@ const initialQuestion = {
     isRequired: false,
 };
 
-// questionLength 추가
 const initialState = {
     title: DEFAULT_VALUES.TITLE,
     description: '',
@@ -46,7 +45,12 @@ const questionFormSlice = createSlice({
             state.questions[questionIdx].isSelected = true;
         },
         addQuestion: state => {
-            const targetIdx = state.questions.findIndex(question => question.isSelected === true);
+            const targetIdx =
+                state.questions.findIndex(question => question.isSelected === true) + 1;
+            const prevSelectedQuestionIdx = state.questions.findIndex(
+                question => question.isSelected === true
+            );
+            state.questions[prevSelectedQuestionIdx].isSelected = false;
             state.questions.splice(targetIdx, 0, initialQuestion);
         },
         deleteQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
