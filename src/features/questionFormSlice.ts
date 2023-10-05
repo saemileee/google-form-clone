@@ -10,6 +10,7 @@ import {
 } from '../interface/Form';
 
 const initialQuestion = {
+    isSelected: true,
     title: DEFAULT_VALUES.QUESTION_TITLE,
     type: DEFAULT_VALUES.QUESTION_TYPE,
     options: [`${DEFAULT_VALUES.QUESTION_OPTION} 1`],
@@ -52,7 +53,8 @@ const questionFormSlice = createSlice({
         },
 
         addQuestion: state => {
-            state.questions.push(initialQuestion);
+            const targetIdx = state.questions.findIndex(question => question.isSelected === true);
+            state.questions.splice(targetIdx, 0, initialQuestion);
         },
         deleteQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
             const {questionIdx} = action.payload;
