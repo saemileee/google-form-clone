@@ -8,12 +8,12 @@ export type QuestionTitle = string;
 
 export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES];
 
-export type Option = string;
+export type OptionType = string;
 
 export interface Question {
     title: QuestionTitle;
     type: keyof QuestionType;
-    options: Option[];
+    options: OptionType[];
     isRequired: boolean;
 }
 
