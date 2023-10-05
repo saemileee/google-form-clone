@@ -14,6 +14,7 @@ const initialState = {
     questions: [initialQuestion],
 };
 
+// title, value, idx 타입 지정 && 객체로파라미터 받아오기 필요
 const questionFormSlice = createSlice({
     name: 'questionForm',
     initialState,
@@ -23,6 +24,18 @@ const questionFormSlice = createSlice({
         },
         changeDescription: (state, action: PayloadAction<string>) => {
             state.description = action.payload;
+        },
+
+        changeQuestionTitle: (
+            state,
+            action: PayloadAction<{questionIdx: number; value: string}>
+        ) => {
+            const {questionIdx, value} = action.payload;
+            state.questions[questionIdx].title = value;
+        },
+        changeQuestionType: (state, action: PayloadAction<{questionIdx: number; value: any}>) => {
+            const {questionIdx, value} = action.payload;
+            state.questions[questionIdx].type = value;
         },
 
         addQuestion: state => {
@@ -37,6 +50,11 @@ const questionFormSlice = createSlice({
             const {questions} = state;
             const newQuestion = questions[questionIdx];
             state.questions.splice(questionIdx, 0, newQuestion);
+        },
+        toggleRequired: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
+            const newIsRequired = !state.questions[questionIdx].isRequired;
+            state.questions[questionIdx].isRequired = newIsRequired;
         },
 
         addQuestionOption: (state, action: PayloadAction<number>) => {
@@ -58,15 +76,29 @@ const questionFormSlice = createSlice({
             const {questionIdx, optionIdx, value} = action.payload;
             state.questions[questionIdx].options[optionIdx] = value;
         },
+        resortQuestionOptions: (
+            state,
+            action: PayloadAction<{questionIdx: number; options: any}>
+        ) => {
+            const {options, questionIdx} = action.payload;
+            state.questions[questionIdx].options = options;
+        },
     },
 });
 
 export const {
     changeTitle,
     changeDescription,
+
+    changeQuestionTitle,
+    changeQuestionType,
+
     addQuestion,
     deleteQuestion,
     duplicateQuestion,
+    toggleRequired,
+    resortQuestionOptions,
+
     addQuestionOption,
     removeQuestionOption,
     changeOptionValue,
