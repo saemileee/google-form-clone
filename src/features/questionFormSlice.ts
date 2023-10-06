@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_VALUES} from '../constants/Form';
+import {DEFAULT_VALUES, QUESTION_TYPES} from '../constants/Form';
 import {
   FormDescription,
   FormTitle,
@@ -99,6 +99,11 @@ const questionFormSlice = createSlice({
       action: PayloadAction<{questionIdx: number; value: QuestionType}>
     ) => {
       const {questionIdx, value} = action.payload;
+      const isOtherOptionSelectable =
+        value === QUESTION_TYPES.multipleChoice || value === QUESTION_TYPES.checkboxes;
+      if (!isOtherOptionSelectable) {
+        state.questions[questionIdx].isOtherSelected = false;
+      }
       state.questions[questionIdx].type = value;
     },
 
