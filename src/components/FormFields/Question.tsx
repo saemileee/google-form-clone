@@ -82,114 +82,108 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
           ))}
         </select>
       </StyledTopInfoWrapper>
-      <div>
+      <StyledOptionList>
         {type === QUESTION_TYPES.shortAnswer && <p>Short answer text</p>}
         {type === QUESTION_TYPES.paragraph && <p>Long answer text</p>}
         {(type === QUESTION_TYPES.multipleChoice ||
           type === QUESTION_TYPES.checkboxes ||
           type === QUESTION_TYPES.dropDown) && (
-          <StyledOptionList>
+          <>
             {options.map((value, optionIdx) => (
-              <div key={`option-${optionIdx}`}>
-                <StyledOptionWrapper
-                  draggable={isDraggable}
-                  onDragStart={() => {
-                    startDrag(optionIdx);
-                  }}
-                  onDragEnter={() => {
-                    enterTarget(optionIdx);
-                  }}
-                  onDragEnd={e => {
-                    e.stopPropagation();
-                    const options = getResortedList();
-                    dispatch(resortQuestionOptions({questionIdx, options}));
-                  }}
-                  onDragOver={e => e.preventDefault()}
-                  onMouseEnter={() => {
-                    focusOption(optionIdx);
-                  }}
-                  onMouseLeave={() => {
-                    setFocusedOptionIdx(null);
-                  }}
+              <StyledOptionWrapper
+                draggable={isDraggable}
+                onDragStart={() => {
+                  startDrag(optionIdx);
+                }}
+                onDragEnter={() => {
+                  enterTarget(optionIdx);
+                }}
+                onDragEnd={e => {
+                  e.stopPropagation();
+                  const options = getResortedList();
+                  dispatch(resortQuestionOptions({questionIdx, options}));
+                }}
+                onDragOver={e => e.preventDefault()}
+                onMouseEnter={() => {
+                  focusOption(optionIdx);
+                }}
+                onMouseLeave={() => {
+                  setFocusedOptionIdx(null);
+                }}
+              >
+                <StyledDragButtonH
+                  selected={focusedOptionIdx === optionIdx ? true : false}
+                  onMouseDown={mouseDown}
+                  onMouseUp={mouseUp}
                 >
-                  <StyledDragButtonH
-                    selected={focusedOptionIdx === optionIdx ? true : false}
-                    onMouseDown={mouseDown}
-                    onMouseUp={mouseUp}
-                  >
-                    <MdDragIndicator size={16} />
-                  </StyledDragButtonH>
-                  <span>{type === QUESTION_TYPES.multipleChoice && <GrRadial size={22} />}</span>
-                  <span>
-                    {type === QUESTION_TYPES.checkboxes && (
-                      <MdOutlineCheckBoxOutlineBlank size={26} />
-                    )}
-                  </span>
-                  <span>{type === QUESTION_TYPES.dropDown && optionIdx + 1}</span>
-                  <StyledTextInput
-                    type='text'
-                    value={value}
-                    onChange={e => {
-                      const value = e.target.value;
-                      dispatch(changeOptionValue({questionIdx, optionIdx, value}));
-                    }}
-                    onFocus={() => setFocusedOptionIdx(optionIdx)}
-                  />
-                  {options.length > MIN_OPTION_LENGTH && (
-                    <StyledMenuButton
-                      name='remove'
-                      onClick={() => dispatch(removeQuestionOption({questionIdx, optionIdx}))}
-                    >
-                      <AiOutlineClose size={22} />
-                    </StyledMenuButton>
+                  <MdDragIndicator size={16} />
+                </StyledDragButtonH>
+                <span>{type === QUESTION_TYPES.multipleChoice && <GrRadial size={22} />}</span>
+                <span>
+                  {type === QUESTION_TYPES.checkboxes && (
+                    <MdOutlineCheckBoxOutlineBlank size={26} />
                   )}
-                </StyledOptionWrapper>
-                {isOtherSelected && (
-                  <StyledAddOptionWrapper>
-                    <span>Other...</span>
-                    <StyledMenuButton
-                      name='remove'
-                      onClick={() => dispatch(removeOtherOption({questionIdx}))}
-                    >
-                      <AiOutlineClose size={22} />
-                    </StyledMenuButton>
-                  </StyledAddOptionWrapper>
+                </span>
+                <span>{type === QUESTION_TYPES.dropDown && optionIdx + 1}</span>
+                <StyledTextInput
+                  type='text'
+                  value={value}
+                  onChange={e => {
+                    const value = e.target.value;
+                    dispatch(changeOptionValue({questionIdx, optionIdx, value}));
+                  }}
+                  onFocus={() => setFocusedOptionIdx(optionIdx)}
+                />
+                {options.length > MIN_OPTION_LENGTH && (
+                  <StyledMenuButton
+                    name='remove'
+                    onClick={() => dispatch(removeQuestionOption({questionIdx, optionIdx}))}
+                  >
+                    <AiOutlineClose size={22} />
+                  </StyledMenuButton>
                 )}
-
-                {isSelected && optionIdx + 1 === options.length && (
-                  <StyledAddOptionWrapper>
-                    <span>{type === QUESTION_TYPES.multipleChoice && <GrRadial size={22} />}</span>
-                    <span>
-                      {type === QUESTION_TYPES.checkboxes && (
-                        <MdOutlineCheckBoxOutlineBlank size={26} />
-                      )}
-                    </span>
-                    <span>{type === QUESTION_TYPES.dropDown && optionIdx + 1}</span>
-                    <button
-                      className='add-option'
-                      onClick={() => dispatch(addQuestionOption({questionIdx}))}
-                    >
-                      Add option
-                    </button>
-                    {!isOtherSelected && (
-                      <span>
-                        {' '}
-                        or
-                        <button
-                          onClick={() => dispatch(addOtherOption({questionIdx}))}
-                          className='add-other'
-                        >
-                          add "Other"
-                        </button>
-                      </span>
-                    )}
-                  </StyledAddOptionWrapper>
-                )}
-              </div>
+              </StyledOptionWrapper>
             ))}
-          </StyledOptionList>
+            {isOtherSelected && (
+              <StyledAddOptionWrapper>
+                <span>Other...</span>
+                <StyledMenuButton
+                  name='remove'
+                  onClick={() => dispatch(removeOtherOption({questionIdx}))}
+                >
+                  <AiOutlineClose size={22} />
+                </StyledMenuButton>
+              </StyledAddOptionWrapper>
+            )}
+
+            <StyledAddOptionWrapper>
+              <span>{type === QUESTION_TYPES.multipleChoice && <GrRadial size={22} />}</span>
+              <span>
+                {type === QUESTION_TYPES.checkboxes && <MdOutlineCheckBoxOutlineBlank size={26} />}
+              </span>
+              <span>{type === QUESTION_TYPES.dropDown && options.length}</span>
+              <button
+                className='add-option'
+                onClick={() => dispatch(addQuestionOption({questionIdx}))}
+              >
+                Add option
+              </button>
+              {!isOtherSelected && (
+                <span>
+                  {' '}
+                  or
+                  <button
+                    onClick={() => dispatch(addOtherOption({questionIdx}))}
+                    className='add-other'
+                  >
+                    add "Other"
+                  </button>
+                </span>
+              )}
+            </StyledAddOptionWrapper>
+          </>
         )}
-      </div>
+      </StyledOptionList>
       {isSelected && (
         <StyledMenuWrapper>
           <StyledMenuButton
