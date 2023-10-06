@@ -18,7 +18,7 @@ import {
 } from '../../features/questionFormSlice';
 import {RootState} from '../../store/store';
 import {QuestionType} from '../../interface/Form';
-import TypeIcon from './TypeIcon';
+import TypeListIcon from './TypeListIcon';
 
 const MIN_OPTION_LENGTH = 1;
 
@@ -81,7 +81,7 @@ const Option = ({
           <MdDragIndicator size={16} />
         </StyledDragButtonH>
         <span>
-          <TypeIcon type={type} optionIdx={optionIdx} />
+          <TypeListIcon type={type} optionIdx={optionIdx} />
         </span>
       </StyledLeftIconsWrapper>
       <StyledTextInput

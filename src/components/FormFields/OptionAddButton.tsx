@@ -1,7 +1,7 @@
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import {addOtherOption, addQuestionOption} from '../../features/questionFormSlice';
-import TypeIcon from './TypeIcon';
+import TypeListIcon from './TypeListIcon';
 import {QuestionType} from '../../interface/Form';
 import {StyledOptionWrapper} from '../../styles/Form';
 
@@ -22,7 +22,7 @@ const OptionAddButton = ({
 
   return (
     <StyledAddOptionWrapper>
-      <TypeIcon type={type} optionIdx={optionIdx} />
+      <TypeListIcon type={type} optionIdx={optionIdx} />
       <button className='add-option' onClick={() => dispatch(addQuestionOption({questionIdx}))}>
         Add option
       </button>

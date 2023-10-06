@@ -3,7 +3,7 @@ import {AiOutlineClose} from 'react-icons/ai';
 import {useDispatch} from 'react-redux';
 import {removeOtherOption} from '../../features/questionFormSlice';
 import {QuestionType} from '../../interface/Form';
-import TypeIcon from './TypeIcon';
+import TypeListIcon from './TypeListIcon';
 import styled from 'styled-components';
 
 const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: number}) => {
@@ -11,7 +11,7 @@ const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: numb
 
   return (
     <StyledOtherOptionWrapper>
-      <TypeIcon type={type} />
+      <TypeListIcon type={type} />
       <StyledOtherOption>Other...</StyledOtherOption>
       <StyledMenuButton name='remove' onClick={() => dispatch(removeOtherOption({questionIdx}))}>
         <AiOutlineClose size={22} />
