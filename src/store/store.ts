@@ -2,9 +2,9 @@ import {configureStore} from '@reduxjs/toolkit';
 import questionFormReducer from '../features/questionFormSlice';
 
 export const store = configureStore({
-    reducer: {
-        questionForm: questionFormReducer,
-    },
+  reducer: {
+    questionForm: questionFormReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

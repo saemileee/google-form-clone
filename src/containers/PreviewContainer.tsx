@@ -1,9 +1,9 @@
 const PreviewContainer = () => {
-    return (
-        <>
-            <h1>PreviewContainer</h1>
-        </>
-    );
+  return (
+    <>
+      <h1>PreviewContainer</h1>
+    </>
+  );
 };
 
 export default PreviewContainer;
