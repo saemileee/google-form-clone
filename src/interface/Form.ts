@@ -15,6 +15,7 @@ export interface Question {
     title: QuestionTitle;
     type: QuestionType;
     options: OptionType[];
+    isOtherSelected: boolean;
     isRequired: boolean;
 }
 
