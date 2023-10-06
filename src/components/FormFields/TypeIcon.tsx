@@ -1,22 +1,27 @@
 import {QuestionType} from '../../interface/Form';
-import {GrRadial} from 'react-icons/gr';
-import {MdOutlineCheckBoxOutlineBlank} from 'react-icons/md';
+import {GrRadialSelected} from 'react-icons/gr';
+import {MdOutlineCheckBox, MdShortText, MdSubject} from 'react-icons/md';
 import {QUESTION_TYPES} from '../../constants/Form';
+import {IoIosArrowDropdown} from 'react-icons/io';
 
-const TypeIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) => {
-  return (
-    <span>
-      {type === QUESTION_TYPES.multipleChoice ? (
-        <GrRadial size={22} />
-      ) : type === QUESTION_TYPES.checkboxes ? (
-        <MdOutlineCheckBoxOutlineBlank size={26} />
-      ) : optionIdx !== undefined && type === QUESTION_TYPES.dropDown ? (
-        <span>{optionIdx + 1}.</span>
-      ) : (
-        <></>
-      )}
-    </span>
-  );
+const TypeIcon = ({type}: {type: QuestionType; optionIdx?: number}) => {
+  const getIcon = (type: QuestionType) => {
+    switch (type) {
+      case QUESTION_TYPES.shortAnswer:
+        return <MdShortText size={22} />;
+      case QUESTION_TYPES.paragraph:
+        return <MdSubject size={22} />;
+      case QUESTION_TYPES.multipleChoice:
+        return <GrRadialSelected size={20} />;
+      case QUESTION_TYPES.checkboxes:
+        return <MdOutlineCheckBox size={22} />;
+      case QUESTION_TYPES.dropDown:
+        return <IoIosArrowDropdown size={22} />;
+      default:
+        return <></>;
+    }
+  };
+  return getIcon(type);
 };
 
 export default TypeIcon;
