@@ -18,6 +18,7 @@ import Option from './Option';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
 import OptionOther from './OptionOther';
 import OptionAddButton from './OptionAddButton';
+import Toggle from '../Toggle';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
@@ -115,9 +116,11 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
           >
             <RiDeleteBinLine size={22} />
           </StyledMenuButton>
-          <div onClick={() => dispatch(toggleRequired({questionIdx}))}>
-            Required <button>{isRequired.toString()}</button>
-          </div>
+          <div className='divider'></div>
+          <Toggle
+            isActive={isRequired}
+            toggleHandler={() => dispatch(toggleRequired({questionIdx}))}
+          />
         </StyledMenuWrapper>
       )}
     </StyledQuestionWrapper>
@@ -152,7 +155,15 @@ const StyledOptionList = styled.div`
 const StyledMenuWrapper = styled.div`
   display: flex;
   justify-content: end;
-  gap: 24px;
-  padding-top: 12px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px 0 12px;
+  margin: 0 28px 0 28px;
   border-top: 1px solid lightgrey;
+  .divider {
+    margin: 0 4px 0 4px;
+    width: 1px;
+    height: 36px;
+    background-color: lightgrey;
+  }
 `;
