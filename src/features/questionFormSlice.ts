@@ -15,6 +15,7 @@ const initialQuestion = {
     title: DEFAULT_VALUES.QUESTION_TITLE,
     type: DEFAULT_VALUES.QUESTION_TYPE,
     options: [`${DEFAULT_VALUES.QUESTION_OPTION} 1`],
+    isOtherSelected: false,
     isRequired: false,
 };
 
@@ -116,6 +117,14 @@ const questionFormSlice = createSlice({
             const {questionIdx, optionIdx} = action.payload;
             state.questions[questionIdx].options.splice(optionIdx, 1);
         },
+        addOtherOption: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
+            state.questions[questionIdx].isOtherSelected = true;
+        },
+        removeOtherOption: (state, action: PayloadAction<{questionIdx: number}>) => {
+            const {questionIdx} = action.payload;
+            state.questions[questionIdx].isOtherSelected = false;
+        },
         changeOptionValue: (
             state,
             action: PayloadAction<{questionIdx: number; optionIdx: number; value: OptionType}>
@@ -149,6 +158,9 @@ export const {
 
     addQuestionOption,
     removeQuestionOption,
+    addOtherOption,
+    removeOtherOption,
+
     changeOptionValue,
     resortQuestionOptions,
 } = questionFormSlice.actions;
