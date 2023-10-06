@@ -1,30 +1,22 @@
 import {PLACEHOLDERS, QUESTION_TYPES} from '../../constants/Form';
 import {RootState} from '../../store/store';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  changeQuestionTitle,
-  deleteQuestion,
-  duplicateQuestion,
-  toggleRequired,
-  changeQuestionType,
-} from '../../features/questionFormSlice';
+import {changeQuestionTitle, changeQuestionType} from '../../features/questionFormSlice';
 import useTextInputField from '../../hooks/useTextInputField';
-import {StyledMenuButton, StyledQuestionTitleInput} from '../../styles/Form';
+import {StyledQuestionTitleInput} from '../../styles/Form';
 import styled from 'styled-components';
-import {BiDuplicate} from 'react-icons/bi';
-import {RiDeleteBinLine} from 'react-icons/ri';
 
 import Option from './Option';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
 import OptionOther from './OptionOther';
 import OptionAddButton from './OptionAddButton';
-import Toggle from '../Toggle';
+import QuestionBottomMenu from './QuestionBottomMenu';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
   const dispatch = useDispatch();
 
-  const {title, type, options, isRequired, isSelected, isOtherSelected} = formData;
+  const {title, type, options, isSelected, isOtherSelected} = formData;
 
   const {isFocused, onFocus, onBlur} = useTextInputField();
   const dragNDropOption = useSortableDragNDrop(options);
@@ -96,33 +88,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
           </>
         )}
       </StyledOptionList>
-      {isSelected && (
-        <StyledMenuWrapper>
-          <StyledMenuButton
-            name='duplicate'
-            onClick={e => {
-              e.stopPropagation();
-              dispatch(duplicateQuestion({questionIdx}));
-            }}
-          >
-            <BiDuplicate size={22} />
-          </StyledMenuButton>
-          <StyledMenuButton
-            name='delete'
-            onClick={e => {
-              e.stopPropagation();
-              dispatch(deleteQuestion({questionIdx}));
-            }}
-          >
-            <RiDeleteBinLine size={22} />
-          </StyledMenuButton>
-          <div className='divider'></div>
-          <Toggle
-            isActive={isRequired}
-            toggleHandler={() => dispatch(toggleRequired({questionIdx}))}
-          />
-        </StyledMenuWrapper>
-      )}
+      {isSelected && <QuestionBottomMenu questionIdx={questionIdx} />}
     </StyledQuestionWrapper>
   );
 };
@@ -150,20 +116,4 @@ const StyledOptionList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-`;
-
-const StyledMenuWrapper = styled.div`
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 12px 0 12px;
-  margin: 0 28px 0 28px;
-  border-top: 1px solid lightgrey;
-  .divider {
-    margin: 0 4px 0 4px;
-    width: 1px;
-    height: 36px;
-    background-color: lightgrey;
-  }
 `;
