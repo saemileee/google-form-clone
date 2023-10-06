@@ -11,6 +11,8 @@ import {
     removeQuestionOption,
     toggleRequired,
     changeQuestionType,
+    addOtherOption,
+    removeOtherOption,
 } from '../../features/questionFormSlice';
 import useTextInputField from '../../hooks/useTextInputField';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
@@ -34,7 +36,7 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
     const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
     const dispatch = useDispatch();
 
-    const {title, type, options, isRequired, isSelected} = formData;
+    const {title, type, options, isRequired, isSelected, isOtherSelected} = formData;
 
     const {isFocused, onFocus, onBlur} = useTextInputField();
 
@@ -152,6 +154,19 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
                                         </StyledMenuButton>
                                     )}
                                 </StyledOptionWrapper>
+                                {isOtherSelected && (
+                                    <StyledAddOptionWrapper>
+                                        <span>Other...</span>
+                                        <StyledMenuButton
+                                            name='remove'
+                                            onClick={() =>
+                                                dispatch(removeOtherOption({questionIdx}))
+                                            }
+                                        >
+                                            <AiOutlineClose size={22} />
+                                        </StyledMenuButton>
+                                    </StyledAddOptionWrapper>
+                                )}
 
                                 {isSelected && optionIdx + 1 === options.length && (
                                     <StyledAddOptionWrapper>
@@ -175,8 +190,21 @@ const Question = ({questionIdx}: {questionIdx: number}) => {
                                             }
                                         >
                                             Add option
-                                        </button>{' '}
-                                        or <button className='add-other'>add "Other"</button>
+                                        </button>
+                                        {!isOtherSelected && (
+                                            <span>
+                                                {' '}
+                                                or
+                                                <button
+                                                    onClick={() =>
+                                                        dispatch(addOtherOption({questionIdx}))
+                                                    }
+                                                    className='add-other'
+                                                >
+                                                    add "Other"
+                                                </button>
+                                            </span>
+                                        )}
                                     </StyledAddOptionWrapper>
                                 )}
                             </div>
