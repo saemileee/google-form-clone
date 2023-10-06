@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface StyledGeneralFormContainerProps {
-  isSelected?: boolean;
+  selected?: boolean;
 }
 export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerProps>`
   overflow: hidden;
@@ -9,6 +9,7 @@ export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerP
   border: 1px solid lightgrey;
   border-radius: 8px;
   background-color: white;
+  box-shadow: ${props => (props.selected ? '0px 0px 10px lightgrey' : '')};
   &:hover {
     .question-form-drag-button {
       visibility: visible;
@@ -16,8 +17,8 @@ export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerP
   }
   input {
     &:hover {
-      border-bottom: ${props => (props.isSelected ? '1px solid lightgrey' : '')};
-      margin-bottom: ${props => (props.isSelected ? '-1px' : '')};
+      border-bottom: ${props => (props.selected ? '1px solid lightgrey' : '')};
+      margin-bottom: ${props => (props.selected ? '-1px' : '')};
     }
     &:focus {
       border-bottom: 2px solid blue;
@@ -75,6 +76,7 @@ export const StyledDragButtonW = styled(StyledDragButton)`
 `;
 
 export const StyledDragButtonH = styled(StyledDragButton)<StyledDragButtonWProps>`
+  width: 24px;
   height: 100%;
 `;
 
@@ -99,5 +101,15 @@ export const StyledMenuButton = styled.button<StyledMenuButtonProps>`
       background-color: grey;
       transform: translateX(-24px);
     }
+  }
+`;
+
+export const StyledOptionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  span {
+    padding-top: 4px;
   }
 `;
