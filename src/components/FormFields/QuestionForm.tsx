@@ -11,6 +11,8 @@ import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
 import OptionOther from './OptionOther';
 import OptionAddButton from './OptionAddButton';
 import QuestionBottomMenu from './QuestionBottomMenu';
+import IconDropDownBox from '../IconDropDownBox';
+import TypeIcon from './TypeIcon';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
@@ -20,6 +22,16 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
 
   const {isFocused, onFocus, onBlur} = useTextInputField();
   const dragNDropOption = useSortableDragNDrop(options);
+
+  const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
+    icon: <TypeIcon type={type[1]} />,
+    value: type[1],
+  }));
+
+  const defaultOptionType = {
+    icon: <TypeIcon type={type} />,
+    value: type,
+  };
 
   const isOptionalType =
     type === QUESTION_TYPES.multipleChoice ||
@@ -45,19 +57,11 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
           onFocus={onFocus}
           onBlur={onBlur}
         />
-        <select
-          onChange={e => {
-            const value = e.target.value;
-            dispatch(changeQuestionType({questionIdx, value}));
-          }}
-          defaultValue={type}
-        >
-          {Object.entries(QUESTION_TYPES).map(([key, value]) => (
-            <option key={key} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
+        <IconDropDownBox
+          options={optionTypes}
+          defaultOption={defaultOptionType}
+          valueChangeHandler={value => dispatch(changeQuestionType({questionIdx, value}))}
+        />
       </StyledTopInfoWrapper>
       <StyledOptionList>
         {type === QUESTION_TYPES.shortAnswer && <p>Short answer text</p>}
