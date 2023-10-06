@@ -4,7 +4,7 @@ interface StyledGeneralFormContainerProps {
   selected?: boolean;
 }
 export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerProps>`
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   border: 1px solid lightgrey;
   border-radius: 8px;

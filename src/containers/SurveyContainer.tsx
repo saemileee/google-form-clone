@@ -31,4 +31,5 @@ const StyledFormInfoLine = styled.div`
   width: 100%;
   height: 16px;
   background-color: blue;
+  border-radius: 8px 8px 0 0;
 `;

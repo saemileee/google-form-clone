@@ -66,6 +66,7 @@ const StyledSelectedLine = styled.div`
   width: 8px;
   height: 100%;
   background-color: blue;
+  border-radius: 8px 0 0 8px;
 `;
 
 const StyledQuestionFormWrapper = styled(StyledGeneralFormWrapper)`
