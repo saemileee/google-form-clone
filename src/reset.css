@@ -122,3 +122,13 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+button,
+select {
+    cursor: pointer;
+}
+
+button {
+    background-color: unset;
+    border: none;
+}
