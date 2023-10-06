@@ -13,6 +13,7 @@ import OptionAddButton from './OptionAddButton';
 import QuestionBottomMenu from './QuestionBottomMenu';
 import IconDropDownBox from '../IconDropDownBox';
 import TypeIcon from './TypeIcon';
+import TextTypeForm from './TextTypeForm';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
@@ -64,8 +65,8 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
         />
       </StyledTopInfoWrapper>
       <StyledOptionList>
-        {type === QUESTION_TYPES.shortAnswer && <p>Short answer text</p>}
-        {type === QUESTION_TYPES.paragraph && <p>Long answer text</p>}
+        {type === QUESTION_TYPES.shortAnswer && <TextTypeForm type={QUESTION_TYPES.shortAnswer} />}
+        {type === QUESTION_TYPES.paragraph && <TextTypeForm type={QUESTION_TYPES.paragraph} />}
         {isOptionalType && (
           <>
             {options.map((value, optionIdx) => (
