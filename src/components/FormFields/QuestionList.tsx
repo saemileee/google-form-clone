@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import Question from '../FormFields/Question';
+import QuestionForm from '../FormFields/QuestionForm';
 import {RootState} from '../../store/store';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
 import {resortQuestions, selectQuestion} from '../../features/questionFormSlice';
@@ -22,6 +22,7 @@ const QuestionList = () => {
       <QuestionAddButton />
       {questions.map((question, idx) => (
         <StyledGeneralFormContainer
+          selected={question.isSelected}
           key={idx}
           onClick={() => dispatch(selectQuestion({questionIdx: idx}))}
           draggable={isDraggable}
@@ -40,11 +41,9 @@ const QuestionList = () => {
           >
             <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
           </StyledDragButtonW>
-          <StyledGeneralFormWrapper>
-            <>
-              <Question questionIdx={idx} />
-            </>
-          </StyledGeneralFormWrapper>
+          <StyledQuestionFormWrapper>
+            <QuestionForm questionIdx={idx} />
+          </StyledQuestionFormWrapper>
         </StyledGeneralFormContainer>
       ))}
     </StyledFormWrapper>
@@ -56,8 +55,8 @@ export default QuestionList;
 const StyledFormWrapper = styled.div`
   padding-top: 12px;
   display: flex;
+  gap: 18px;
   flex-direction: column;
-  gap: 24px;
   width: 100%;
 `;
 
@@ -67,4 +66,8 @@ const StyledSelectedLine = styled.div`
   width: 8px;
   height: 100%;
   background-color: blue;
+`;
+
+const StyledQuestionFormWrapper = styled(StyledGeneralFormWrapper)`
+  padding: 0;
 `;
