@@ -3,6 +3,7 @@ import {DEFAULT_VALUES} from '../../constants/Form';
 import useTextInputField from '../../hooks/useTextInputField';
 import {changeTitle} from '../../features/questionFormSlice';
 import {RootState} from '../../store/store';
+import {StyledTitleInput} from '../../styles/Form';
 
 const Title = () => {
     const title = useSelector((state: RootState) => state.questionForm.title);
@@ -12,7 +13,7 @@ const Title = () => {
 
     return (
         <>
-            <input
+            <StyledTitleInput
                 style={isFocused ? {outlineColor: 'red'} : undefined}
                 type='text'
                 value={title}

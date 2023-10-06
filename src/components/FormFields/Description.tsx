@@ -3,6 +3,7 @@ import {PLACEHOLDERS} from '../../constants/Form';
 import useTextInputField from '../../hooks/useTextInputField';
 import {RootState} from '../../store/store';
 import {changeDescription} from '../../features/questionFormSlice';
+import {StyledTextInput} from '../../styles/Form';
 
 const Description = () => {
     const description = useSelector((state: RootState) => state.questionForm.description);
@@ -12,7 +13,7 @@ const Description = () => {
 
     return (
         <>
-            <input
+            <StyledTextInput
                 style={isFocused ? {outlineColor: 'red'} : undefined}
                 type='text'
                 value={description}
