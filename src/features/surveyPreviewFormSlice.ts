@@ -1,11 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {
-  AnswerCheckboxes,
-  AnswerDropDown,
-  AnswerMultipleChoice,
-  AnswerTextAnswer,
-  PreviewQuestionForm,
-} from '../interface/Form';
+import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
 import {formStateStorage} from '../store/localStorage';
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
 
@@ -15,66 +9,52 @@ const surveyPreviewFormSlice = createSlice({
   name: 'questionForm',
   initialState,
   reducers: {
-    changeMultipleOption: (
+    toggleMultipleOption: (
       state,
-      action: {payload: {questionIdx: number; selectedIdx: number | null; isOtherOption: boolean}}
+      action: {
+        payload: {questionIdx: number; selectedIdx: AnswerMultipleChoice['selectedOptionIndex']};
+      }
     ) => {
-      const {questionIdx, selectedIdx, isOtherOption} = action.payload;
-      if (
-        'selectedOptionIndex' in state.questions[questionIdx].answer &&
-        'other' in state.questions[questionIdx].answer
-      ) {
-        const currentSelect = (state.questions[questionIdx].answer as AnswerMultipleChoice)
-          .selectedOptionIndex;
-        if (selectedIdx !== currentSelect) {
-          (state.questions[questionIdx].answer as AnswerMultipleChoice).selectedOptionIndex =
-            selectedIdx;
-        } else {
-          (state.questions[questionIdx].answer as AnswerMultipleChoice).selectedOptionIndex = null;
-
-          const currentIsOtherOption = (state.questions[questionIdx].answer as AnswerMultipleChoice)
-            .isOtherSelected;
-          if (isOtherOption) {
-            (state.questions[questionIdx].answer as AnswerMultipleChoice).isOtherSelected =
-              !currentIsOtherOption;
-          }
-        }
+      const {questionIdx, selectedIdx} = action.payload;
+      const currentSelect = state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex;
+      if (selectedIdx === currentSelect) {
+        state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex = null;
+      } else {
+        state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex = selectedIdx;
       }
     },
-    toggleCheckboxOption: (state, action: {payload: {questionIdx: number; optionIdx: number}}) => {
-      const {questionIdx, optionIdx} = action.payload;
+    toggleCheckboxOption: (
+      state,
+      action: {payload: {questionIdx: number; selectedIdx: number | 'other'}}
+    ) => {
+      const {questionIdx, selectedIdx} = action.payload;
 
-      if (
-        'selectedOptionIndexes' in state.questions[questionIdx].answer &&
-        'other' in state.questions[questionIdx].answer
-      ) {
-        const currentAnswer = state.questions[questionIdx].answer as AnswerCheckboxes;
+      const currentSelects = state.questions[questionIdx].answer.checkboxes!.selectedOptionIndexes;
 
-        const currentSelects = currentAnswer.selectedOptionIndexes;
-
-        if (currentSelects && currentSelects.includes(optionIdx)) {
-          (state.questions[questionIdx].answer as AnswerCheckboxes).selectedOptionIndexes =
-            currentSelects.filter(index => index !== optionIdx);
-        } else {
-          (state.questions[questionIdx].answer as AnswerCheckboxes).selectedOptionIndexes =
-            currentSelects ? [...currentSelects, optionIdx] : [optionIdx];
-        }
+      if (currentSelects.includes(selectedIdx)) {
+        state.questions[questionIdx].answer.checkboxes!.selectedOptionIndexes =
+          currentSelects.filter(select => select !== selectedIdx);
+      } else {
+        state.questions[questionIdx].answer.checkboxes!.selectedOptionIndexes = [
+          ...currentSelects,
+          selectedIdx,
+        ];
       }
     },
     changeDropdownOption: (
       state,
-      action: {payload: {questionIdx: number; selectedIdx: number | null}}
+      action: {payload: {questionIdx: number; answer: AnswerDropDown['selectedOptionIndex']}}
     ) => {
-      const {questionIdx, selectedIdx} = action.payload;
-      (state.questions[questionIdx].answer as AnswerDropDown).selectedOptionIndex = selectedIdx;
+      const {questionIdx, answer} = action.payload;
+      state.questions[questionIdx].answer.dropdown!.selectedOptionIndex = answer;
     },
     changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
       const {questionIdx, value} = action.payload;
-      (state.questions[questionIdx].answer as AnswerTextAnswer).answer = value;
+      state.questions[questionIdx].answer.shortAnswer!.answer = value;
     },
   },
 });
 
-export const {changeMultipleOption, toggleCheckboxOption, changeDropdownOption, changeTextAnswer} =
+export const {toggleMultipleOption, toggleCheckboxOption, changeDropdownOption, changeTextAnswer} =
   surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;
