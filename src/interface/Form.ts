@@ -53,7 +53,7 @@ export interface PreviewQuestion {
   answer: {
     multipleChoice?: AnswerMultipleChoice;
     checkboxes?: AnswerCheckboxes;
-    dropdown?: AnswerDropDown;
+    dropDown?: AnswerDropDown;
     shortAnswer?: AnswerTextAnswer;
     paragraph?: AnswerTextAnswer;
   };
