@@ -2,7 +2,6 @@ import {PLACEHOLDERS, QUESTION_TYPES} from '../../constants/Form';
 import {RootState} from '../../store/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeQuestionTitle, changeQuestionType} from '../../features/questionFormSlice';
-import useTextInputField from '../../hooks/useTextInputField';
 import {StyledQuestionTitleInput, StyledQuestionWrapper} from '../../styles/Form';
 import styled from 'styled-components';
 
@@ -21,7 +20,6 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
 
   const {title, type, options, isSelected, isOtherSelected} = formData;
 
-  const {isFocused, onFocus, onBlur} = useTextInputField();
   const dragNDropOption = useSortableDragNDrop(options);
 
   const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
@@ -47,7 +45,6 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
       <StyledTopInfoWrapper>
         <StyledQuestionTitleInput
           className={isSelected ? 'selected' : undefined}
-          style={isFocused ? {outlineColor: 'red'} : undefined}
           type='text'
           value={title}
           placeholder={PLACEHOLDERS.QUESTION}
@@ -55,8 +52,6 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             const value = e.target.value;
             dispatch(changeQuestionTitle({questionIdx, value}));
           }}
-          onFocus={onFocus}
-          onBlur={onBlur}
         />
         <IconDropDownBox
           options={optionTypes}
