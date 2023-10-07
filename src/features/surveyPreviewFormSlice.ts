@@ -1,5 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AnswerCheckboxes, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
+import {
+  AnswerCheckboxes,
+  AnswerDropDown,
+  AnswerMultipleChoice,
+  PreviewQuestionForm,
+} from '../interface/Form';
 import {formStateStorage} from '../store/localStorage';
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
 
@@ -42,8 +47,16 @@ const surveyPreviewFormSlice = createSlice({
         }
       }
     },
+    changeDropdownOption: (
+      state,
+      action: {payload: {questionIdx: number; selectedIdx: number | null}}
+    ) => {
+      const {questionIdx, selectedIdx} = action.payload;
+      (state.questions[questionIdx].answer as AnswerDropDown).selectedOptionIndex = selectedIdx;
+    },
   },
 });
 
-export const {changeMultipleOption, toggleCheckboxOption} = surveyPreviewFormSlice.actions;
+export const {changeMultipleOption, toggleCheckboxOption, changeDropdownOption} =
+  surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;
