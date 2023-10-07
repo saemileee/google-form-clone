@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Description from '../components/FormFields/Description';
-import QuestionList from '../components/FormFields/QuestionList';
-import Title from '../components/FormFields/Title';
+import Description from '../components/SurveyPostForm/Description';
+import QuestionList from '../components/SurveyPostForm/QuestionList';
+import Title from '../components/SurveyPostForm/Title';
 import {StyledGeneralFormContainer, StyledGeneralFormWrapper} from '../styles/Form';
 
 const surveyContainer = () => {

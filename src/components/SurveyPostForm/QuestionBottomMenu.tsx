@@ -16,6 +16,7 @@ const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
     <StyledMenuWrapper>
       <StyledMenuButton
         name='duplicate'
+        tooltipPosition='bottom'
         onClick={e => {
           e.stopPropagation();
           dispatch(duplicateQuestion({questionIdx}));
@@ -25,6 +26,7 @@ const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
       </StyledMenuButton>
       <StyledMenuButton
         name='delete'
+        tooltipPosition='bottom'
         onClick={e => {
           e.stopPropagation();
           dispatch(deleteQuestion({questionIdx}));

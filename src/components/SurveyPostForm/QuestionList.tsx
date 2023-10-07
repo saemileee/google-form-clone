@@ -1,9 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
-import QuestionForm from '../FormFields/QuestionForm';
+import QuestionForm from './QuestionForm';
 import {RootState} from '../../store/store';
 import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
 import {resortQuestions, selectQuestion} from '../../features/questionFormSlice';
-import QuestionAddButton from './QuestionAddButton';
 import styled from 'styled-components';
 import {
   StyledDragButtonW,
@@ -11,6 +10,7 @@ import {
   StyledGeneralFormWrapper,
 } from '../../styles/Form';
 import {MdDragIndicator} from 'react-icons/md';
+import SideMenu from './SideMenu';
 
 const QuestionList = () => {
   const questions = useSelector((state: RootState) => state.questionForm.questions);
@@ -19,7 +19,7 @@ const QuestionList = () => {
     useSortableDragNDrop(questions);
   return (
     <StyledFormWrapper>
-      <QuestionAddButton />
+      <SideMenu />
       {questions.map((question, idx) => (
         <StyledGeneralFormContainer
           selected={question.isSelected}
@@ -53,6 +53,7 @@ const QuestionList = () => {
 export default QuestionList;
 
 const StyledFormWrapper = styled.div`
+  position: relative;
   padding-top: 12px;
   display: flex;
   gap: 18px;

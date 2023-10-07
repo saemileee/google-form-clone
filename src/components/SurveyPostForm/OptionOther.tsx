@@ -13,7 +13,11 @@ const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: numb
     <StyledOtherOptionWrapper>
       <TypeListIcon type={type} />
       <StyledOtherOption>Other...</StyledOtherOption>
-      <StyledMenuButton name='remove' onClick={() => dispatch(removeOtherOption({questionIdx}))}>
+      <StyledMenuButton
+        name='remove'
+        tooltipPosition='bottom'
+        onClick={() => dispatch(removeOtherOption({questionIdx}))}
+      >
         <AiOutlineClose size={22} />
       </StyledMenuButton>
     </StyledOtherOptionWrapper>

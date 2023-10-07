@@ -95,6 +95,7 @@ const Option = ({
       />
       {options.length > MIN_OPTION_LENGTH && (
         <StyledMenuButton
+          tooltipPosition='bottom'
           name='remove'
           onClick={() => dispatch(removeQuestionOption({questionIdx, optionIdx}))}
         >
