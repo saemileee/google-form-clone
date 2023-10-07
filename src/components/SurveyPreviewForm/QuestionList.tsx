@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import {StyledFormWrapper, StyledGeneralFormContainer} from '../../styles/Form';
+import {StyledFormWrapper} from '../../styles/Form';
 import QuestionForm from './QuestionForm';
 import {RootState} from '../../store/store';
 
