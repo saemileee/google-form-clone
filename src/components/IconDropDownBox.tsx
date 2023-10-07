@@ -56,8 +56,8 @@ const IconDropDownBox = <T extends object>({
         <DropdownList>
           {options.map(option => (
             <DropdownItem
-              isOpen={isOpen}
-              isSelected={selectedOption.value === option.value}
+              $isOpen={isOpen}
+              $isSelected={selectedOption.value === option.value}
               key={`${option.value}`}
               onClick={() => selectOption(option)}
             >
@@ -74,38 +74,37 @@ export default IconDropDownBox;
 
 const DropdownWrapper = styled.div`
   border-radius: 4px;
-  padding: 8px;
+  padding: 8px 12px 8px 12px;
   border: 1px solid #dadce0;
   margin-left: 35px;
-  font-size: 10pt;
+  font-size: 12pt;
   font-weight: 400;
-  letter-spacing: 0.2px;
-  line-height: 32px;
   color: #202124;
   width: 250px;
   position: relative;
 `;
 
-const DropdownItem = styled.div<{isOpen?: boolean; isSelected?: boolean}>`
+const DropdownItem = styled.div<{$isOpen?: boolean; $isSelected?: boolean}>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   cursor: pointer;
   background-color: ${props => {
-    if (props.isOpen) {
-      return props.isSelected ? 'rgba(26,115,232,0.078)' : 'white';
+    if (props.$isOpen) {
+      return props.$isSelected ? 'rgba(26,115,232,0.078)' : 'white';
     } else {
       return 'white';
     }
   }};
   .select-box-value {
     width: 100%;
+    line-height: 2.4rem;
   }
   &:hover {
     background-color: ${props => {
-      if (props.isOpen) {
-        return props.isSelected ? 'rgba(26,115,232,0.039)' : '#eeeeee';
+      if (props.$isOpen) {
+        return props.$isSelected ? 'rgba(26,115,232,0.039)' : '#eeeeee';
       } else {
         return 'white';
       }
