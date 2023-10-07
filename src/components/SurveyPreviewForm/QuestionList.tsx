@@ -44,6 +44,15 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
                     />
                   ))}
 
+                {isOtherSelected && type === QUESTION_TYPES.multipleChoice && (
+                  <OptionMultipleChoiceItem
+                    isOtherOption
+                    key={`${questionIdx}-other`}
+                    questionIdx={questionIdx}
+                    questionAnswer={answer as AnswerMultipleChoice}
+                  />
+                )}
+
                 {type === QUESTION_TYPES.checkboxes &&
                   options.map((option, optionIdx) => (
                     <OptionCheckboxesItem
@@ -54,12 +63,6 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
                       questionAnswer={answer as AnswerCheckboxes}
                     />
                   ))}
-
-                {isOtherSelected && (
-                  <li>
-                    <input type='text' />
-                  </li>
-                )}
               </ul>
               {type === QUESTION_TYPES.dropDown && (
                 <select
@@ -71,7 +74,7 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
                 >
                   <option>{DEFAULT_VALUES.DROP_DOWN}</option>
                   {options.map((option, idx) => (
-                    <option id={idx.toString()} value={option}>
+                    <option key={`${questionIdx}-${idx}`} id={idx.toString()} value={option}>
                       {option}
                     </option>
                   ))}

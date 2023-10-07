@@ -7,10 +7,11 @@ export const surveyPostFormToPrevFormState = (state: Form): PreviewQuestionForm 
       case QUESTION_TYPES.multipleChoice:
         return {
           selectedOptionIndex: null,
+          isOtherSelected: false,
           other: null,
         };
       case QUESTION_TYPES.checkboxes:
-        return {selectedOptionIndexes: [], other: null};
+        return {selectedOptionIndexes: [], isOtherSelected: false, other: null};
 
       case QUESTION_TYPES.dropDown:
         return {selectedOptionIndex: null};
