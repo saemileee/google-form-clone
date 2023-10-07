@@ -1,4 +1,5 @@
-import {QUESTION_TYPES} from '../../constants/Form';
+import {useDispatch} from 'react-redux';
+import {DEFAULT_VALUES, QUESTION_TYPES} from '../../constants/Form';
 import {
   AnswerCheckboxes,
   AnswerMultipleChoice,
@@ -8,8 +9,10 @@ import {
 import {StyledFormWrapper, StyledGeneralFormContainer} from '../../styles/Form';
 import OptionCheckboxesItem from './OptionCheckboxesItem';
 import OptionMultipleChoiceItem from './OptionMultipleChoiceItem';
+import {changeDropdownOption} from '../../features/surveyPreviewFormSlice';
 
 const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) => {
+  const dispatch = useDispatch();
   return (
     <StyledFormWrapper>
       <StyledGeneralFormContainer>
@@ -58,6 +61,22 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
                   </li>
                 )}
               </ul>
+              {type === QUESTION_TYPES.dropDown && (
+                <select
+                  defaultValue='DEFAULT_VALUES.DROP_DOWN'
+                  onChange={e => {
+                    const selectedIdx = e.target.id ? Number(e.target.id) : null;
+                    dispatch(changeDropdownOption({questionIdx, selectedIdx}));
+                  }}
+                >
+                  <option>{DEFAULT_VALUES.DROP_DOWN}</option>
+                  {options.map((option, idx) => (
+                    <option id={idx.toString()} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           );
         })}
