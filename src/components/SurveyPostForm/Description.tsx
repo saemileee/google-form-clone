@@ -12,20 +12,18 @@ const Description = () => {
   const {isFocused, onFocus, onBlur} = useTextInputField();
 
   return (
-    <>
-      <StyledTextInput
-        style={isFocused ? {outlineColor: 'red'} : undefined}
-        type='text'
-        value={description}
-        placeholder={PLACEHOLDERS.DESCRIPTION}
-        onChange={e => {
-          const value = e.target.value;
-          dispatch(changeDescription({value}));
-        }}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
-    </>
+    <StyledTextInput
+      style={isFocused ? {outlineColor: 'red'} : undefined}
+      type='text'
+      value={description}
+      placeholder={PLACEHOLDERS.DESCRIPTION}
+      onChange={e => {
+        const value = e.target.value;
+        dispatch(changeDescription({value}));
+      }}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    />
   );
 };
 

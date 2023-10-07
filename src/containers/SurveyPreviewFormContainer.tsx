@@ -2,6 +2,7 @@ import SurveyPreviewDescription from '../components/SurveyPreviewForm/Descriptio
 import SurveyPreviewQuestionList from '../components/SurveyPreviewForm/QuestionList';
 import SurveyPreviewTitle from '../components/SurveyPreviewForm/Title';
 import {
+  StyledFormInfoLine,
   StyledGeneralFormContainer,
   StyledGeneralFormWrapper,
   StyledSurveyContainer,
@@ -11,12 +12,13 @@ const PreviewContainer = () => {
   return (
     <StyledSurveyContainer>
       <StyledGeneralFormContainer>
+        <StyledFormInfoLine />
         <StyledGeneralFormWrapper>
           <SurveyPreviewTitle />
           <SurveyPreviewDescription />
         </StyledGeneralFormWrapper>
-        <SurveyPreviewQuestionList />
       </StyledGeneralFormContainer>
+      <SurveyPreviewQuestionList />
     </StyledSurveyContainer>
   );
 };

@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 import {AnswerMultipleChoice} from '../../interface/Form';
 import {toggleMultipleOption, typeOtherOption} from '../../features/surveyPreviewFormSlice';
 import {LABELS, OTHER_IDX} from '../../constants/Form';
+import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../styles/Form';
 
 interface OptionMultipleChoiceItemProps {
   value?: string;
@@ -18,29 +19,33 @@ const OptionMultipleChoiceItem = ({
 }: OptionMultipleChoiceItemProps) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
-  const {selectedOptionIndex} = questionAnswer;
+  const {selectedOptionIndex, other} = questionAnswer;
   return (
-    <li>
+    <StyledPreviewOptionWrapper>
       <input
         type='radio'
         id={itemId}
         name={itemId}
         value={value}
         onClick={() => dispatch(toggleMultipleOption({questionIdx, selectedIdx: optionIdx}))}
+        onChange={() => {
+          return;
+        }}
         checked={selectedOptionIndex === optionIdx}
       />
       {optionIdx === OTHER_IDX ? (
-        <div>
+        <span>
           <label htmlFor={itemId}>{value}</label>
-          <input
+          <StyledQuestionTextInput
+            value={other || ''}
             type='text'
             onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
           />
-        </div>
+        </span>
       ) : (
         <label htmlFor={itemId}>{value}</label>
       )}
-    </li>
+    </StyledPreviewOptionWrapper>
   );
 };
 

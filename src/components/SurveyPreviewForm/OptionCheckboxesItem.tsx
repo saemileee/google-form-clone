@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 import {AnswerCheckboxes} from '../../interface/Form';
 import {toggleCheckboxOption, typeOtherOption} from '../../features/surveyPreviewFormSlice';
 import {LABELS, OTHER_IDX} from '../../constants/Form';
+import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../styles/Form';
 
 interface OptionCheckboxesItemProps {
   isOtherOption?: boolean;
@@ -19,9 +20,9 @@ const OptionCheckboxesItem = ({
 }: OptionCheckboxesItemProps) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
-  const {selectedOptionIndexes} = questionAnswer;
+  const {selectedOptionIndexes, other} = questionAnswer;
   return (
-    <li>
+    <StyledPreviewOptionWrapper>
       <input
         type='checkbox'
         id={itemId}
@@ -31,17 +32,18 @@ const OptionCheckboxesItem = ({
         checked={selectedOptionIndexes!.includes(optionIdx)}
       />
       {optionIdx === OTHER_IDX ? (
-        <div>
+        <span>
           <label htmlFor={itemId}>{value}</label>
-          <input
+          <StyledQuestionTextInput
+            value={other || ''}
             type='text'
             onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
           />
-        </div>
+        </span>
       ) : (
         <label htmlFor={itemId}>{value}</label>
       )}
-    </li>
+    </StyledPreviewOptionWrapper>
   );
 };
 
