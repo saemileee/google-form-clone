@@ -2,19 +2,21 @@ import {useDispatch} from 'react-redux';
 import {AnswerMultipleChoice} from '../../interface/Form';
 import {changeMultipleOption} from '../../features/surveyPreviewFormSlice';
 
+interface OptionMultipleChoiceItemProps {
+  isOtherOption?: boolean;
+  value?: string;
+  questionIdx: number;
+  optionIdx?: number | null;
+  questionAnswer: AnswerMultipleChoice;
+}
+
 const OptionMultipleChoiceItem = ({
   isOtherOption = false,
   value = 'Other: ',
   questionIdx,
   questionAnswer,
   optionIdx = null,
-}: {
-  isOtherOption?: boolean;
-  value?: string;
-  questionIdx: number;
-  optionIdx?: number | null;
-  questionAnswer: AnswerMultipleChoice;
-}) => {
+}: OptionMultipleChoiceItemProps) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
   const {selectedOptionIndex, isOtherSelected} = questionAnswer;
