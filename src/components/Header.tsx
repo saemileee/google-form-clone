@@ -1,17 +1,19 @@
 import {AiOutlineEye} from 'react-icons/ai';
-import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import {StyledMenuButton} from '../styles/Form';
 
 const Header = () => {
-  const navigate = useNavigate();
-  const navToPreviewPage = () => {
-    navigate('/preview');
+  const openPreviewTab = () => {
+    window.open(
+      `${window.location.origin}${window.location.pathname}preview`,
+      '_blank',
+      'noopener, noreferrer'
+    );
   };
   return (
     <StyledHeaderContainer>
       <span>Survey form</span>
-      <StyledMenuButton name='preview' $tooltipPosition='bottom' onClick={navToPreviewPage}>
+      <StyledMenuButton name='preview' $tooltipPosition='bottom' onClick={openPreviewTab}>
         <AiOutlineEye size={24} />
       </StyledMenuButton>
     </StyledHeaderContainer>
