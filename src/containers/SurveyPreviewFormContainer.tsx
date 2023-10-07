@@ -1,15 +1,16 @@
 import SurveyPreviewDescription from '../components/SurveyPreviewForm/Description';
 import SurveyPreviewQuestionList from '../components/SurveyPreviewForm/QuestionList';
 import SurveyPreviewTitle from '../components/SurveyPreviewForm/Title';
-import {formStateStorage} from '../store/localStorage';
 import {
   StyledGeneralFormContainer,
   StyledGeneralFormWrapper,
   StyledSurveyContainer,
 } from '../styles/Form';
+import {useSelector} from 'react-redux';
+import {RootState} from '../store/store';
 
 const PreviewContainer = () => {
-  const formData = formStateStorage.getItem();
+  const formData = useSelector((state: RootState) => state.surveyPreviewForm);
   const {title, description, questions} = formData;
   return (
     <StyledSurveyContainer>
