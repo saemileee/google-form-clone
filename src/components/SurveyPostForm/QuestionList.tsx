@@ -23,7 +23,7 @@ const QuestionList = () => {
 
   useEffect(() => {
     if (questionListRef.current) {
-      setSideMenuTopValue(questionListRef.current.offsetTop);
+      setSideMenuTopValue(questionListRef.current.clientTop);
     }
   }, []);
 
@@ -72,7 +72,7 @@ export default QuestionList;
 
 const StyledFormWrapper = styled.div`
   position: relative;
-  padding-top: 12px;
+  margin-top: 24px;
   display: flex;
   gap: 18px;
   flex-direction: column;
