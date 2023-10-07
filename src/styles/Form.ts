@@ -48,6 +48,29 @@ export const StyledTextInput = styled.input`
   border: none;
   outline: none;
   font-size: 12pt;
+
+  &:focus {
+    border-bottom: 2px solid ${color.primary};
+    margin-bottom: -2px;
+  }
+`;
+
+export const StyledPreviewTextInput = styled(StyledTextInput)`
+  border-bottom: 1px dotted ${color.border};
+`;
+
+export const StyledTextArea = styled.textarea`
+  padding: 8px 0 8px 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 12pt;
+  border-bottom: 1px dotted ${color.border};
+
+  &:focus {
+    border-bottom: 2px solid ${color.primary};
+    margin-bottom: -2px;
+  }
 `;
 
 export const StyledTitleInput = styled(StyledTextInput)`
