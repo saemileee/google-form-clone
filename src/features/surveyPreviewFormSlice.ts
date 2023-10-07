@@ -83,6 +83,10 @@ const surveyPreviewFormSlice = createSlice({
         }
       }
     },
+
+    resetForm: state => {
+      state.questions = initialState.questions;
+    },
   },
 });
 
@@ -92,5 +96,6 @@ export const {
   selectDropDownOption,
   changeTextAnswer,
   typeOtherOption,
+  resetForm,
 } = surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;
