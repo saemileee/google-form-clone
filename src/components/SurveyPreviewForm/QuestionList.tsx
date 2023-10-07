@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {DEFAULT_VALUES, QUESTION_TYPES} from '../../constants/Form';
+import {LABELS, QUESTION_TYPES} from '../../constants/Form';
 import {
   AnswerCheckboxes,
   AnswerMultipleChoice,
@@ -66,13 +66,13 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
               </ul>
               {type === QUESTION_TYPES.dropDown && (
                 <select
-                  defaultValue='DEFAULT_VALUES.DROP_DOWN'
+                  defaultValue='LABELS.DROP_DOWN'
                   onChange={e => {
                     const selectedIdx = e.target.id ? Number(e.target.id) : null;
                     dispatch(changeDropdownOption({questionIdx, selectedIdx}));
                   }}
                 >
-                  <option>{DEFAULT_VALUES.DROP_DOWN}</option>
+                  <option>{LABELS.DROP_DOWN}</option>
                   {options.map((option, idx) => (
                     <option key={`${questionIdx}-${idx}`} id={idx.toString()} value={option}>
                       {option}
