@@ -1,3 +1,5 @@
+import SurveyPreviewDescription from '../components/SurveyPreviewForm/Description';
+import SurveyPreviewTitle from '../components/SurveyPreviewForm/Title';
 import {formStateStorage} from '../store/localStorage';
 
 const PreviewContainer = () => {
@@ -5,8 +7,8 @@ const PreviewContainer = () => {
   const {title, description} = formData;
   return (
     <>
-      <h1>{title}</h1>
-      <p>{description}</p>
+      <SurveyPreviewTitle title={title} />
+      <SurveyPreviewDescription description={description} />
     </>
   );
 };
