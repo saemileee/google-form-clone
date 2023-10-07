@@ -24,3 +24,47 @@ export interface Form {
   description: FormDescription;
   questions: Question[];
 }
+
+export interface AnswerMultipleChoice {
+  selectedOptionIndex: number | null;
+  other: string | null;
+}
+
+export interface AnswerCheckboxes {
+  selectedOptionIndexes: number[] | null;
+  other: string | null;
+}
+export interface AnswerDropDown {
+  selectedOptionIndex: number | null;
+}
+export interface AnswerShortAnswer {
+  answer: string | null;
+}
+export interface AnswerParagraph {
+  answer: string | null;
+}
+
+export type PreviewQuestionAnswer =
+  | AnswerMultipleChoice
+  | AnswerCheckboxes
+  | AnswerDropDown
+  | AnswerShortAnswer
+  | AnswerParagraph;
+
+export interface PreviewQuestion {
+  title: QuestionTitle;
+  layout: {
+    isSelected: boolean;
+    type: QuestionType;
+    options: OptionType[];
+    isOtherSelected: boolean;
+    isRequired: boolean;
+  };
+  answer: PreviewQuestionAnswer;
+}
+
+export interface PreviewQuestionForm {
+  title: FormTitle;
+  description: FormDescription;
+  questions: PreviewQuestion[];
+}
