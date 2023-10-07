@@ -9,8 +9,9 @@ import {
   StyledGeneralFormContainer,
   StyledOptionList,
   StyledOptionWrapper,
+  StyledPreviewTextInput,
   StyledQuestionTitle,
-  StyledTextInput,
+  StyledTextArea,
 } from '../../styles/Form';
 import {ChangeEvent} from 'react';
 
@@ -39,14 +40,14 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
           switch (type) {
             case QUESTION_TYPES.shortAnswer:
               return (
-                <StyledTextInput
+                <StyledPreviewTextInput
                   placeholder='Your answer'
                   onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
                 />
               );
             case QUESTION_TYPES.paragraph:
               return (
-                <StyledTextInput
+                <StyledTextArea
                   placeholder='Your answer'
                   onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
                 />
