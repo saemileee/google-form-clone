@@ -23,7 +23,11 @@ const OptionDropDownItem = ({
         id={itemId}
         name={itemId}
         value={value ? value : undefined}
-        onChange={() => dispatch(changeMultipleOption({questionIdx, selectedIdx: optionIdx}))}
+        onChange={() =>
+          dispatch(
+            changeMultipleOption({questionIdx, selectedIdx: optionIdx, isOtherOption: false})
+          )
+        }
         checked={optionIdx === selectedOptionIndex}
       />
       <label htmlFor={itemId}>{value}</label>
