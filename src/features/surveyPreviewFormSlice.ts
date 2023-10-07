@@ -1,10 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
+import {AnswerCheckboxes, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
 import {formStateStorage} from '../store/localStorage';
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
 
 const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(formStateStorage.getItem());
-console.info(initialState);
 
 const surveyPreviewFormSlice = createSlice({
   name: 'questionForm',
@@ -23,8 +22,28 @@ const surveyPreviewFormSlice = createSlice({
           selectedIdx;
       }
     },
+    toggleCheckboxOption: (state, action: {payload: {questionIdx: number; optionIdx: number}}) => {
+      const {questionIdx, optionIdx} = action.payload;
+
+      if (
+        'selectedOptionIndexes' in state.questions[questionIdx].answer &&
+        'other' in state.questions[questionIdx].answer
+      ) {
+        const currentAnswer = state.questions[questionIdx].answer as AnswerCheckboxes;
+
+        const currentSelects = currentAnswer.selectedOptionIndexes;
+
+        if (currentSelects && currentSelects.includes(optionIdx)) {
+          (state.questions[questionIdx].answer as AnswerCheckboxes).selectedOptionIndexes =
+            currentSelects.filter(index => index !== optionIdx);
+        } else {
+          (state.questions[questionIdx].answer as AnswerCheckboxes).selectedOptionIndexes =
+            currentSelects ? [...currentSelects, optionIdx] : [optionIdx];
+        }
+      }
+    },
   },
 });
 
-export const {changeMultipleOption} = surveyPreviewFormSlice.actions;
+export const {changeMultipleOption, toggleCheckboxOption} = surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;
