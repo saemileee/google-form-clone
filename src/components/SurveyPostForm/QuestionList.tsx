@@ -11,20 +11,38 @@ import {
 } from '../../styles/Form';
 import {MdDragIndicator} from 'react-icons/md';
 import SideMenu from './SideMenu';
+import React, {useEffect, useRef, useState} from 'react';
 
 const QuestionList = () => {
   const questions = useSelector((state: RootState) => state.questionForm.questions);
   const dispatch = useDispatch();
+
+  const [sideMenuTopValue, setSideMenuTopValue] = useState(0);
+
+  const questionListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (questionListRef.current) {
+      setSideMenuTopValue(questionListRef.current.offsetTop);
+    }
+  }, []);
+
+  const onSelectedQuestion = (e: React.MouseEvent<HTMLDivElement>, idx: number) => {
+    dispatch(selectQuestion({questionIdx: idx}));
+    setSideMenuTopValue(e.currentTarget.offsetTop);
+  };
+
   const {isDraggable, startDrag, enterTarget, getResortedList, mouseDown, mouseUp} =
     useSortableDragNDrop(questions);
+
   return (
-    <StyledFormWrapper>
-      <SideMenu />
+    <StyledFormWrapper ref={questionListRef}>
+      <SideMenu topValue={sideMenuTopValue} />
       {questions.map((question, idx) => (
         <StyledGeneralFormContainer
           selected={question.isSelected}
           key={idx}
-          onClick={() => dispatch(selectQuestion({questionIdx: idx}))}
+          onClick={e => onSelectedQuestion(e, idx)}
           draggable={isDraggable}
           onDragStart={() => startDrag(idx)}
           onDragEnter={() => enterTarget(idx)}
