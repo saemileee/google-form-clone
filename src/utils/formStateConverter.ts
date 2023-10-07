@@ -5,23 +5,19 @@ export const surveyPostFormToPrevFormState = (state: Form): PreviewQuestionForm 
   const getInitialAnswer = (type: QuestionType) => {
     switch (type) {
       case QUESTION_TYPES.multipleChoice:
-        return {
-          selectedOptionIndex: null,
-          isOtherSelected: false,
-          other: null,
-        };
+        return {multipleChoice: {selectedOptionIndex: null, other: null}};
       case QUESTION_TYPES.checkboxes:
-        return {selectedOptionIndexes: [], isOtherSelected: false, other: null};
+        return {checkboxes: {selectedOptionIndexes: [], other: null}};
 
       case QUESTION_TYPES.dropDown:
-        return {selectedOptionIndex: null};
+        return {dropDown: {selectedOptionIndex: null}};
       case QUESTION_TYPES.shortAnswer:
-        return {answer: null};
+        return {shortAnswer: {answer: null}};
 
       case QUESTION_TYPES.paragraph:
-        return {answer: null};
+        return {paragraph: {answer: null}};
       default:
-        return {answer: null};
+        return {paragraph: {answer: null}};
     }
   };
 

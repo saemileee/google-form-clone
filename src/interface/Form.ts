@@ -1,4 +1,4 @@
-import {QUESTION_TYPES} from '../constants/Form';
+import {QUESTION_TYPES, OTHER_IDX} from '../constants/Form';
 
 export type FormTitle = string;
 
@@ -26,14 +26,12 @@ export interface Form {
 }
 
 export interface AnswerMultipleChoice {
-  selectedOptionIndex: number | null;
-  isOtherSelected: boolean;
+  selectedOptionIndex: number | typeof OTHER_IDX | null;
   other: string | null;
 }
 
 export interface AnswerCheckboxes {
-  selectedOptionIndexes: number[] | null;
-  isOtherSelected: boolean;
+  selectedOptionIndexes: (number | 'other')[];
   other: string | null;
 }
 export interface AnswerDropDown {
@@ -42,12 +40,6 @@ export interface AnswerDropDown {
 export interface AnswerTextAnswer {
   answer: string | null;
 }
-
-export type PreviewQuestionAnswer =
-  | AnswerMultipleChoice
-  | AnswerCheckboxes
-  | AnswerDropDown
-  | AnswerTextAnswer;
 
 export interface PreviewQuestion {
   title: QuestionTitle;
@@ -58,7 +50,13 @@ export interface PreviewQuestion {
     isOtherSelected: boolean;
     isRequired: boolean;
   };
-  answer: PreviewQuestionAnswer;
+  answer: {
+    multipleChoice?: AnswerMultipleChoice;
+    checkboxes?: AnswerCheckboxes;
+    dropdown?: AnswerDropDown;
+    shortAnswer?: AnswerTextAnswer;
+    paragraph?: AnswerTextAnswer;
+  };
 }
 
 export interface PreviewQuestionForm {

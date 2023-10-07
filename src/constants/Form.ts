@@ -19,6 +19,8 @@ export const LABELS = {
   OTHER_OPTION: 'Other: ',
 };
 
+export const OTHER_IDX = 'other' as const;
+
 export const PLACEHOLDERS = {
   DESCRIPTION: 'Form description',
   QUESTION: 'Question',
