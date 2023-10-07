@@ -6,6 +6,7 @@ import {RiDeleteBinLine} from 'react-icons/ri';
 import Toggle from '../Toggle';
 import styled from 'styled-components';
 import {RootState} from '../../store/store';
+import {color} from '../../styles/variables.ts/color';
 
 const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
@@ -48,11 +49,11 @@ const StyledMenuWrapper = styled.div`
   gap: 12px;
   padding: 12px 12px 0 12px;
   margin: 0 28px 0 28px;
-  border-top: 1px solid lightgrey;
+  border-top: 1px solid ${color.lightgrey};
   .divider {
     margin: 0 4px 0 4px;
     width: 1px;
     height: 36px;
-    background-color: lightgrey;
+    background-color: ${color.lightgrey};
   }
 `;

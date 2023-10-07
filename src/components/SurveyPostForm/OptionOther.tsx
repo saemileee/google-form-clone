@@ -5,6 +5,7 @@ import {removeOtherOption} from '../../features/questionFormSlice';
 import {QuestionType} from '../../interface/Form';
 import TypeListIcon from './TypeListIcon';
 import styled from 'styled-components';
+import {color} from '../../styles/variables.ts/color';
 
 const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: number}) => {
   const dispatch = useDispatch();
@@ -34,6 +35,6 @@ const StyledOtherOptionWrapper = styled(StyledOptionWrapper)`
 const StyledOtherOption = styled.span`
   box-sizing: border-box;
   padding-bottom: 4px;
-  border-bottom: 1px dotted lightgrey;
+  border-bottom: 1px dotted ${color.lightgrey};
   width: 100%;
 `;

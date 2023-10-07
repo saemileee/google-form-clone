@@ -4,6 +4,7 @@ import {StyledMenuButton} from '../styles/Form';
 import {formStateStorage} from '../store/localStorage';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store/store';
+import {color} from '../styles/variables.ts/color';
 
 const Header = () => {
   const formState = useSelector((state: RootState) => state.questionForm);
@@ -36,9 +37,9 @@ const StyledHeaderContainer = styled.header`
   padding: 12px 24px 12px 24px;
   width: 100vw;
   background-color: white;
-  box-shadow: 0 0 4px lightgrey;
+  box-shadow: 0 0 4px ${color.lightgrey};
   span {
-    font-size: 18pt;
+    font-size: 15pt;
     font-weight: 600;
   }
 `;

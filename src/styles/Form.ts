@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {color} from './variables.ts/color';
 
 interface StyledGeneralFormContainerProps {
   selected?: boolean;
@@ -8,10 +9,10 @@ interface StyledGeneralFormContainerProps {
 export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerProps>`
   overflow: visible;
   position: relative;
-  border: 1px solid lightgrey;
+  border: 1px solid ${color.lightgrey};
   border-radius: 8px;
   background-color: white;
-  box-shadow: ${props => (props.selected ? '0px 0px 10px lightgrey' : '')};
+  box-shadow: ${props => (props.selected ? '0px 0px 10px ${color.lightgrey}' : '')};
   padding: ${props => `${props.$padding}px`};
   display: flex;
   flex-direction: column;
@@ -23,11 +24,11 @@ export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerP
   }
   input {
     &:hover {
-      border-bottom: ${props => (props.selected ? '1px solid lightgrey' : '')};
+      border-bottom: ${props => (props.selected ? '1px solid ${color.lightgrey}' : '')};
       margin-bottom: ${props => (props.selected ? '-1px' : '')};
     }
     &:focus {
-      border-bottom: 2px solid blue;
+      border-bottom: 2px solid ${color.primary};
       margin-bottom: -2px;
     }
   }
@@ -59,8 +60,8 @@ export const StyledQuestionTitleInput = styled(StyledTextInput)`
   font-weight: 400;
   &.selected {
     padding: 14px;
-    background-color: lightgrey;
-    border-bottom: 1px solid blue;
+    background-color: ${color.lightgrey};
+    border-bottom: 1px solid ${color.primary};
   }
 `;
 
@@ -98,7 +99,7 @@ export const StyledMenuButton = styled.button<StyledMenuButtonProps>`
   aspect-ratio: 1/1;
   border-radius: 30px;
   &:hover {
-    background-color: lightgrey;
+    background-color: ${color.lightgrey};
     &::after {
       content: '${props => props.name}';
       position: absolute;
@@ -142,14 +143,14 @@ export const StyledOptionWrapper = styled.div`
 export const StyledSurveyContainer = styled.div`
   margin: 0 auto;
   width: 768px;
-  padding-top: 12px;
+  padding-top: 24px;
   padding-bottom: 48px;
 `;
 
 export const StyledFormInfoLine = styled.div`
   width: 100%;
   height: 16px;
-  background-color: blue;
+  background-color: ${color.primary};
   border-radius: 8px 8px 0 0;
 `;
 
@@ -219,10 +220,10 @@ export const StyledQuestionTextInput = styled(StyledTextInput)`
   margin-left: 8px;
   width: 80%;
   font-weight: 400;
-  border-bottom: 1px dotted lightgrey;
+  border-bottom: 1px dotted ${color.lightgrey};
 
   &.selected {
-    border-bottom: 1px solid blue;
+    border-bottom: 1px solid ${color.primary};
   }
 `;
 

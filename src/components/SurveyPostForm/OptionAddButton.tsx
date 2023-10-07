@@ -4,6 +4,7 @@ import {addOtherOption, addQuestionOption} from '../../features/questionFormSlic
 import TypeListIcon from './TypeListIcon';
 import {QuestionType} from '../../interface/Form';
 import {StyledOptionWrapper} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
 
 const OptionAddButton = ({
   type,
@@ -58,11 +59,11 @@ const StyledAddOptionWrapper = styled(StyledOptionWrapper)`
     color: grey;
     &:hover {
       cursor: text;
-      border-bottom: 1px solid lightgrey;
+      border-bottom: 1px solid ${color.lightgrey};
       margin-bottom: -1px;
     }
   }
   .add-other {
-    color: blue;
+    color: ${color.primary};
   }
 `;
