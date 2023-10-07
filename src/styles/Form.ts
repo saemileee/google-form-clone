@@ -145,3 +145,12 @@ export const StyledFormInfoLine = styled.div`
   background-color: blue;
   border-radius: 8px 8px 0 0;
 `;
+
+export const StyledFormWrapper = styled.div`
+  position: relative;
+  margin-top: 24px;
+  display: flex;
+  gap: 18px;
+  flex-direction: column;
+  width: 100%;
+`;
