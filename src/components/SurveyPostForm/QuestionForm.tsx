@@ -99,7 +99,7 @@ const StyledTopInfoWrapper = styled.div`
   padding: 0 28px 0 28px;
   box-sizing: border-box;
   display: flex;
-  gap: 24px;
+  justify-content: space-between;
 `;
 
 const StyledOptionList = styled.div`
