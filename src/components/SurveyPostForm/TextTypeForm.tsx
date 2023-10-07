@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {QUESTION_TYPES} from '../../constants/Form';
 import {QuestionType} from '../../interface/Form';
+import {color} from '../../styles/variables.ts/color';
 
 const TextTypeForm = ({type}: {type: QuestionType}) => {
   const getTextTypeForm = () => {
@@ -23,7 +24,7 @@ const StyledShortAnswerTypeForm = styled.div`
   margin: 0 24px 32px 24px;
   padding: 12px 0 6px 0;
   width: 50%;
-  border-bottom: 1px dotted lightgrey;
+  border-bottom: 1px dotted ${color.lightgrey};
   color: grey;
   font-weight: 500;
 `;
@@ -31,7 +32,7 @@ const StyledShortAnswerTypeForm = styled.div`
 const StyledLongAnswerTypeForm = styled.div`
   margin: 0 24px 32px 24px;
   padding: 12px 0 6px 0;
-  border-bottom: 1px dotted lightgrey;
+  border-bottom: 1px dotted ${color.lightgrey};
   color: grey;
   font-weight: 500;
 `;

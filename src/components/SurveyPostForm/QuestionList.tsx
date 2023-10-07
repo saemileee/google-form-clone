@@ -13,6 +13,7 @@ import {
 import {MdDragIndicator} from 'react-icons/md';
 import SideMenu from './SideMenu';
 import React, {useEffect, useRef, useState} from 'react';
+import {color} from '../../styles/variables.ts/color';
 
 const QuestionList = () => {
   const questions = useSelector((state: RootState) => state.questionForm.questions);
@@ -76,7 +77,7 @@ const StyledSelectedLine = styled.div`
   position: absolute;
   width: 8px;
   height: 100%;
-  background-color: blue;
+  background-color: ${color.primary};
   border-radius: 8px 0 0 8px;
 `;
 
