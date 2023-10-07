@@ -24,8 +24,8 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
 
   const {isSelected: isQuestionSelected, type, options, isOtherSelected, isRequired} = layout;
 
-  const onSelectDropDownOption = (e: ChangeEvent) => {
-    const selectedIdx = e.target.id ? Number(e.target.id) : null;
+  const onSelectDropDownOption = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedIdx = isNaN(Number(e.target.value)) ? null : Number(e.target.value);
     dispatch(selectDropDownOption({questionIdx, selectedIdx}));
   };
 
@@ -97,12 +97,12 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             case QUESTION_TYPES.dropDown:
               return (
                 <StyledDefaultSelectBox
-                  defaultValue='LABELS.DROP_DOWN'
+                  defaultValue={LABELS.DROP_DOWN}
                   onChange={onSelectDropDownOption}
                 >
                   <option>{LABELS.DROP_DOWN}</option>
                   {options.map((option, idx) => (
-                    <option key={`${questionIdx}-${idx}`} id={idx.toString()} value={option}>
+                    <option key={`${questionIdx}-${idx}`} value={idx}>
                       {option}
                     </option>
                   ))}
