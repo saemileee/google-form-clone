@@ -1,6 +1,6 @@
 import {useDispatch} from 'react-redux';
 import {AnswerCheckboxes} from '../../interface/Form';
-import {toggleCheckboxOption} from '../../features/surveyPreviewFormSlice';
+import {toggleCheckboxOption, typeOtherOption} from '../../features/surveyPreviewFormSlice';
 import {LABELS, OTHER_IDX} from '../../constants/Form';
 
 interface OptionCheckboxesItemProps {
@@ -33,7 +33,10 @@ const OptionCheckboxesItem = ({
       {optionIdx === OTHER_IDX ? (
         <div>
           <label htmlFor={itemId}>{value}</label>
-          <input type='text' />
+          <input
+            type='text'
+            onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
+          />
         </div>
       ) : (
         <label htmlFor={itemId}>{value}</label>

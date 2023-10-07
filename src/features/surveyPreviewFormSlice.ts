@@ -49,16 +49,43 @@ const surveyPreviewFormSlice = createSlice({
       }
     ) => {
       const {questionIdx, selectedIdx} = action.payload;
-      state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex = selectedIdx;
+      state.questions[questionIdx].answer.dropdown!.selectedOptionIndex = selectedIdx;
     },
 
     changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
       const {questionIdx, value} = action.payload;
       state.questions[questionIdx].answer.shortAnswer!.answer = value;
     },
+
+    typeOtherOption: (state, action: {payload: {questionIdx: number; value: string}}) => {
+      const {questionIdx, value} = action.payload;
+      if (state.questions[questionIdx].answer.multipleChoice) {
+        state.questions[questionIdx].answer.multipleChoice!.other = value;
+
+        const currentSelected =
+          state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex;
+        if (currentSelected !== OTHER_IDX && value.length > 0) {
+          state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex = OTHER_IDX;
+        }
+      }
+      if (state.questions[questionIdx].answer.checkboxes) {
+        state.questions[questionIdx].answer.checkboxes!.other = value;
+
+        const currentSelected =
+          state.questions[questionIdx].answer.checkboxes!.selectedOptionIndexes;
+        if (!currentSelected.includes(OTHER_IDX) && value.length > 0) {
+          state.questions[questionIdx].answer.checkboxes!.selectedOptionIndexes.push(OTHER_IDX);
+        }
+      }
+    },
   },
 });
 
-export const {toggleMultipleOption, toggleCheckboxOption, selectDropDownOption, changeTextAnswer} =
-  surveyPreviewFormSlice.actions;
+export const {
+  toggleMultipleOption,
+  toggleCheckboxOption,
+  selectDropDownOption,
+  changeTextAnswer,
+  typeOtherOption,
+} = surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;
