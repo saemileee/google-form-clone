@@ -6,6 +6,7 @@ import {resortQuestions, selectQuestion} from '../../features/questionFormSlice'
 import styled from 'styled-components';
 import {
   StyledDragButtonW,
+  StyledFormWrapper,
   StyledGeneralFormContainer,
   StyledGeneralFormWrapper,
 } from '../../styles/Form';
@@ -69,15 +70,6 @@ const QuestionList = () => {
 };
 
 export default QuestionList;
-
-const StyledFormWrapper = styled.div`
-  position: relative;
-  margin-top: 24px;
-  display: flex;
-  gap: 18px;
-  flex-direction: column;
-  width: 100%;
-`;
 
 const StyledSelectedLine = styled.div`
   left: 0px;
