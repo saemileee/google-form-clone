@@ -30,11 +30,12 @@ export default OptionOther;
 const StyledOtherOptionWrapper = styled(StyledOptionWrapper)`
   box-sizing: border-box;
   padding: 0 0 0 24px;
+  width: 100%;
 `;
 
 const StyledOtherOption = styled.span`
   box-sizing: border-box;
   padding-bottom: 4px;
   border-bottom: 1px dotted ${color.lightgrey};
-  width: 100%;
+  width: 90%;
 `;
