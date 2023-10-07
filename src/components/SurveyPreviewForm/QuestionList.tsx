@@ -1,15 +1,10 @@
 import {useDispatch} from 'react-redux';
 import {LABELS, QUESTION_TYPES} from '../../constants/Form';
-import {
-  AnswerCheckboxes,
-  AnswerMultipleChoice,
-  PreviewQuestion,
-  QuestionType,
-} from '../../interface/Form';
+import {PreviewQuestion} from '../../interface/Form';
 import {StyledFormWrapper, StyledGeneralFormContainer, StyledTextInput} from '../../styles/Form';
 import OptionCheckboxesItem from './OptionCheckboxesItem';
 import OptionMultipleChoiceItem from './OptionMultipleChoiceItem';
-import {changeDropdownOption, changeTextAnswer} from '../../features/surveyPreviewFormSlice';
+import {selectDropDownOption, changeTextAnswer} from '../../features/surveyPreviewFormSlice';
 
 const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) => {
   const dispatch = useDispatch();
@@ -34,42 +29,50 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
               </p>
               <ul>
                 {type === QUESTION_TYPES.multipleChoice &&
+                  answer.multipleChoice &&
                   options.map((option, optionIdx) => (
                     <OptionMultipleChoiceItem
                       key={`${questionIdx}-${optionIdx}`}
                       value={option}
                       questionIdx={questionIdx}
                       optionIdx={optionIdx}
-                      questionAnswer={answer as AnswerMultipleChoice}
+                      questionAnswer={answer.multipleChoice!}
                     />
                   ))}
 
                 {isOtherSelected && type === QUESTION_TYPES.multipleChoice && (
                   <OptionMultipleChoiceItem
-                    isOtherOption
                     key={`${questionIdx}-other`}
                     questionIdx={questionIdx}
-                    questionAnswer={answer as AnswerMultipleChoice}
+                    questionAnswer={answer.multipleChoice!}
                   />
                 )}
 
                 {type === QUESTION_TYPES.checkboxes &&
+                  answer.checkboxes &&
                   options.map((option, optionIdx) => (
                     <OptionCheckboxesItem
                       key={`${questionIdx}-${optionIdx}`}
                       value={option}
                       questionIdx={questionIdx}
                       optionIdx={optionIdx}
-                      questionAnswer={answer as AnswerCheckboxes}
+                      questionAnswer={answer.checkboxes!}
                     />
                   ))}
+                {isOtherSelected && type === QUESTION_TYPES.checkboxes && (
+                  <OptionCheckboxesItem
+                    key={`${questionIdx}-other`}
+                    questionIdx={questionIdx}
+                    questionAnswer={answer.checkboxes!}
+                  />
+                )}
               </ul>
               {type === QUESTION_TYPES.dropDown && (
                 <select
                   defaultValue='LABELS.DROP_DOWN'
                   onChange={e => {
                     const selectedIdx = e.target.id ? Number(e.target.id) : null;
-                    dispatch(changeDropdownOption({questionIdx, selectedIdx}));
+                    dispatch(selectDropDownOption({questionIdx, selectedIdx}));
                   }}
                 >
                   <option>{LABELS.DROP_DOWN}</option>

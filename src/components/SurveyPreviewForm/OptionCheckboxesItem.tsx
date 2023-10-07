@@ -1,18 +1,22 @@
 import {useDispatch} from 'react-redux';
 import {AnswerCheckboxes} from '../../interface/Form';
 import {toggleCheckboxOption} from '../../features/surveyPreviewFormSlice';
+import {LABELS, OTHER_IDX} from '../../constants/Form';
+
+interface OptionCheckboxesItemProps {
+  isOtherOption?: boolean;
+  value?: string;
+  questionIdx: number;
+  optionIdx?: number | 'other';
+  questionAnswer: AnswerCheckboxes;
+}
 
 const OptionCheckboxesItem = ({
-  value,
+  value = LABELS.OTHER_OPTION,
   questionIdx,
   questionAnswer,
-  optionIdx,
-}: {
-  value: string;
-  questionIdx: number;
-  optionIdx: number;
-  questionAnswer: AnswerCheckboxes;
-}) => {
+  optionIdx = OTHER_IDX,
+}: OptionCheckboxesItemProps) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
   const {selectedOptionIndexes} = questionAnswer;
@@ -23,10 +27,17 @@ const OptionCheckboxesItem = ({
         id={itemId}
         name={itemId}
         value={value}
-        onChange={() => dispatch(toggleCheckboxOption({questionIdx, optionIdx}))}
-        checked={selectedOptionIndexes ? selectedOptionIndexes.includes(optionIdx) : false}
+        onChange={() => dispatch(toggleCheckboxOption({questionIdx, selectedIdx: optionIdx}))}
+        checked={selectedOptionIndexes!.includes(optionIdx)}
       />
-      <label htmlFor={itemId}>{value}</label>
+      {optionIdx === OTHER_IDX ? (
+        <div>
+          <label htmlFor={itemId}>{value}</label>
+          <input type='text' />
+        </div>
+      ) : (
+        <label htmlFor={itemId}>{value}</label>
+      )}
     </li>
   );
 };

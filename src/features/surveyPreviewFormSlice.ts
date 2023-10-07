@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
 import {formStateStorage} from '../store/localStorage';
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
+import {OTHER_IDX} from '../constants/Form';
 
 const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(formStateStorage.getItem());
 
@@ -25,7 +26,7 @@ const surveyPreviewFormSlice = createSlice({
     },
     toggleCheckboxOption: (
       state,
-      action: {payload: {questionIdx: number; selectedIdx: number | 'other'}}
+      action: {payload: {questionIdx: number; selectedIdx: number | typeof OTHER_IDX}}
     ) => {
       const {questionIdx, selectedIdx} = action.payload;
 
@@ -41,13 +42,16 @@ const surveyPreviewFormSlice = createSlice({
         ];
       }
     },
-    changeDropdownOption: (
+    selectDropDownOption: (
       state,
-      action: {payload: {questionIdx: number; answer: AnswerDropDown['selectedOptionIndex']}}
+      action: {
+        payload: {questionIdx: number; selectedIdx: AnswerDropDown['selectedOptionIndex']};
+      }
     ) => {
-      const {questionIdx, answer} = action.payload;
-      state.questions[questionIdx].answer.dropdown!.selectedOptionIndex = answer;
+      const {questionIdx, selectedIdx} = action.payload;
+      state.questions[questionIdx].answer.multipleChoice!.selectedOptionIndex = selectedIdx;
     },
+
     changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
       const {questionIdx, value} = action.payload;
       state.questions[questionIdx].answer.shortAnswer!.answer = value;
@@ -55,6 +59,6 @@ const surveyPreviewFormSlice = createSlice({
   },
 });
 
-export const {toggleMultipleOption, toggleCheckboxOption, changeDropdownOption, changeTextAnswer} =
+export const {toggleMultipleOption, toggleCheckboxOption, selectDropDownOption, changeTextAnswer} =
   surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;
