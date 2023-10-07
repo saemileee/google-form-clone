@@ -1,25 +1,24 @@
 import {useDispatch} from 'react-redux';
 import {AnswerMultipleChoice} from '../../interface/Form';
-import {changeMultipleOption} from '../../features/surveyPreviewFormSlice';
+import {toggleMultipleOption} from '../../features/surveyPreviewFormSlice';
+import {LABELS, OTHER_IDX} from '../../constants/Form';
 
 interface OptionMultipleChoiceItemProps {
-  isOtherOption?: boolean;
   value?: string;
   questionIdx: number;
-  optionIdx?: number | null;
+  optionIdx?: AnswerMultipleChoice['selectedOptionIndex'];
   questionAnswer: AnswerMultipleChoice;
 }
 
 const OptionMultipleChoiceItem = ({
-  isOtherOption = false,
-  value = 'Other: ',
+  value = LABELS.OTHER_OPTION,
   questionIdx,
   questionAnswer,
-  optionIdx = null,
+  optionIdx = OTHER_IDX,
 }: OptionMultipleChoiceItemProps) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
-  const {selectedOptionIndex, isOtherSelected} = questionAnswer;
+  const {selectedOptionIndex} = questionAnswer;
   return (
     <li>
       <input
@@ -27,16 +26,10 @@ const OptionMultipleChoiceItem = ({
         id={itemId}
         name={itemId}
         value={value}
-        onClick={() =>
-          dispatch(changeMultipleOption({questionIdx, selectedIdx: optionIdx, isOtherOption}))
-        }
-        checked={
-          isOtherOption
-            ? selectedOptionIndex === null && isOtherSelected
-            : optionIdx === selectedOptionIndex
-        }
+        onClick={() => dispatch(toggleMultipleOption({questionIdx, selectedIdx: optionIdx}))}
+        checked={selectedOptionIndex === optionIdx}
       />
-      {isOtherOption ? (
+      {optionIdx === OTHER_IDX ? (
         <div>
           <label htmlFor={itemId}>{value}</label>
           <input type='text' />
