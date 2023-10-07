@@ -48,13 +48,18 @@ const surveyPreviewFormSlice = createSlice({
         payload: {questionIdx: number; selectedIdx: AnswerDropDown['selectedOptionIndex']};
       }
     ) => {
+      console.info(action.payload);
       const {questionIdx, selectedIdx} = action.payload;
-      state.questions[questionIdx].answer.dropdown!.selectedOptionIndex = selectedIdx;
+      state.questions[questionIdx].answer.dropDown!.selectedOptionIndex = selectedIdx;
     },
 
     changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
       const {questionIdx, value} = action.payload;
-      state.questions[questionIdx].answer.shortAnswer!.answer = value;
+      if (state.questions[questionIdx].answer.shortAnswer) {
+        state.questions[questionIdx].answer.shortAnswer!.answer = value;
+      } else if (state.questions[questionIdx].answer.paragraph) {
+        state.questions[questionIdx].answer.paragraph!.answer = value;
+      }
     },
 
     typeOtherOption: (state, action: {payload: {questionIdx: number; value: string}}) => {
