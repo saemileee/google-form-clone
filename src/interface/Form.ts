@@ -37,10 +37,7 @@ export interface AnswerCheckboxes {
 export interface AnswerDropDown {
   selectedOptionIndex: number | null;
 }
-export interface AnswerShortAnswer {
-  answer: string | null;
-}
-export interface AnswerParagraph {
+export interface AnswerTextAnswer {
   answer: string | null;
 }
 
@@ -48,8 +45,7 @@ export type PreviewQuestionAnswer =
   | AnswerMultipleChoice
   | AnswerCheckboxes
   | AnswerDropDown
-  | AnswerShortAnswer
-  | AnswerParagraph;
+  | AnswerTextAnswer;
 
 export interface PreviewQuestion {
   title: QuestionTitle;
