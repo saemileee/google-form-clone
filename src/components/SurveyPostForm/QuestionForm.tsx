@@ -3,7 +3,7 @@ import {RootState} from '../../store/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeQuestionTitle, changeQuestionType} from '../../features/questionFormSlice';
 import useTextInputField from '../../hooks/useTextInputField';
-import {StyledQuestionTitleInput} from '../../styles/Form';
+import {StyledQuestionTitleInput, StyledQuestionWrapper} from '../../styles/Form';
 import styled from 'styled-components';
 
 import Option from './Option';
@@ -99,14 +99,6 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
 };
 
 export default QuestionForm;
-
-const StyledQuestionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-bottom: 12px;
-  width: 100%;
-`;
 
 const StyledTopInfoWrapper = styled.div`
   padding: 0 28px 0 28px;

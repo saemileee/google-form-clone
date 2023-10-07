@@ -12,19 +12,17 @@ const Title = () => {
   const {isFocused, onFocus, onBlur} = useTextInputField(DEFAULT_VALUES.TITLE);
 
   return (
-    <>
-      <StyledTitleInput
-        style={isFocused ? {outlineColor: 'red'} : undefined}
-        type='text'
-        value={title}
-        onChange={e => {
-          const value = e.target.value;
-          dispatch(changeTitle({value}));
-        }}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
-    </>
+    <StyledTitleInput
+      style={isFocused ? {outlineColor: 'red'} : undefined}
+      type='text'
+      value={title}
+      onChange={e => {
+        const value = e.target.value;
+        dispatch(changeTitle({value}));
+      }}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    />
   );
 };
 

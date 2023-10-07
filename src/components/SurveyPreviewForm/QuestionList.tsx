@@ -7,11 +7,9 @@ const SurveyPreviewQuestionList = () => {
   const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);
   return (
     <StyledFormWrapper>
-      <StyledGeneralFormContainer>
-        {questions.map((_, questionIdx) => (
-          <QuestionForm questionIdx={questionIdx} />
-        ))}
-      </StyledGeneralFormContainer>
+      {questions.map((_, questionIdx) => (
+        <QuestionForm key={`question-${questionIdx}`} questionIdx={questionIdx} />
+      ))}
     </StyledFormWrapper>
   );
 };

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 interface StyledGeneralFormContainerProps {
   selected?: boolean;
+  $padding?: number;
+  $gap?: number;
 }
 export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerProps>`
   overflow: visible;
@@ -10,6 +12,10 @@ export const StyledGeneralFormContainer = styled.div<StyledGeneralFormContainerP
   border-radius: 8px;
   background-color: white;
   box-shadow: ${props => (props.selected ? '0px 0px 10px lightgrey' : '')};
+  padding: ${props => `${props.$padding}px`};
+  display: flex;
+  flex-direction: column;
+  gap: ${props => `${props.$gap}px`};
   &:hover {
     .question-form-drag-button {
       visibility: visible;
@@ -137,6 +143,7 @@ export const StyledSurveyContainer = styled.div`
   margin: 0 auto;
   width: 768px;
   padding-top: 12px;
+  padding-bottom: 48px;
 `;
 
 export const StyledFormInfoLine = styled.div`
@@ -153,4 +160,77 @@ export const StyledFormWrapper = styled.div`
   gap: 18px;
   flex-direction: column;
   width: 100%;
+`;
+
+export const StyledTitle = styled.h1`
+  padding: 12px 0 12px 0;
+  font-size: 24pt;
+  font-weight: 500;
+`;
+
+export const StyledDescription = styled.p`
+  font-size: 12pt;
+  line-height: 1.4rem;
+`;
+
+interface StyledQuestionWrapperProps {
+  $padding?: number;
+}
+
+export const StyledQuestionWrapper = styled.div<StyledQuestionWrapperProps>`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 12px;
+  padding: ${props => `${props.$padding}px`};
+  width: 100%;
+`;
+
+export const StyledQuestionTitle = styled.h2`
+  font-size: 13pt;
+  .symbol-required {
+    color: red;
+  }
+`;
+
+export const StyledOptionList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  font-size: 13pt;
+`;
+
+export const StyledPreviewOptionWrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  input[type='radio'],
+  input[type='checkbox'] {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+    margin-right: 12px;
+  }
+`;
+
+export const StyledQuestionTextInput = styled(StyledTextInput)`
+  padding-top: 0px;
+  padding-bottom: 2px;
+  margin-left: 8px;
+  width: 80%;
+  font-weight: 400;
+  border-bottom: 1px dotted lightgrey;
+
+  &.selected {
+    border-bottom: 1px solid blue;
+  }
+`;
+
+export const StyledDefaultSelectBox = styled.select`
+  padding: 12px;
+  width: 300px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url('/assets/arrow-down-filled-triangle.png') no-repeat 93% 50%;
 `;
