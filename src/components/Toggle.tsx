@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {color} from '../styles/variables.ts/color';
 
 interface ToggleProps<T> {
   isActive: boolean;
@@ -58,12 +59,12 @@ const StyledToggleEl = styled.div`
 
 const StyledToggleTrack = styled.div<Toggle>`
   transition: border-color 0.3s ease;
-  border: 7px solid #b9b9b9;
+  border: 7px solid ${color.border};
   border-radius: 7px;
   position: absolute;
   top: 3px;
   width: 23px;
-  border-color: ${props => (props.$active ? 'rgba(219,68,55,0.25)' : '#b9b9b9')};
+  border-color: ${props => (props.$active ? `${color.primary}25` : `${color.textGrey}70`)};
 `;
 
 const StyledToggleInk = styled.div<Toggle>`
@@ -71,7 +72,7 @@ const StyledToggleInk = styled.div<Toggle>`
     opacity 0.15s ease,
     left 0.3s ease,
     background-color 0.3 ease;
-  background-color: ${props => (props.$active ? 'rgba(219,68,55,0.5)' : 'rgba(0,0,0,0.2)')};
+  background-color: ${props => (props.$active ? `${color.primary}30` : `${color.primary}10`)};
   border-radius: 100%;
   height: 20px;
   left: ${props => (props.$active ? '17px' : '0')};
@@ -94,7 +95,7 @@ const StyledToggleThumb = styled.div<Toggle>`
   border-radius: 100%;
   position: absolute;
   box-shadow: 0px 1px 3px rgb(0 0 0 / 40%);
-  border-color: ${props => (props.$active ? 'rgb(219,68,55)' : 'white')};
+  border-color: ${props => (props.$active ? `${color.primary}` : 'white')};
 `;
 
 export default Toggle;
