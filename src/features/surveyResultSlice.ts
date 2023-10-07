@@ -8,7 +8,7 @@ const surveyResultSlice = createSlice({
   initialState,
   reducers: {
     submitFormData: (state, action: {payload: {form: PreviewQuestionForm}}) => {
-      state = action.payload.form;
+      return {...action.payload.form};
     },
   },
 });
