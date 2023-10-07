@@ -1,6 +1,6 @@
 import {useDispatch} from 'react-redux';
 import {AnswerMultipleChoice} from '../../interface/Form';
-import {toggleMultipleOption} from '../../features/surveyPreviewFormSlice';
+import {toggleMultipleOption, typeOtherOption} from '../../features/surveyPreviewFormSlice';
 import {LABELS, OTHER_IDX} from '../../constants/Form';
 
 interface OptionMultipleChoiceItemProps {
@@ -32,7 +32,10 @@ const OptionMultipleChoiceItem = ({
       {optionIdx === OTHER_IDX ? (
         <div>
           <label htmlFor={itemId}>{value}</label>
-          <input type='text' />
+          <input
+            type='text'
+            onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
+          />
         </div>
       ) : (
         <label htmlFor={itemId}>{value}</label>
