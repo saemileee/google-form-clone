@@ -82,24 +82,43 @@ export const StyledDragButtonH = styled(StyledDragButton)<StyledDragButtonWProps
 
 interface StyledMenuButtonProps {
   name: string;
+  tooltipPosition: 'bottom' | 'right';
 }
 export const StyledMenuButton = styled.button<StyledMenuButtonProps>`
   position: relative;
-  width: 48px;
-  height: 48px;
+  display: flex;
+  align-items: center;
+  width: max-content - 2px;
+  aspect-ratio: 1/1;
   border-radius: 30px;
   &:hover {
-    visibility: visible;
     background-color: lightgrey;
     &::after {
-      visibility: hidden;
       content: '${props => props.name}';
       position: absolute;
-      bottom: -24px;
-      padding: 4px;
+      z-index: 9;
+      right: ${props =>
+        props.tooltipPosition === 'bottom'
+          ? '50%'
+          : props.tooltipPosition === 'right'
+          ? '-4px'
+          : 0};
+      bottom: ${props =>
+        props.tooltipPosition === 'bottom'
+          ? '-50%'
+          : props.tooltipPosition === 'right'
+          ? '50%'
+          : 0};
+      padding: 4px 6px 4px 6px;
       border-radius: 4px;
       background-color: grey;
-      transform: translateX(-24px);
+      transform: ${props =>
+        props.tooltipPosition === 'bottom'
+          ? 'translateX(50%) translateY(25%)'
+          : props.tooltipPosition === 'right'
+          ? 'translateX(100%) translateY(50%)'
+          : 0};
+      color: white;
     }
   }
 `;
