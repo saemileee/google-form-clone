@@ -17,15 +17,28 @@ const surveyPreviewFormSlice = createSlice({
   reducers: {
     changeMultipleOption: (
       state,
-      action: {payload: {questionIdx: number; selectedIdx: number}}
+      action: {payload: {questionIdx: number; selectedIdx: number | null; isOtherOption: boolean}}
     ) => {
-      const {questionIdx, selectedIdx} = action.payload;
+      const {questionIdx, selectedIdx, isOtherOption} = action.payload;
       if (
         'selectedOptionIndex' in state.questions[questionIdx].answer &&
         'other' in state.questions[questionIdx].answer
       ) {
-        (state.questions[questionIdx].answer as AnswerMultipleChoice).selectedOptionIndex =
-          selectedIdx;
+        const currentSelect = (state.questions[questionIdx].answer as AnswerMultipleChoice)
+          .selectedOptionIndex;
+        if (selectedIdx !== currentSelect) {
+          (state.questions[questionIdx].answer as AnswerMultipleChoice).selectedOptionIndex =
+            selectedIdx;
+        } else {
+          (state.questions[questionIdx].answer as AnswerMultipleChoice).selectedOptionIndex = null;
+
+          const currentIsOtherOption = (state.questions[questionIdx].answer as AnswerMultipleChoice)
+            .isOtherSelected;
+          if (isOtherOption) {
+            (state.questions[questionIdx].answer as AnswerMultipleChoice).isOtherSelected =
+              !currentIsOtherOption;
+          }
+        }
       }
     },
     toggleCheckboxOption: (state, action: {payload: {questionIdx: number; optionIdx: number}}) => {

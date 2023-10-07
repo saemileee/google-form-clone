@@ -3,19 +3,21 @@ import {AnswerMultipleChoice} from '../../interface/Form';
 import {changeMultipleOption} from '../../features/surveyPreviewFormSlice';
 
 const OptionMultipleChoiceItem = ({
-  value,
+  isOtherOption = false,
+  value = 'Other: ',
   questionIdx,
   questionAnswer,
-  optionIdx,
+  optionIdx = null,
 }: {
-  value: string;
+  isOtherOption?: boolean;
+  value?: string;
   questionIdx: number;
-  optionIdx: number;
+  optionIdx?: number | null;
   questionAnswer: AnswerMultipleChoice;
 }) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
-  const {selectedOptionIndex} = questionAnswer;
+  const {selectedOptionIndex, isOtherSelected} = questionAnswer;
   return (
     <li>
       <input
@@ -23,10 +25,23 @@ const OptionMultipleChoiceItem = ({
         id={itemId}
         name={itemId}
         value={value}
-        onChange={() => dispatch(changeMultipleOption({questionIdx, selectedIdx: optionIdx}))}
-        checked={optionIdx === selectedOptionIndex}
+        onClick={() =>
+          dispatch(changeMultipleOption({questionIdx, selectedIdx: optionIdx, isOtherOption}))
+        }
+        checked={
+          isOtherOption
+            ? selectedOptionIndex === null && isOtherSelected
+            : optionIdx === selectedOptionIndex
+        }
       />
-      <label htmlFor={itemId}>{value}</label>
+      {isOtherOption ? (
+        <div>
+          <label htmlFor={itemId}>{value}</label>
+          <input type='text' />
+        </div>
+      ) : (
+        <label htmlFor={itemId}>{value}</label>
+      )}
     </li>
   );
 };

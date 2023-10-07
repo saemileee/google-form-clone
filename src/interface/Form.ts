@@ -27,11 +27,13 @@ export interface Form {
 
 export interface AnswerMultipleChoice {
   selectedOptionIndex: number | null;
+  isOtherSelected: boolean;
   other: string | null;
 }
 
 export interface AnswerCheckboxes {
   selectedOptionIndexes: number[] | null;
+  isOtherSelected: boolean;
   other: string | null;
 }
 export interface AnswerDropDown {
