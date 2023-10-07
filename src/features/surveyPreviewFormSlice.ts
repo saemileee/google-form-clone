@@ -3,6 +3,7 @@ import {
   AnswerCheckboxes,
   AnswerDropDown,
   AnswerMultipleChoice,
+  AnswerTextAnswer,
   PreviewQuestionForm,
 } from '../interface/Form';
 import {formStateStorage} from '../store/localStorage';
@@ -54,9 +55,13 @@ const surveyPreviewFormSlice = createSlice({
       const {questionIdx, selectedIdx} = action.payload;
       (state.questions[questionIdx].answer as AnswerDropDown).selectedOptionIndex = selectedIdx;
     },
+    changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
+      const {questionIdx, value} = action.payload;
+      (state.questions[questionIdx].answer as AnswerTextAnswer).answer = value;
+    },
   },
 });
 
-export const {changeMultipleOption, toggleCheckboxOption, changeDropdownOption} =
+export const {changeMultipleOption, toggleCheckboxOption, changeDropdownOption, changeTextAnswer} =
   surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;

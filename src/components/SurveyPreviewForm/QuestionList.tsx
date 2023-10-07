@@ -6,10 +6,10 @@ import {
   PreviewQuestion,
   QuestionType,
 } from '../../interface/Form';
-import {StyledFormWrapper, StyledGeneralFormContainer} from '../../styles/Form';
+import {StyledFormWrapper, StyledGeneralFormContainer, StyledTextInput} from '../../styles/Form';
 import OptionCheckboxesItem from './OptionCheckboxesItem';
 import OptionMultipleChoiceItem from './OptionMultipleChoiceItem';
-import {changeDropdownOption} from '../../features/surveyPreviewFormSlice';
+import {changeDropdownOption, changeTextAnswer} from '../../features/surveyPreviewFormSlice';
 
 const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) => {
   const dispatch = useDispatch();
@@ -76,6 +76,18 @@ const SurveyPreviewQuestionList = ({questions}: {questions: PreviewQuestion[]}) 
                     </option>
                   ))}
                 </select>
+              )}
+              {type === QUESTION_TYPES.shortAnswer && (
+                <StyledTextInput
+                  placeholder='Your answer'
+                  onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
+                />
+              )}
+              {type === QUESTION_TYPES.paragraph && (
+                <textarea
+                  placeholder='Your answer'
+                  onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
+                />
               )}
             </div>
           );
