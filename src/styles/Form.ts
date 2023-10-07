@@ -82,7 +82,7 @@ export const StyledDragButtonH = styled(StyledDragButton)<StyledDragButtonWProps
 
 interface StyledMenuButtonProps {
   name: string;
-  tooltipPosition: 'bottom' | 'right';
+  $tooltipPosition: 'bottom' | 'right';
 }
 export const StyledMenuButton = styled.button<StyledMenuButtonProps>`
   position: relative;
@@ -98,24 +98,24 @@ export const StyledMenuButton = styled.button<StyledMenuButtonProps>`
       position: absolute;
       z-index: 9;
       right: ${props =>
-        props.tooltipPosition === 'bottom'
+        props.$tooltipPosition === 'bottom'
           ? '50%'
-          : props.tooltipPosition === 'right'
+          : props.$tooltipPosition === 'right'
           ? '-4px'
           : 0};
       bottom: ${props =>
-        props.tooltipPosition === 'bottom'
+        props.$tooltipPosition === 'bottom'
           ? '-50%'
-          : props.tooltipPosition === 'right'
+          : props.$tooltipPosition === 'right'
           ? '50%'
           : 0};
       padding: 4px 6px 4px 6px;
       border-radius: 4px;
       background-color: grey;
       transform: ${props =>
-        props.tooltipPosition === 'bottom'
+        props.$tooltipPosition === 'bottom'
           ? 'translateX(50%) translateY(25%)'
-          : props.tooltipPosition === 'right'
+          : props.$tooltipPosition === 'right'
           ? 'translateX(100%) translateY(50%)'
           : 0};
       color: white;

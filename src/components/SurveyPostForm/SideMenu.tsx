@@ -8,8 +8,8 @@ const SideMenu = ({topValue = 0}) => {
   const dispatch = useDispatch();
 
   return (
-    <SideMenuWrapper topValue={topValue}>
-      <StyledMenuButton name='add' tooltipPosition='right' onClick={() => dispatch(addQuestion())}>
+    <SideMenuWrapper $topValue={topValue}>
+      <StyledMenuButton name='add' $tooltipPosition='right' onClick={() => dispatch(addQuestion())}>
         <MdAddCircleOutline size={24} />
       </StyledMenuButton>
     </SideMenuWrapper>
@@ -17,7 +17,7 @@ const SideMenu = ({topValue = 0}) => {
 };
 export default SideMenu;
 
-const SideMenuWrapper = styled.div<{topValue: number}>`
+const SideMenuWrapper = styled.div<{$topValue: number}>`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -34,5 +34,5 @@ const SideMenuWrapper = styled.div<{topValue: number}>`
   top: 0;
   right: -80px;
   padding: 6px 0;
-  transform: ${props => `translateY(${props.topValue}px)`};
+  transform: ${props => `translateY(${props.$topValue}px)`};
 `;

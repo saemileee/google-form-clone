@@ -15,7 +15,7 @@ const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: numb
       <StyledOtherOption>Other...</StyledOtherOption>
       <StyledMenuButton
         name='remove'
-        tooltipPosition='bottom'
+        $tooltipPosition='bottom'
         onClick={() => dispatch(removeOtherOption({questionIdx}))}
       >
         <AiOutlineClose size={22} />
