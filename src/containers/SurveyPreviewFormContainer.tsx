@@ -6,20 +6,16 @@ import {
   StyledGeneralFormWrapper,
   StyledSurveyContainer,
 } from '../styles/Form';
-import {useSelector} from 'react-redux';
-import {RootState} from '../store/store';
 
 const PreviewContainer = () => {
-  const formData = useSelector((state: RootState) => state.surveyPreviewForm);
-  const {title, description, questions} = formData;
   return (
     <StyledSurveyContainer>
       <StyledGeneralFormContainer>
         <StyledGeneralFormWrapper>
-          <SurveyPreviewTitle title={title} />
-          <SurveyPreviewDescription description={description} />
+          <SurveyPreviewTitle />
+          <SurveyPreviewDescription />
         </StyledGeneralFormWrapper>
-        <SurveyPreviewQuestionList questions={questions} />
+        <SurveyPreviewQuestionList />
       </StyledGeneralFormContainer>
     </StyledSurveyContainer>
   );

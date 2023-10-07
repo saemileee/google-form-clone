@@ -1,6 +1,8 @@
-import {FormTitle} from '../../interface/Form';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
-const SurveyPreviewTitle = ({title}: {title: FormTitle}) => {
+const SurveyPreviewTitle = () => {
+  const title = useSelector((state: RootState) => state.surveyPreviewForm).title;
   return <h1>{title}</h1>;
 };
 

@@ -1,6 +1,8 @@
-import {FormDescription} from '../../interface/Form';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
-const SurveyPreviewDescription = ({description}: {description: FormDescription}) => {
+const SurveyPreviewDescription = () => {
+  const description = useSelector((state: RootState) => state.surveyPreviewForm).description;
   return <p>{description}</p>;
 };
 
