@@ -3,13 +3,11 @@ import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../inte
 import {formStateStorage} from '../store/localStorage';
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
 import {OTHER_IDX} from '../constants/Form';
-import {useDispatch} from 'react-redux';
-import {setResultFormState} from './surveyResultSlice';
 
 const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(formStateStorage.getItem());
 
 const surveyPreviewFormSlice = createSlice({
-  name: 'questionForm',
+  name: 'surveyPreviewForm',
   initialState,
   reducers: {
     toggleMultipleOption: (
@@ -88,11 +86,6 @@ const surveyPreviewFormSlice = createSlice({
 
     resetForm: state => {
       state.questions = initialState.questions;
-    },
-
-    submitForm: state => {
-      const dispatch = useDispatch();
-      dispatch(setResultFormState({form: state}));
     },
   },
 });

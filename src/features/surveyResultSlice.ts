@@ -4,14 +4,14 @@ import {PreviewQuestionForm} from '../interface/Form';
 const initialState: PreviewQuestionForm = {title: '', description: '', questions: []};
 
 const surveyResultSlice = createSlice({
-  name: 'questionForm',
+  name: 'surveyResult',
   initialState,
   reducers: {
-    setResultFormState: (state, action: {payload: {form: PreviewQuestionForm}}) => {
+    submitFormData: (state, action: {payload: {form: PreviewQuestionForm}}) => {
       state = action.payload.form;
     },
   },
 });
 
-export const {setResultFormState} = surveyResultSlice.actions;
+export const {submitFormData} = surveyResultSlice.actions;
 export default surveyResultSlice.reducer;
