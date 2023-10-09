@@ -1,10 +1,10 @@
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {addOtherOption, addQuestionOption} from '../../features/questionFormSlice';
-import TypeListIcon from './TypeListIcon';
-import {QuestionType} from '../../interface/Form';
-import {StyledOptionWrapper} from '../../styles/Form';
-import {color} from '../../styles/variables.ts/color';
+import {addQuestionOption, addOtherOption} from '../../../../../features/questionFormSlice';
+import {QuestionType} from '../../../../../interface/Form';
+import {StyledOptionWrapper} from '../../../../../styles/Form';
+import {color} from '../../../../../styles/variables.ts/color';
+import TypeListIcon from '../../../TypeListIcon';
 
 const OptionAddButton = ({
   type,

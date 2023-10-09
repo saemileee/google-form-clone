@@ -1,19 +1,19 @@
 import {useDispatch, useSelector} from 'react-redux';
-import QuestionForm from './QuestionForm';
-import {RootState} from '../../store/store';
-import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
-import {resortQuestions, selectQuestion} from '../../features/questionFormSlice';
+import {RootState} from '../../../store/store';
+import {useEffect, useRef, useState} from 'react';
+import {MdDragIndicator} from 'react-icons/md';
 import styled from 'styled-components';
+import {selectQuestion, resortQuestions} from '../../../features/questionFormSlice';
+import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
 import {
-  StyledDragButtonW,
   StyledFormWrapper,
   StyledGeneralFormContainer,
+  StyledDragButtonW,
   StyledGeneralFormWrapper,
-} from '../../styles/Form';
-import {MdDragIndicator} from 'react-icons/md';
-import SideMenu from './SideMenu';
-import React, {useEffect, useRef, useState} from 'react';
-import {color} from '../../styles/variables.ts/color';
+} from '../../../styles/Form';
+import {color} from '../../../styles/variables.ts/color';
+import SideMenu from '../SideMenu';
+import QuestionForm from './QuestionForm';
 
 const QuestionList = () => {
   const questions = useSelector((state: RootState) => state.questionForm.questions);

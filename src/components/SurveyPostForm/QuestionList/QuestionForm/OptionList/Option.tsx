@@ -1,14 +1,12 @@
 import styled from 'styled-components';
-import {StyledDragButtonH, StyledMenuButton, StyledTextInput} from '../../styles/Form';
-
+import {QuestionType} from '../../../../../interface/Form';
 import {useDispatch, useSelector} from 'react-redux';
-import {MdDragIndicator} from 'react-icons/md';
 import {AiOutlineClose} from 'react-icons/ai';
-
-import {changeOptionValue, removeQuestionOption} from '../../features/questionFormSlice';
-import {RootState} from '../../store/store';
-import {QuestionType} from '../../interface/Form';
-import TypeListIcon from './TypeListIcon';
+import {MdDragIndicator} from 'react-icons/md';
+import {changeOptionValue, removeQuestionOption} from '../../../../../features/questionFormSlice';
+import {RootState} from '../../../../../store/store';
+import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../../../styles/Form';
+import TypeListIcon from '../../../TypeListIcon';
 
 const MIN_OPTION_LENGTH = 1;
 
