@@ -1,12 +1,16 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {StyledMenuButton} from '../../styles/Form';
-import {deleteQuestion, duplicateQuestion, toggleRequired} from '../../features/questionFormSlice';
 import {BiDuplicate} from 'react-icons/bi';
 import {RiDeleteBinLine} from 'react-icons/ri';
-import Toggle from '../Toggle';
 import styled from 'styled-components';
-import {RootState} from '../../store/store';
-import {color} from '../../styles/variables.ts/color';
+import {
+  duplicateQuestion,
+  deleteQuestion,
+  toggleRequired,
+} from '../../../../features/questionFormSlice';
+import {RootState} from '../../../../store/store';
+import {StyledMenuButton} from '../../../../styles/Form';
+import {color} from '../../../../styles/variables.ts/color';
+import Toggle from '../../../Toggle';
 
 const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);

@@ -1,11 +1,11 @@
-import {StyledMenuButton, StyledOptionWrapper} from '../../styles/Form';
 import {AiOutlineClose} from 'react-icons/ai';
 import {useDispatch} from 'react-redux';
-import {removeOtherOption} from '../../features/questionFormSlice';
-import {QuestionType} from '../../interface/Form';
-import TypeListIcon from './TypeListIcon';
 import styled from 'styled-components';
-import {color} from '../../styles/variables.ts/color';
+import {removeOtherOption} from '../../../../../features/questionFormSlice';
+import {QuestionType} from '../../../../../interface/Form';
+import {StyledMenuButton, StyledOptionWrapper} from '../../../../../styles/Form';
+import {color} from '../../../../../styles/variables.ts/color';
+import TypeListIcon from '../../../TypeListIcon';
 
 const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: number}) => {
   const dispatch = useDispatch();

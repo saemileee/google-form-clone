@@ -1,16 +1,11 @@
-import {title} from 'process';
-import styled from 'styled-components';
-import {PLACEHOLDERS, QUESTION_TYPES} from '../../constants/Form';
-import {
-  changeTitle,
-  changeQuestionType,
-  changeQuestionTitle,
-} from '../../features/questionFormSlice';
-import {StyledQuestionTitleInput} from '../../styles/Form';
-import IconDropDownBox from '../IconDropDownBox';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../store/store';
-import TypeIcon from './TypeListIcon';
+import styled from 'styled-components';
+import {QUESTION_TYPES, PLACEHOLDERS} from '../../../../constants/Form';
+import {changeQuestionTitle, changeQuestionType} from '../../../../features/questionFormSlice';
+import {RootState} from '../../../../store/store';
+import {StyledQuestionTitleInput} from '../../../../styles/Form';
+import IconDropDownBox from '../../../IconDropDownBox';
+import TypeIcon from '../../TypeListIcon';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
   icon: <TypeIcon type={type[1]} />,

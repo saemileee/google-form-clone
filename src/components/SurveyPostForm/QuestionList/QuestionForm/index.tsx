@@ -1,10 +1,9 @@
-import {RootState} from '../../store/store';
 import {useSelector} from 'react-redux';
-import {StyledQuestionWrapper} from '../../styles/Form';
-
 import QuestionBottomMenu from './QuestionBottomMenu';
 import React from 'react';
 import QuestionFormTop from './QuestionFormTop';
+import {RootState} from '../../../../store/store';
+import {StyledQuestionWrapper} from '../../../../styles/Form';
 import OptionList from './OptionList';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
