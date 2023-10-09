@@ -1,21 +1,11 @@
 import styled from 'styled-components';
-import {
-  StyledDragButtonH,
-  StyledMenuButton,
-  StyledOptionWrapper,
-  StyledTextInput,
-} from '../../styles/Form';
+import {StyledDragButtonH, StyledMenuButton, StyledTextInput} from '../../styles/Form';
 
-import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {MdDragIndicator} from 'react-icons/md';
 import {AiOutlineClose} from 'react-icons/ai';
 
-import {
-  changeOptionValue,
-  removeQuestionOption,
-  resortQuestionOptions,
-} from '../../features/questionFormSlice';
+import {changeOptionValue, removeQuestionOption} from '../../features/questionFormSlice';
 import {RootState} from '../../store/store';
 import {QuestionType} from '../../interface/Form';
 import TypeListIcon from './TypeListIcon';
@@ -27,53 +17,31 @@ interface OptionProps {
   value: string;
   optionIdx: number;
   questionIdx: number;
-  dragNDropOption: any;
+  selected: boolean;
+  mouseUp: () => void;
+  mouseDown: () => void;
+  focusOption: (optionIdx: number) => void;
 }
-const Option = ({type, value, optionIdx, questionIdx, dragNDropOption}: OptionProps) => {
-  const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
-  const {options, isSelected} = formData;
+const Option = ({
+  type,
+  value,
+  optionIdx,
+  questionIdx,
+  selected,
+  mouseUp,
+  mouseDown,
+  focusOption,
+}: OptionProps) => {
+  const options = useSelector(
+    (state: RootState) => state.questionForm.questions[questionIdx].options
+  );
 
-  const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
-    dragNDropOption;
-
-  const [focusedOptionIdx, setFocusedOptionIdx] = useState<null | number>(null);
   const dispatch = useDispatch();
 
-  const focusOption = (optionIdx: number) => {
-    if (isSelected) {
-      setFocusedOptionIdx(optionIdx);
-    }
-  };
-
   return (
-    <StyledOptionWrapper
-      draggable={isDraggable}
-      onDragStart={() => {
-        startDrag(optionIdx);
-      }}
-      onDragEnter={() => {
-        enterTarget(optionIdx);
-      }}
-      onDragEnd={e => {
-        e.stopPropagation();
-        setResortedList((list: string[]) =>
-          dispatch(resortQuestionOptions({questionIdx, options: list}))
-        );
-      }}
-      onDragOver={e => e.preventDefault()}
-      onMouseEnter={() => {
-        focusOption(optionIdx);
-      }}
-      onMouseLeave={() => {
-        setFocusedOptionIdx(null);
-      }}
-    >
+    <>
       <StyledLeftIconsWrapper>
-        <StyledDragButtonH
-          selected={focusedOptionIdx === optionIdx ? true : false}
-          onMouseDown={mouseDown}
-          onMouseUp={mouseUp}
-        >
+        <StyledDragButtonH selected={selected} onMouseDown={mouseDown} onMouseUp={mouseUp}>
           <MdDragIndicator size={16} />
         </StyledDragButtonH>
         <span>
@@ -87,7 +55,7 @@ const Option = ({type, value, optionIdx, questionIdx, dragNDropOption}: OptionPr
           const value = e.target.value;
           dispatch(changeOptionValue({questionIdx, optionIdx, value}));
         }}
-        onFocus={() => setFocusedOptionIdx(optionIdx)}
+        onFocus={() => focusOption(optionIdx)}
       />
       {options.length > MIN_OPTION_LENGTH && (
         <StyledMenuButton
@@ -98,7 +66,7 @@ const Option = ({type, value, optionIdx, questionIdx, dragNDropOption}: OptionPr
           <AiOutlineClose size={22} />
         </StyledMenuButton>
       )}
-    </StyledOptionWrapper>
+    </>
   );
 };
 

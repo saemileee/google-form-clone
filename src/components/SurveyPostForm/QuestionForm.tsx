@@ -1,8 +1,16 @@
 import {PLACEHOLDERS, QUESTION_TYPES} from '../../constants/Form';
 import {RootState} from '../../store/store';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeQuestionTitle, changeQuestionType} from '../../features/questionFormSlice';
-import {StyledQuestionTitleInput, StyledQuestionWrapper} from '../../styles/Form';
+import {
+  changeQuestionTitle,
+  changeQuestionType,
+  resortQuestionOptions,
+} from '../../features/questionFormSlice';
+import {
+  StyledOptionWrapper,
+  StyledQuestionTitleInput,
+  StyledQuestionWrapper,
+} from '../../styles/Form';
 import styled from 'styled-components';
 
 import Option from './Option';
@@ -13,14 +21,18 @@ import QuestionBottomMenu from './QuestionBottomMenu';
 import IconDropDownBox from '../IconDropDownBox';
 import TypeIcon from './TypeIcon';
 import TextTypeForm from './TextTypeForm';
+import {useState} from 'react';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
+
   const dispatch = useDispatch();
 
   const {title, type, options, isSelected, isOtherSelected} = formData;
 
   const dragNDropOption = useSortableDragNDrop(options);
+  const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
+    dragNDropOption;
 
   const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
     icon: <TypeIcon type={type[1]} />,
@@ -40,6 +52,26 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const isOtherOptionSelectable =
     type === QUESTION_TYPES.multipleChoice || type === QUESTION_TYPES.checkboxes;
 
+  const [focusedOptionIdx, setFocusedOptionIdx] = useState<null | number>(null);
+
+  const focusOption = (optionIdx: number) => {
+    if (isSelected) {
+      setFocusedOptionIdx(optionIdx);
+    }
+  };
+
+  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatch(changeQuestionTitle({questionIdx, value}));
+  };
+
+  const resortOptions = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setResortedList((list: string[]) =>
+      dispatch(resortQuestionOptions({questionIdx, options: list}))
+    );
+  };
+
   return (
     <StyledQuestionWrapper>
       <StyledTopInfoWrapper>
@@ -48,10 +80,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
           type='text'
           value={title}
           placeholder={PLACEHOLDERS.QUESTION}
-          onChange={e => {
-            const value = e.target.value;
-            dispatch(changeQuestionTitle({questionIdx, value}));
-          }}
+          onChange={changeTitle}
         />
         <IconDropDownBox
           options={optionTypes}
@@ -65,14 +94,35 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
         {isOptionalType && (
           <>
             {options.map((value, optionIdx) => (
-              <Option
-                key={`option-${optionIdx}`}
-                type={type}
-                value={value}
-                optionIdx={optionIdx}
-                questionIdx={questionIdx}
-                dragNDropOption={dragNDropOption}
-              />
+              <StyledOptionWrapper
+                draggable={isDraggable}
+                onDragStart={() => {
+                  startDrag(optionIdx);
+                }}
+                onDragEnter={() => {
+                  enterTarget(optionIdx);
+                }}
+                onDragEnd={resortOptions}
+                onDragOver={e => e.preventDefault()}
+                onMouseEnter={() => {
+                  focusOption(optionIdx);
+                }}
+                onMouseLeave={() => {
+                  setFocusedOptionIdx(null);
+                }}
+              >
+                <Option
+                  key={`option-${optionIdx}`}
+                  type={type}
+                  value={value}
+                  optionIdx={optionIdx}
+                  questionIdx={questionIdx}
+                  selected={focusedOptionIdx === optionIdx ? true : false}
+                  mouseUp={mouseUp}
+                  mouseDown={mouseDown}
+                  focusOption={focusOption}
+                />
+              </StyledOptionWrapper>
             ))}
 
             {isOtherSelected && <OptionOther type={type} questionIdx={questionIdx} />}
