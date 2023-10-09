@@ -5,14 +5,14 @@ import {removeOtherOption} from '../../../../../features/questionFormSlice';
 import {QuestionType} from '../../../../../interface/Form';
 import {StyledMenuButton, StyledOptionWrapper} from '../../../../../styles/Form';
 import {color} from '../../../../../styles/variables.ts/color';
-import TypeListIcon from '../../../TypeListIcon';
+import OptionIcon from './OptionIcon';
 
 const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: number}) => {
   const dispatch = useDispatch();
 
   return (
     <StyledOtherOptionWrapper>
-      <TypeListIcon type={type} />
+      <OptionIcon type={type} />
       <StyledOtherOption>Other...</StyledOtherOption>
       <StyledMenuButton
         name='remove'

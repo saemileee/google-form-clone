@@ -5,7 +5,7 @@ import {changeQuestionTitle, changeQuestionType} from '../../../../features/ques
 import {RootState} from '../../../../store/store';
 import {StyledQuestionTitleInput} from '../../../../styles/Form';
 import IconDropDownBox from '../../../IconDropDownBox';
-import TypeIcon from '../../TypeListIcon';
+import TypeIcon from './TypeIcon';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
   icon: <TypeIcon type={type[1]} />,

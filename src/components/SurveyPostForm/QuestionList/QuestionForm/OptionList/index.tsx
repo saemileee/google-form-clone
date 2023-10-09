@@ -6,10 +6,10 @@ import {resortQuestionOptions} from '../../../../../features/questionFormSlice';
 import useSortableDragNDrop from '../../../../../hooks/useSortableDragNDrop';
 import {RootState} from '../../../../../store/store';
 import {StyledOptionWrapper} from '../../../../../styles/Form';
-import TextTypeForm from '../../../TextTypeForm';
 import OptionAddButton from './OptionAddButton';
 import OptionOther from './OptionOther';
 import Option from './Option';
+import TextTypeForm from '../../../Global/TextTypeForm';
 
 const OptionList = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();

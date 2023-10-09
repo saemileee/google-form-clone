@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {changeTitle} from '../../features/questionFormSlice';
-import {RootState} from '../../store/store';
-import {StyledTitleInput} from '../../styles/Form';
+import {changeTitle} from '../../../features/questionFormSlice';
+import {RootState} from '../../../store/store';
+import {StyledTitleInput} from '../../../styles/Form';
 
 const Title = () => {
   const title = useSelector((state: RootState) => state.questionForm.title);
