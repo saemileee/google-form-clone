@@ -29,7 +29,7 @@ const OptionCheckboxesItem = ({
         name={itemId}
         value={value}
         onChange={() => dispatch(toggleCheckboxOption({questionIdx, selectedIdx: optionIdx}))}
-        checked={selectedOptionIndexes!.includes(optionIdx)}
+        checked={selectedOptionIndexes.includes(optionIdx)}
       />
       {optionIdx === OTHER_IDX ? (
         <span>
