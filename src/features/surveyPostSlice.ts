@@ -34,7 +34,7 @@ const resetQuestionSelection = (state: Form) => {
 };
 
 const surveyPostSlice = createSlice({
-  name: 'questionForm',
+  name: 'surveyPostSlice',
   initialState,
   reducers: {
     changeTitle: (state, action: PayloadAction<{value: FormTitle}>) => {
