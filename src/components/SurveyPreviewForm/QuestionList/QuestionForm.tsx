@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {ChangeEvent} from 'react';
-import {QUESTION_TYPES, LABELS} from '../../../constants/Form';
+import {QUESTION_TYPES, LABELS, OTHER_IDX} from '../../../constants/Form';
 import {selectDropDownOption, changeTextAnswer} from '../../../features/surveyPreviewFormSlice';
 import {RootState} from '../../../store/store';
 import {
@@ -17,12 +17,26 @@ import OptionMultipleChoiceItem from './Option/OptionMultipleChoiceItem';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();
-  const question = useSelector(
-    (state: RootState) => state.surveyPreviewForm.questions[questionIdx]
+  const title = useSelector(
+    (state: RootState) => state.surveyPreviewForm.questions[questionIdx].title
   );
-  const {title, answer, layout} = question;
-
+  const answer = useSelector(
+    (state: RootState) => state.surveyPreviewForm.questions[questionIdx].answer
+  );
+  const layout = useSelector(
+    (state: RootState) => state.surveyPreviewForm.questions[questionIdx].layout
+  );
   const {type, options, isOtherSelected, isRequired} = layout;
+
+  const multipleChoiceAnswer = answer.multipleChoice || {
+    selectedOptionIndex: null,
+    other: null,
+  };
+
+  const checkboxesAnswer = answer.checkboxes || {
+    selectedOptionIndexes: [],
+    other: null,
+  };
 
   const onSelectDropDownOption = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedIdx = isNaN(Number(e.target.value)) ? null : Number(e.target.value);
@@ -61,14 +75,14 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
                       value={option}
                       questionIdx={questionIdx}
                       optionIdx={optionIdx}
-                      questionAnswer={answer.multipleChoice!}
+                      questionAnswer={multipleChoiceAnswer}
                     />
                   ))}
                   {isOtherSelected && (
                     <OptionMultipleChoiceItem
                       key={`${questionIdx}-other`}
                       questionIdx={questionIdx}
-                      questionAnswer={answer.multipleChoice!}
+                      questionAnswer={multipleChoiceAnswer}
                     />
                   )}
                 </StyledOptionList>
@@ -82,14 +96,14 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
                       value={option}
                       questionIdx={questionIdx}
                       optionIdx={optionIdx}
-                      questionAnswer={answer.checkboxes!}
+                      questionAnswer={checkboxesAnswer}
                     />
                   ))}
                   {isOtherSelected && (
                     <OptionCheckboxesItem
                       key={`${questionIdx}-other`}
                       questionIdx={questionIdx}
-                      questionAnswer={answer.checkboxes!}
+                      questionAnswer={checkboxesAnswer}
                     />
                   )}
                 </StyledOptionList>
