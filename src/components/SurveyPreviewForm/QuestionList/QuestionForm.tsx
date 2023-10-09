@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {ChangeEvent} from 'react';
-import {QUESTION_TYPES, LABELS, OTHER_IDX} from '../../../constants/Form';
+import {QUESTION_TYPES, LABELS} from '../../../constants/Form';
 import {selectDropDownOption, changeTextAnswer} from '../../../features/surveyPreviewFormSlice';
 import {RootState} from '../../../store/store';
 import {
@@ -12,8 +12,8 @@ import {
   StyledOptionList,
   StyledDefaultSelectBox,
 } from '../../../styles/Form';
-import OptionCheckboxesItem from './Option/OptionCheckboxesItem';
-import OptionMultipleChoiceItem from './Option/OptionMultipleChoiceItem';
+import OptionCheckboxesItem from '../../Global/Option/OptionCheckboxesItem';
+import OptionMultipleChoiceItem from '../../Global/Option/OptionMultipleChoiceItem';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();

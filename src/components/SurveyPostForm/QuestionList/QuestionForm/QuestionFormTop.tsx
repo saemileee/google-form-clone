@@ -4,7 +4,7 @@ import {QUESTION_TYPES, PLACEHOLDERS} from '../../../../constants/Form';
 import {changeQuestionTitle, changeQuestionType} from '../../../../features/questionFormSlice';
 import {RootState} from '../../../../store/store';
 import {StyledQuestionTitleInput} from '../../../../styles/Form';
-import IconDropDownBox from '../../../IconDropDownBox';
+import IconDropDownBox from './IconDropDownBox';
 import TypeIcon from './TypeIcon';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({

@@ -10,7 +10,7 @@ import {
 import {RootState} from '../../../../store/store';
 import {StyledMenuButton} from '../../../../styles/Form';
 import {color} from '../../../../styles/variables.ts/color';
-import Toggle from '../../../Toggle';
+import Toggle from './Toggle';
 
 const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
