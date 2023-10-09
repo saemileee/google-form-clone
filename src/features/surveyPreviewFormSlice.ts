@@ -2,10 +2,25 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
 import {formStateStorage} from '../store/localStorage';
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
-import {OTHER_IDX} from '../constants/Form';
+import {OTHER_IDX, QUESTION_TYPES} from '../constants/Form';
 
-const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(formStateStorage.getItem());
+// 임시 이니셜 상태
+const initialQuestionState = {
+  isSelected: false,
+  title: '',
+  type: QUESTION_TYPES.checkboxes,
+  options: [''],
+  isOtherSelected: false,
+  isRequired: false,
+};
 
+const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(
+  formStateStorage.getItem() || {
+    title: '',
+    description: '',
+    questions: [initialQuestionState],
+  }
+);
 const surveyPreviewFormSlice = createSlice({
   name: 'surveyPreviewForm',
   initialState,
