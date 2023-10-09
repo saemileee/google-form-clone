@@ -1,8 +1,8 @@
 import {useDispatch} from 'react-redux';
-import {AnswerMultipleChoice} from '../../interface/Form';
-import {toggleMultipleOption, typeOtherOption} from '../../features/surveyPreviewFormSlice';
-import {LABELS, OTHER_IDX} from '../../constants/Form';
-import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../styles/Form';
+import {LABELS, OTHER_IDX} from '../../../../constants/Form';
+import {toggleMultipleOption, typeOtherOption} from '../../../../features/surveyPreviewFormSlice';
+import {AnswerMultipleChoice} from '../../../../interface/Form';
+import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../../styles/Form';
 
 interface OptionMultipleChoiceItemProps {
   value?: string;

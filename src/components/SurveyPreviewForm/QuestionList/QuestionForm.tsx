@@ -1,19 +1,19 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../store/store';
-import {LABELS, QUESTION_TYPES} from '../../constants/Form';
-import OptionMultipleChoiceItem from './OptionMultipleChoiceItem';
-import OptionCheckboxesItem from './OptionCheckboxesItem';
-import {selectDropDownOption, changeTextAnswer} from '../../features/surveyPreviewFormSlice';
+import {ChangeEvent} from 'react';
+import {QUESTION_TYPES, LABELS} from '../../../constants/Form';
+import {selectDropDownOption, changeTextAnswer} from '../../../features/surveyPreviewFormSlice';
+import {RootState} from '../../../store/store';
 import {
-  StyledDefaultSelectBox,
   StyledGeneralFormContainer,
-  StyledOptionList,
+  StyledQuestionTitle,
   StyledOptionWrapper,
   StyledPreviewTextInput,
-  StyledQuestionTitle,
   StyledTextArea,
-} from '../../styles/Form';
-import {ChangeEvent} from 'react';
+  StyledOptionList,
+  StyledDefaultSelectBox,
+} from '../../../styles/Form';
+import OptionCheckboxesItem from './Option/OptionCheckboxesItem';
+import OptionMultipleChoiceItem from './Option/OptionMultipleChoiceItem';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   );
   const {title, answer, layout} = question;
 
-  const {isSelected: isQuestionSelected, type, options, isOtherSelected, isRequired} = layout;
+  const {type, options, isOtherSelected, isRequired} = layout;
 
   const onSelectDropDownOption = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedIdx = isNaN(Number(e.target.value)) ? null : Number(e.target.value);
