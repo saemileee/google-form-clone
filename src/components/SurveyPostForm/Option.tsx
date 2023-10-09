@@ -22,23 +22,18 @@ import TypeListIcon from './TypeListIcon';
 
 const MIN_OPTION_LENGTH = 1;
 
-const Option = ({
-  type,
-  value,
-  optionIdx,
-  questionIdx,
-  dragNDropOption,
-}: {
+interface OptionProps {
   type: QuestionType;
   value: string;
   optionIdx: number;
   questionIdx: number;
   dragNDropOption: any;
-}) => {
+}
+const Option = ({type, value, optionIdx, questionIdx, dragNDropOption}: OptionProps) => {
   const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
   const {options, isSelected} = formData;
 
-  const {isDraggable, startDrag, enterTarget, getResortedList, mouseDown, mouseUp} =
+  const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
     dragNDropOption;
 
   const [focusedOptionIdx, setFocusedOptionIdx] = useState<null | number>(null);
@@ -61,8 +56,9 @@ const Option = ({
       }}
       onDragEnd={e => {
         e.stopPropagation();
-        const options = getResortedList();
-        dispatch(resortQuestionOptions({questionIdx, options}));
+        setResortedList((list: string[]) =>
+          dispatch(resortQuestionOptions({questionIdx, options: list}))
+        );
       }}
       onDragOver={e => e.preventDefault()}
       onMouseEnter={() => {

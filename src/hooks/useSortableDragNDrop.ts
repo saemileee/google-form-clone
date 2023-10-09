@@ -14,7 +14,7 @@ const useSortableDragNDrop = <T>(list: T[]) => {
     target.current = idx;
   };
 
-  const getResortedList = () => {
+  const setResortedList = (cb: (list: T[]) => void) => {
     const sourceIdx = source.current;
     const targetIdx = target.current;
 
@@ -25,9 +25,10 @@ const useSortableDragNDrop = <T>(list: T[]) => {
       newList.splice(targetIdx, 0, sourceValue);
       source.current = null;
       target.current = null;
-      return newList;
+      cb(newList);
+      return;
     }
-    return list;
+    cb(list);
   };
 
   const mouseDown = () => {
@@ -38,7 +39,7 @@ const useSortableDragNDrop = <T>(list: T[]) => {
     setIsDraggable(false);
   };
 
-  return {isDraggable, startDrag, enterTarget, getResortedList, mouseDown, mouseUp};
+  return {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp};
 };
 
 export default useSortableDragNDrop;
