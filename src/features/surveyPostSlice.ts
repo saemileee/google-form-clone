@@ -19,7 +19,7 @@ const initialQuestion = {
   isRequired: false,
 };
 
-const initialState = {
+export const initialState = {
   title: DEFAULT_VALUES.TITLE,
   description: '',
   questions: [initialQuestion],
