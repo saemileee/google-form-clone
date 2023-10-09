@@ -6,7 +6,7 @@ export class LocalStorage<T> {
 
   getItem() {
     try {
-      return JSON.parse(localStorage.getItem(this.key)!);
+      return JSON.parse(localStorage.getItem(this.key) || '');
     } catch (e) {
       console.error('파싱될 수 없는 value 값입니다. 스토리지를 리셋합니다.');
       this.setItem('');
