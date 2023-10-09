@@ -3,7 +3,7 @@ import {QuestionType} from '../../../../../interface/Form';
 import {useDispatch, useSelector} from 'react-redux';
 import {AiOutlineClose} from 'react-icons/ai';
 import {MdDragIndicator} from 'react-icons/md';
-import {changeOptionValue, removeQuestionOption} from '../../../../../features/questionFormSlice';
+import {changeOptionValue, removeQuestionOption} from '../../../../../features/surveyPostSlice';
 import {RootState} from '../../../../../store/store';
 import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../../../styles/Form';
 import OptionIcon from './OptionIcon';

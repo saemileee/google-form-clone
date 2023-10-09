@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {PLACEHOLDERS} from '../../../constants/Form';
-import {changeDescription} from '../../../features/questionFormSlice';
+import {changeDescription} from '../../../features/surveyPostSlice';
 import {RootState} from '../../../store/store';
 import {StyledTextInput} from '../../../styles/Form';
 

@@ -1,7 +1,7 @@
 import {MdAddCircleOutline} from 'react-icons/md';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {addQuestion} from '../../features/questionFormSlice';
+import {addQuestion} from '../../features/surveyPostSlice';
 import {StyledMenuButton} from '../../styles/Form';
 
 const SideMenu = ({topValue = 0}) => {

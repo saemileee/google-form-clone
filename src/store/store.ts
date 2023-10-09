@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit';
-import questionFormReducer from '../features/questionFormSlice';
+import questionFormReducer from '../features/surveyPostSlice';
 import surveyPreviewFormSlice from '../features/surveyPreviewFormSlice';
 import surveyResultSlice from '../features/surveyResultSlice';
 

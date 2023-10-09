@@ -6,7 +6,7 @@ import {
   duplicateQuestion,
   deleteQuestion,
   toggleRequired,
-} from '../../../../features/questionFormSlice';
+} from '../../../../features/surveyPostSlice';
 import {RootState} from '../../../../store/store';
 import {StyledMenuButton} from '../../../../styles/Form';
 import {color} from '../../../../styles/variables.ts/color';

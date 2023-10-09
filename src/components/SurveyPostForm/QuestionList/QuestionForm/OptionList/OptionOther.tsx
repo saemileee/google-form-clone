@@ -1,7 +1,7 @@
 import {AiOutlineClose} from 'react-icons/ai';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {removeOtherOption} from '../../../../../features/questionFormSlice';
+import {removeOtherOption} from '../../../../../features/surveyPostSlice';
 import {QuestionType} from '../../../../../interface/Form';
 import {StyledMenuButton, StyledOptionWrapper} from '../../../../../styles/Form';
 import {color} from '../../../../../styles/variables.ts/color';

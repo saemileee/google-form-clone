@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {QUESTION_TYPES, PLACEHOLDERS} from '../../../../constants/Form';
-import {changeQuestionTitle, changeQuestionType} from '../../../../features/questionFormSlice';
+import {changeQuestionTitle, changeQuestionType} from '../../../../features/surveyPostSlice';
 import {RootState} from '../../../../store/store';
 import {StyledQuestionTitleInput} from '../../../../styles/Form';
 import IconDropDownBox from './IconDropDownBox';
