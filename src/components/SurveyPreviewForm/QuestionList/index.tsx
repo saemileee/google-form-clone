@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
-import {StyledFormWrapper} from '../../styles/Form';
 import QuestionForm from './QuestionForm';
-import {RootState} from '../../store/store';
+import {RootState} from '../../../store/store';
+import {StyledFormWrapper} from '../../../styles/Form';
 
 const SurveyPreviewQuestionList = () => {
   const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);

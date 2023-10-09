@@ -1,8 +1,8 @@
 import {useDispatch} from 'react-redux';
-import {AnswerCheckboxes} from '../../interface/Form';
-import {toggleCheckboxOption, typeOtherOption} from '../../features/surveyPreviewFormSlice';
-import {LABELS, OTHER_IDX} from '../../constants/Form';
-import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../styles/Form';
+import {LABELS, OTHER_IDX} from '../../../../constants/Form';
+import {toggleCheckboxOption, typeOtherOption} from '../../../../features/surveyPreviewFormSlice';
+import {AnswerCheckboxes} from '../../../../interface/Form';
+import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../../styles/Form';
 
 interface OptionCheckboxesItemProps {
   isOtherOption?: boolean;

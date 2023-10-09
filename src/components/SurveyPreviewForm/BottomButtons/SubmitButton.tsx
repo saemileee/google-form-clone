@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import {color} from '../../styles/variables.ts/color';
-import {getUnfilledRequiredIndexes} from '../../utils/validations';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../store/store';
-import {submitFormData} from '../../features/surveyResultSlice';
 import {useNavigate} from 'react-router-dom';
+import {submitFormData} from '../../../features/surveyResultSlice';
+import {RootState} from '../../../store/store';
+import {color} from '../../../styles/variables.ts/color';
 
 const SubmitButton = () => {
   const formData = useSelector((state: RootState) => state.surveyPreviewForm);

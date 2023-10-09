@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import {color} from '../../styles/variables.ts/color';
 import {useDispatch} from 'react-redux';
-import {resetForm} from '../../features/surveyPreviewFormSlice';
+import {resetForm} from '../../../features/surveyPreviewFormSlice';
+import {color} from '../../../styles/variables.ts/color';
 
 const ClearFormButton = () => {
   const dispatch = useDispatch();

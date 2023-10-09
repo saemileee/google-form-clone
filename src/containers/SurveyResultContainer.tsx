@@ -1,6 +1,6 @@
-import SurveyPreviewDescription from '../components/SurveyPreviewForm/Description';
+import Description from '../components/Global/StaticBasicInfo/Description';
+import Title from '../components/Global/StaticBasicInfo/Title';
 import SurveyPreviewQuestionList from '../components/SurveyResult/QuestionList';
-import SurveyPreviewTitle from '../components/SurveyPreviewForm/Title';
 import {
   StyledFormInfoLine,
   StyledGeneralFormContainer,
@@ -15,8 +15,8 @@ const SurveyResultContainer = () => {
         <StyledFormInfoLine />
         <StyledGeneralFormWrapper>
           <p>응답에 참여해 주셔서 감사합니다.</p>
-          <SurveyPreviewTitle />
-          <SurveyPreviewDescription />
+          <Title />
+          <Description />
         </StyledGeneralFormWrapper>
       </StyledGeneralFormContainer>
       <SurveyPreviewQuestionList />

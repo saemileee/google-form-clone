@@ -1,39 +1,16 @@
-import styled from 'styled-components';
-import ClearFormButton from '../components/SurveyPreviewForm/ClearFormButton';
-import SurveyPreviewDescription from '../components/SurveyPreviewForm/Description';
 import SurveyPreviewQuestionList from '../components/SurveyPreviewForm/QuestionList';
-import SubmitButton from '../components/SurveyPreviewForm/SubmitButton';
-import SurveyPreviewTitle from '../components/SurveyPreviewForm/Title';
-import {
-  StyledFormInfoLine,
-  StyledGeneralFormContainer,
-  StyledGeneralFormWrapper,
-  StyledSurveyContainer,
-} from '../styles/Form';
+import {StyledSurveyContainer} from '../styles/Form';
+import BasicInfo from '../components/SurveyPostForm/BasicInfo';
+import BottomButtons from '../components/SurveyPreviewForm/BottomButtons';
 
 const PreviewContainer = () => {
   return (
     <StyledSurveyContainer>
-      <StyledGeneralFormContainer>
-        <StyledFormInfoLine />
-        <StyledGeneralFormWrapper>
-          <SurveyPreviewTitle />
-          <SurveyPreviewDescription />
-        </StyledGeneralFormWrapper>
-      </StyledGeneralFormContainer>
+      <BasicInfo />
       <SurveyPreviewQuestionList />
-      <StyledBottomButtonWrapper>
-        <SubmitButton />
-        <ClearFormButton />
-      </StyledBottomButtonWrapper>
+      <BottomButtons />
     </StyledSurveyContainer>
   );
 };
 
 export default PreviewContainer;
-
-const StyledBottomButtonWrapper = styled.div`
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-`;
