@@ -34,7 +34,7 @@ const QuestionList = () => {
     setSideMenuTopValue(e.currentTarget.offsetTop);
   };
 
-  const {isDraggable, startDrag, enterTarget, getResortedList, mouseDown, mouseUp} =
+  const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
     useSortableDragNDrop(questions);
 
   return (
@@ -49,8 +49,7 @@ const QuestionList = () => {
           onDragStart={() => startDrag(idx)}
           onDragEnter={() => enterTarget(idx)}
           onDragEnd={() => {
-            const questions = getResortedList();
-            dispatch(resortQuestions({questions}));
+            setResortedList(list => dispatch(resortQuestions({questions: list})));
           }}
         >
           {question.isSelected && <StyledSelectedLine />}
