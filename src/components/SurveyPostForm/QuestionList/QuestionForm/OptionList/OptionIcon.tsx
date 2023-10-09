@@ -1,9 +1,9 @@
-import {QuestionType} from '../../interface/Form';
 import {GrRadial} from 'react-icons/gr';
 import {MdOutlineCheckBoxOutlineBlank} from 'react-icons/md';
-import {QUESTION_TYPES} from '../../constants/Form';
+import {QUESTION_TYPES} from '../../../../../constants/Form';
+import {QuestionType} from '../../../../../interface/Form';
 
-const TypeIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) => {
+const OptionIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) => {
   const getIcon = (type: QuestionType) => {
     switch (type) {
       case QUESTION_TYPES.multipleChoice:
@@ -23,4 +23,4 @@ const TypeIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) =
   return getIcon(type);
 };
 
-export default TypeIcon;
+export default OptionIcon;

@@ -4,7 +4,7 @@ import {addQuestionOption, addOtherOption} from '../../../../../features/questio
 import {QuestionType} from '../../../../../interface/Form';
 import {StyledOptionWrapper} from '../../../../../styles/Form';
 import {color} from '../../../../../styles/variables.ts/color';
-import TypeListIcon from '../../../TypeListIcon';
+import OptionIcon from './OptionIcon';
 
 const OptionAddButton = ({
   type,
@@ -23,7 +23,7 @@ const OptionAddButton = ({
 
   return (
     <StyledAddOptionWrapper>
-      <TypeListIcon type={type} optionIdx={optionIdx} />
+      <OptionIcon type={type} optionIdx={optionIdx} />
       <button className='add-option' onClick={() => dispatch(addQuestionOption({questionIdx}))}>
         Add option
       </button>

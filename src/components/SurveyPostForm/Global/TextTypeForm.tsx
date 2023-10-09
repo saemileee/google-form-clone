@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import {QUESTION_TYPES} from '../../constants/Form';
-import {QuestionType} from '../../interface/Form';
-import {color} from '../../styles/variables.ts/color';
+import {QUESTION_TYPES} from '../../../constants/Form';
+import {QuestionType} from '../../../interface/Form';
+import {color} from '../../../styles/variables.ts/color';
 
 const TextTypeForm = ({type}: {type: QuestionType}) => {
   const getTextTypeForm = () => {

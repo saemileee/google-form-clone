@@ -6,7 +6,7 @@ import {MdDragIndicator} from 'react-icons/md';
 import {changeOptionValue, removeQuestionOption} from '../../../../../features/questionFormSlice';
 import {RootState} from '../../../../../store/store';
 import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../../../styles/Form';
-import TypeListIcon from '../../../TypeListIcon';
+import OptionIcon from './OptionIcon';
 
 const MIN_OPTION_LENGTH = 1;
 
@@ -43,7 +43,7 @@ const Option = ({
           <MdDragIndicator size={16} />
         </StyledDragButtonH>
         <span>
-          <TypeListIcon type={type} optionIdx={optionIdx} />
+          <OptionIcon type={type} optionIdx={optionIdx} />
         </span>
       </StyledLeftIconsWrapper>
       <StyledTextInput

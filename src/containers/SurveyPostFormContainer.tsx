@@ -1,23 +1,11 @@
-import Description from '../components/SurveyPostForm/Description';
+import BasicInfo from '../components/SurveyPostForm/BasicInfo';
 import QuestionList from '../components/SurveyPostForm/QuestionList';
-import Title from '../components/SurveyPostForm/Title';
-import {
-  StyledFormInfoLine,
-  StyledGeneralFormContainer,
-  StyledGeneralFormWrapper,
-  StyledSurveyContainer,
-} from '../styles/Form';
+import {StyledSurveyContainer} from '../styles/Form';
 
 const SurveyPostFormContainer = () => {
   return (
     <StyledSurveyContainer>
-      <StyledGeneralFormContainer>
-        <StyledFormInfoLine />
-        <StyledGeneralFormWrapper>
-          <Title />
-          <Description />
-        </StyledGeneralFormWrapper>
-      </StyledGeneralFormContainer>
+      <BasicInfo />
       <QuestionList />
     </StyledSurveyContainer>
   );
