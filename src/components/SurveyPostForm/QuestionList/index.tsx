@@ -3,7 +3,7 @@ import {RootState} from '../../../store/store';
 import {useEffect, useRef, useState} from 'react';
 import {MdDragIndicator} from 'react-icons/md';
 import styled from 'styled-components';
-import {selectQuestion, resortQuestions} from '../../../features/questionFormSlice';
+import {selectQuestion, resortQuestions} from '../../../features/surveyPostSlice';
 import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
 import {
   StyledFormWrapper,

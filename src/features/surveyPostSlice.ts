@@ -33,7 +33,7 @@ const resetQuestionSelection = (state: Form) => {
   state.questions = newQuestions;
 };
 
-const questionFormSlice = createSlice({
+const surveyPostSlice = createSlice({
   name: 'questionForm',
   initialState,
   reducers: {
@@ -188,5 +188,5 @@ export const {
 
   changeOptionValue,
   resortQuestionOptions,
-} = questionFormSlice.actions;
-export default questionFormSlice.reducer;
+} = surveyPostSlice.actions;
+export default surveyPostSlice.reducer;

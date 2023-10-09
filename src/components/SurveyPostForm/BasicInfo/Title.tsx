@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {changeTitle} from '../../../features/questionFormSlice';
+import {changeTitle} from '../../../features/surveyPostSlice';
 import {RootState} from '../../../store/store';
 import {StyledTitleInput} from '../../../styles/Form';
 

@@ -1,6 +1,6 @@
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {addQuestionOption, addOtherOption} from '../../../../../features/questionFormSlice';
+import {addQuestionOption, addOtherOption} from '../../../../../features/surveyPostSlice';
 import {QuestionType} from '../../../../../interface/Form';
 import {StyledOptionWrapper} from '../../../../../styles/Form';
 import {color} from '../../../../../styles/variables.ts/color';

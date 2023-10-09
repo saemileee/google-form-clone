@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {QUESTION_TYPES} from '../../../../../constants/Form';
-import {resortQuestionOptions} from '../../../../../features/questionFormSlice';
+import {resortQuestionOptions} from '../../../../../features/surveyPostSlice';
 import useSortableDragNDrop from '../../../../../hooks/useSortableDragNDrop';
 import {RootState} from '../../../../../store/store';
 import {StyledOptionWrapper} from '../../../../../styles/Form';
