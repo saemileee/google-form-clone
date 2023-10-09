@@ -1,8 +1,8 @@
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import {QUESTION_TYPES} from '../../constants/Form';
-import OptionMultipleChoiceItem from './OptionMultipleChoiceItem';
-import OptionCheckboxesItem from './OptionCheckboxesItem';
+import OptionMultipleChoiceItem from '../Global/Option/OptionMultipleChoiceItem';
+import OptionCheckboxesItem from '../Global/Option/OptionCheckboxesItem';
 import {
   StyledDefaultSelectBox,
   StyledGeneralFormContainer,
@@ -18,6 +18,16 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const {title, answer, layout} = question;
 
   const {type, options, isOtherSelected, isRequired} = layout;
+
+  const multipleChoiceAnswer = answer.multipleChoice || {
+    selectedOptionIndex: null,
+    other: null,
+  };
+
+  const checkboxesAnswer = answer.checkboxes || {
+    selectedOptionIndexes: [],
+    other: null,
+  };
 
   return (
     <StyledGeneralFormContainer $padding={24} $gap={24}>
@@ -47,18 +57,20 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
                 <StyledOptionList>
                   {options.map((option, optionIdx) => (
                     <OptionMultipleChoiceItem
+                      isForResult
                       key={`${questionIdx}-${optionIdx}`}
                       value={option}
                       questionIdx={questionIdx}
                       optionIdx={optionIdx}
-                      questionAnswer={answer.multipleChoice!}
+                      questionAnswer={multipleChoiceAnswer}
                     />
                   ))}
                   {isOtherSelected && (
                     <OptionMultipleChoiceItem
+                      isForResult
                       key={`${questionIdx}-other`}
                       questionIdx={questionIdx}
-                      questionAnswer={answer.multipleChoice!}
+                      questionAnswer={multipleChoiceAnswer}
                     />
                   )}
                 </StyledOptionList>
@@ -68,18 +80,20 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
                 <StyledOptionList>
                   {options.map((option, optionIdx) => (
                     <OptionCheckboxesItem
+                      isForResult
                       key={`${questionIdx}-${optionIdx}`}
                       value={option}
                       questionIdx={questionIdx}
                       optionIdx={optionIdx}
-                      questionAnswer={answer.checkboxes!}
+                      questionAnswer={checkboxesAnswer}
                     />
                   ))}
                   {isOtherSelected && (
                     <OptionCheckboxesItem
+                      isForResult
                       key={`${questionIdx}-other`}
                       questionIdx={questionIdx}
-                      questionAnswer={answer.checkboxes!}
+                      questionAnswer={checkboxesAnswer}
                     />
                   )}
                 </StyledOptionList>

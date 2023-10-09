@@ -1,25 +1,12 @@
-import Description from '../components/Global/StaticBasicInfo/Description';
-import Title from '../components/Global/StaticBasicInfo/Title';
-import SurveyPreviewQuestionList from '../components/SurveyResult/QuestionList';
-import {
-  StyledFormInfoLine,
-  StyledGeneralFormContainer,
-  StyledGeneralFormWrapper,
-  StyledSurveyContainer,
-} from '../styles/Form';
+import BasicInfo from '../components/SurveyResult/BasicInfo';
+import QuestionList from '../components/SurveyResult/QuestionList';
+import {StyledSurveyContainer} from '../styles/Form';
 
 const SurveyResultContainer = () => {
   return (
     <StyledSurveyContainer>
-      <StyledGeneralFormContainer>
-        <StyledFormInfoLine />
-        <StyledGeneralFormWrapper>
-          <p>응답에 참여해 주셔서 감사합니다.</p>
-          <Title />
-          <Description />
-        </StyledGeneralFormWrapper>
-      </StyledGeneralFormContainer>
-      <SurveyPreviewQuestionList />
+      <BasicInfo />
+      <QuestionList />
     </StyledSurveyContainer>
   );
 };

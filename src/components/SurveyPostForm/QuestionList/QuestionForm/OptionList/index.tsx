@@ -60,6 +60,7 @@ const OptionList = ({questionIdx}: {questionIdx: number}) => {
         <>
           {options.map((value, optionIdx) => (
             <StyledOptionWrapper
+              key={`option-${optionIdx}`}
               draggable={isDraggable}
               onDragStart={() => {
                 startDrag(optionIdx);
@@ -77,7 +78,6 @@ const OptionList = ({questionIdx}: {questionIdx: number}) => {
               }}
             >
               <Option
-                key={`option-${optionIdx}`}
                 type={type}
                 value={value}
                 optionIdx={optionIdx}

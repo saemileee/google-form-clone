@@ -1,8 +1,8 @@
 import {useDispatch} from 'react-redux';
-import {LABELS, OTHER_IDX} from '../../../../constants/Form';
-import {toggleCheckboxOption, typeOtherOption} from '../../../../features/surveyPreviewFormSlice';
-import {AnswerCheckboxes} from '../../../../interface/Form';
-import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../../styles/Form';
+import {OTHER_IDX} from '../../../constants/Form';
+import {toggleCheckboxOption, typeOtherOption} from '../../../features/surveyPreviewFormSlice';
+import {AnswerCheckboxes} from '../../../interface/Form';
+import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../styles/Form';
 
 interface OptionCheckboxesItemProps {
   isOtherOption?: boolean;
@@ -10,13 +10,15 @@ interface OptionCheckboxesItemProps {
   questionIdx: number;
   optionIdx?: number | 'other';
   questionAnswer: AnswerCheckboxes;
+  isForResult?: boolean;
 }
 
 const OptionCheckboxesItem = ({
-  value = LABELS.OTHER_OPTION,
+  value = OTHER_IDX,
   questionIdx,
   questionAnswer,
   optionIdx = OTHER_IDX,
+  isForResult = false,
 }: OptionCheckboxesItemProps) => {
   const dispatch = useDispatch();
   const itemId = `question-${questionIdx}-${value}`;
@@ -24,11 +26,16 @@ const OptionCheckboxesItem = ({
   return (
     <StyledPreviewOptionWrapper>
       <input
+        disabled={isForResult}
         type='checkbox'
         id={itemId}
         name={itemId}
         value={value}
-        onChange={() => dispatch(toggleCheckboxOption({questionIdx, selectedIdx: optionIdx}))}
+        onChange={
+          isForResult
+            ? undefined
+            : () => dispatch(toggleCheckboxOption({questionIdx, selectedIdx: optionIdx}))
+        }
         checked={selectedOptionIndexes.includes(optionIdx)}
       />
       {optionIdx === OTHER_IDX ? (
