@@ -1,10 +1,10 @@
-import {useSelector} from 'react-redux';
 import {StyledFormWrapper} from '../../styles/Form';
 import QuestionForm from './QuestionForm';
-import {RootState} from '../../store/store';
+import {formResultStateStorage} from '../../store/localStorage';
+import {PreviewQuestion} from '../../interface/Form';
 
 const SurveyPreviewQuestionList = () => {
-  const questions = useSelector((state: RootState) => state.surveyResult.questions);
+  const questions: PreviewQuestion[] = formResultStateStorage.getItem().questions;
   return (
     <StyledFormWrapper>
       {questions.map((_, questionIdx) => (

@@ -12,9 +12,12 @@ import {
   StyledQuestionTitle,
   StyledTextArea,
 } from '../../styles/Form';
+import {PreviewQuestion} from '../../interface/Form';
+import {formResultStateStorage} from '../../store/localStorage';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
-  const question = useSelector((state: RootState) => state.surveyResult.questions[questionIdx]);
+  const question: PreviewQuestion = formResultStateStorage.getItem().questions[questionIdx];
+
   const {title, answer, layout} = question;
 
   const {type, options, isOtherSelected, isRequired} = layout;
