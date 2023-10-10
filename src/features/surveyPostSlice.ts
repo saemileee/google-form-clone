@@ -9,6 +9,7 @@ import {
   Question,
   Form,
 } from '../interface/Form';
+import {formPostStateStorage} from '../store/localStorage';
 
 const initialQuestion = {
   isSelected: true,
@@ -19,7 +20,9 @@ const initialQuestion = {
   isRequired: false,
 };
 
-export const initialState = {
+const cachedState = formPostStateStorage.getItem();
+
+export const initialState: Form = cachedState || {
   title: DEFAULT_VALUES.TITLE,
   description: '',
   questions: [initialQuestion],
@@ -40,10 +43,14 @@ const surveyPostSlice = createSlice({
     changeTitle: (state, action: PayloadAction<{value: FormTitle}>) => {
       const {value} = action.payload;
       state.title = value;
+
+      formPostStateStorage.setItem(state);
     },
     changeDescription: (state, action: PayloadAction<{value: FormDescription}>) => {
       const {value} = action.payload;
       state.description = value;
+
+      formPostStateStorage.setItem(state);
     },
 
     selectQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
@@ -57,12 +64,16 @@ const surveyPostSlice = createSlice({
             }
       );
       state.questions = newQuestions;
+
+      formPostStateStorage.setItem(state);
     },
 
     addQuestion: state => {
       const targetIdx = state.questions.findIndex(question => question.isSelected === true) + 1;
       resetQuestionSelection(state);
       state.questions.splice(targetIdx, 0, initialQuestion);
+
+      formPostStateStorage.setItem(state);
     },
 
     deleteQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
@@ -76,6 +87,7 @@ const surveyPostSlice = createSlice({
       }
 
       state.questions.splice(questionIdx, 1);
+      formPostStateStorage.setItem(state);
     },
 
     duplicateQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
@@ -87,17 +99,23 @@ const surveyPostSlice = createSlice({
 
       resetQuestionSelection(state);
       state.questions[targetIdx].isSelected = true;
+
+      formPostStateStorage.setItem(state);
     },
 
     toggleRequired: (state, action: PayloadAction<{questionIdx: number}>) => {
       const {questionIdx} = action.payload;
       const newIsRequired = !state.questions[questionIdx].isRequired;
       state.questions[questionIdx].isRequired = newIsRequired;
+
+      formPostStateStorage.setItem(state);
     },
 
     resortQuestions: (state, action: PayloadAction<{questions: Question[]}>) => {
       const {questions} = action.payload;
       state.questions = questions;
+
+      formPostStateStorage.setItem(state);
     },
 
     changeQuestionTitle: (
@@ -106,6 +124,8 @@ const surveyPostSlice = createSlice({
     ) => {
       const {questionIdx, value} = action.payload;
       state.questions[questionIdx].title = value;
+
+      formPostStateStorage.setItem(state);
     },
 
     changeQuestionType: (
@@ -121,6 +141,7 @@ const surveyPostSlice = createSlice({
       }
 
       state.questions[questionIdx].type = value;
+      formPostStateStorage.setItem(state);
     },
 
     addQuestionOption: (state, action: PayloadAction<{questionIdx: number}>) => {
@@ -129,6 +150,8 @@ const surveyPostSlice = createSlice({
       const newOptionValue = `${DEFAULT_VALUES.QUESTION_OPTION} ${newOptionLength}`;
 
       state.questions[questionIdx].options.push(newOptionValue);
+
+      formPostStateStorage.setItem(state);
     },
 
     removeQuestionOption: (
@@ -137,16 +160,22 @@ const surveyPostSlice = createSlice({
     ) => {
       const {questionIdx, optionIdx} = action.payload;
       state.questions[questionIdx].options.splice(optionIdx, 1);
+
+      formPostStateStorage.setItem(state);
     },
 
     addOtherOption: (state, action: PayloadAction<{questionIdx: number}>) => {
       const {questionIdx} = action.payload;
       state.questions[questionIdx].isOtherSelected = true;
+
+      formPostStateStorage.setItem(state);
     },
 
     removeOtherOption: (state, action: PayloadAction<{questionIdx: number}>) => {
       const {questionIdx} = action.payload;
       state.questions[questionIdx].isOtherSelected = false;
+
+      formPostStateStorage.setItem(state);
     },
 
     changeOptionValue: (
@@ -155,6 +184,8 @@ const surveyPostSlice = createSlice({
     ) => {
       const {questionIdx, optionIdx, value} = action.payload;
       state.questions[questionIdx].options[optionIdx] = value;
+
+      formPostStateStorage.setItem(state);
     },
 
     resortQuestionOptions: (
@@ -163,6 +194,8 @@ const surveyPostSlice = createSlice({
     ) => {
       const {options, questionIdx} = action.payload;
       state.questions[questionIdx].options = options;
+
+      formPostStateStorage.setItem(state);
     },
   },
 });
