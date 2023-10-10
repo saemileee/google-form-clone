@@ -11,7 +11,7 @@ const BasicInfo = () => {
     <StyledGeneralFormContainer>
       <StyledFormInfoLine />
       <StyledGeneralFormWrapper>
-        <p>응답에 참여해 주셔서 감사합니다.</p>
+        <p>✅ 응답에 참여해 주셔서 감사합니다.</p>
         <Title />
         <Description />
       </StyledGeneralFormWrapper>

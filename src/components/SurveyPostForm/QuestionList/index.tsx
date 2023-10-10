@@ -60,9 +60,7 @@ const QuestionList = () => {
           >
             <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
           </StyledDragButtonW>
-          <StyledQuestionFormWrapper>
-            <QuestionForm questionIdx={idx} />
-          </StyledQuestionFormWrapper>
+          <QuestionForm questionIdx={idx} />
         </StyledGeneralFormContainer>
       ))}
     </StyledFormWrapper>
@@ -78,8 +76,4 @@ const StyledSelectedLine = styled.div`
   height: 100%;
   background-color: ${color.primary};
   border-radius: 8px 0 0 8px;
-`;
-
-const StyledQuestionFormWrapper = styled(StyledGeneralFormWrapper)`
-  padding: 0;
 `;

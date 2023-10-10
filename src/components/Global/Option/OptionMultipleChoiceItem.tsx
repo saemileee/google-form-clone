@@ -44,6 +44,8 @@ const OptionMultipleChoiceItem = ({
         <span>
           <label htmlFor={itemId}>{value}</label>
           <StyledQuestionTextInput
+            id={itemId}
+            name={itemId}
             disabled={isForResult}
             value={other || ''}
             type='text'

@@ -51,7 +51,7 @@ const StyledMenuWrapper = styled.div`
   justify-content: end;
   align-items: center;
   gap: 12px;
-  padding: 12px 12px 0 12px;
+  padding: 20px 12px 0 12px;
   margin: 0 28px 0 28px;
   border-top: 1px solid ${color.lightgrey};
   .divider {

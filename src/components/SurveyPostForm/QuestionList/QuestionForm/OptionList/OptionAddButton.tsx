@@ -45,7 +45,7 @@ export default OptionAddButton;
 const StyledAddOptionWrapper = styled(StyledOptionWrapper)`
   padding: 0 24px 0 24px;
   box-sizing: border-box;
-  height: 48px;
+  height: 34px;
   span {
     padding-top: 4px;
   }

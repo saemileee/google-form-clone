@@ -19,7 +19,7 @@ const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: numb
         $tooltipPosition='bottom'
         onClick={() => dispatch(removeOtherOption({questionIdx}))}
       >
-        <AiOutlineClose size={22} />
+        <AiOutlineClose size={22} color={color.textGrey} />
       </StyledMenuButton>
     </StyledOtherOptionWrapper>
   );
