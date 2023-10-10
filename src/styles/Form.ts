@@ -45,9 +45,13 @@ export const StyledFormWrapper = styled.div`
 
 export const StyledSurveyContainer = styled.div`
   margin: 0 auto;
-  width: 768px;
+  padding: 2rem;
   padding-top: 100px;
   padding-bottom: 48px;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+  }
 `;
 
 interface StyledQuestionWrapperProps {
