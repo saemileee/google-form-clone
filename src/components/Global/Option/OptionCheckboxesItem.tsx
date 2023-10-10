@@ -3,6 +3,7 @@ import {LABELS, OTHER_IDX} from '../../../constants/Form';
 import {toggleCheckboxOption, typeOtherOption} from '../../../features/surveyPreviewFormSlice';
 import {AnswerCheckboxes} from '../../../interface/Form';
 import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../styles/Form';
+import {selectAllText} from '../../../utils/textInputControllers';
 
 interface OptionCheckboxesItemProps {
   isOtherOption?: boolean;
@@ -48,6 +49,7 @@ const OptionCheckboxesItem = ({
             value={other || ''}
             type='text'
             onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
+            onFocus={selectAllText}
           />
         </span>
       ) : (

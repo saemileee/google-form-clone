@@ -6,6 +6,7 @@ import {RootState} from '../../../../store/store';
 import {StyledQuestionTitleInput} from '../../../../styles/Form';
 import IconDropDownBox from './IconDropDownBox';
 import TypeIcon from './TypeIcon';
+import {selectAllText} from '../../../../utils/textInputControllers';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
   icon: <TypeIcon type={type[1]} />,
@@ -34,6 +35,7 @@ const QuestionFormTop = ({questionIdx}: {questionIdx: number}) => {
   return (
     <StyledTopInfoWrapper>
       <StyledQuestionTitleInput
+        onFocus={selectAllText}
         className={isSelected ? 'selected' : undefined}
         type='text'
         value={title}

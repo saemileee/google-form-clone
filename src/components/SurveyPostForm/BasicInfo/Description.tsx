@@ -3,6 +3,7 @@ import {PLACEHOLDERS} from '../../../constants/Form';
 import {changeDescription} from '../../../features/surveyPostSlice';
 import {RootState} from '../../../store/store';
 import {StyledTextInput} from '../../../styles/Form';
+import {selectAllText} from '../../../utils/textInputControllers';
 
 const Description = () => {
   const description = useSelector((state: RootState) => state.questionForm.description);
@@ -19,6 +20,7 @@ const Description = () => {
       value={description}
       placeholder={PLACEHOLDERS.DESCRIPTION}
       onChange={onTextInputChange}
+      onFocus={selectAllText}
     />
   );
 };

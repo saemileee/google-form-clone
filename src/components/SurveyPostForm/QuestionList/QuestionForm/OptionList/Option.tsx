@@ -8,6 +8,7 @@ import {RootState} from '../../../../../store/store';
 import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../../../styles/Form';
 import OptionIcon from './OptionIcon';
 import {color} from '../../../../../styles/variables.ts/color';
+import {selectAllText} from '../../../../../utils/textInputControllers';
 
 const MIN_OPTION_LENGTH = 1;
 
@@ -52,7 +53,10 @@ const Option = ({
           const value = e.target.value;
           dispatch(changeOptionValue({questionIdx, optionIdx, value}));
         }}
-        onFocus={() => focusOption(optionIdx)}
+        onFocus={e => {
+          selectAllText(e);
+          focusOption(optionIdx);
+        }}
       />
       {options.length > MIN_OPTION_LENGTH && (
         <StyledMenuButton

@@ -3,6 +3,7 @@ import {LABELS, OTHER_IDX} from '../../../constants/Form';
 import {toggleMultipleOption, typeOtherOption} from '../../../features/surveyPreviewFormSlice';
 import {AnswerMultipleChoice} from '../../../interface/Form';
 import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../styles/Form';
+import {selectAllText} from '../../../utils/textInputControllers';
 
 interface OptionMultipleChoiceItemProps {
   value?: string;
@@ -50,6 +51,7 @@ const OptionMultipleChoiceItem = ({
             value={other || ''}
             type='text'
             onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
+            onFocus={selectAllText}
           />
         </span>
       ) : (
