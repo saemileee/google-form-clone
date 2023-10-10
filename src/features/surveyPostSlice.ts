@@ -22,11 +22,13 @@ const initialQuestion = {
 
 const cachedState = formPostStateStorage.getItem();
 
-export const initialState: Form = cachedState || {
+export const initialPostFormState = {
   title: DEFAULT_VALUES.TITLE,
   description: '',
   questions: [initialQuestion],
 };
+
+export const initialState: Form = cachedState || initialPostFormState;
 
 const resetQuestionSelection = (state: Form) => {
   const newQuestions = state.questions.map(question => ({
