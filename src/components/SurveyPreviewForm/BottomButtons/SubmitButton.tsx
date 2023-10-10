@@ -1,21 +1,27 @@
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {submitFormData} from '../../../features/surveyResultSlice';
 import {RootState} from '../../../store/store';
 import {color} from '../../../styles/variables.ts/color';
+import {getUnfilledRequiredIndexes} from '../../../utils/formValidations';
+import {setInvalidatedQuestions, submitForm} from '../../../features/surveyPreviewFormSlice';
 
 const SubmitButton = () => {
-  const formData = useSelector((state: RootState) => state.surveyPreviewForm);
+  const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const submitForm = () => {
-    // 유효성 추가 필요
-    dispatch(submitFormData({form: formData}));
-    navigate('/result');
+  const submitFormData = () => {
+    const invalidatedQuestionIndexes = getUnfilledRequiredIndexes(questions);
+    const isValidatedForm = invalidatedQuestionIndexes.length === 0;
+    if (isValidatedForm) {
+      dispatch(submitForm());
+      navigate('/result');
+    } else {
+      dispatch(setInvalidatedQuestions({invalidatedQuestionIndexes}));
+    }
   };
-  return <FormSubmitButton onClick={submitForm}>Submit</FormSubmitButton>;
+  return <FormSubmitButton onClick={submitFormData}>Submit</FormSubmitButton>;
 };
 
 export default SubmitButton;
