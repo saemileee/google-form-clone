@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {RootState} from '../../../store/store';
 import {color} from '../../../styles/variables.ts/color';
 import {getUnfilledRequiredIndexes} from '../../../utils/formValidations';
-import {setInvalidatedQuestions, submitForm} from '../../../features/surveyPreviewFormSlice';
+import {setInvalidQuestions, submitForm} from '../../../features/surveyPreviewFormSlice';
 
 const SubmitButton = () => {
   const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);
@@ -18,7 +18,7 @@ const SubmitButton = () => {
       dispatch(submitForm());
       navigate('/result');
     } else {
-      dispatch(setInvalidatedQuestions({invalidatedQuestionIndexes}));
+      dispatch(setInvalidQuestions({invalidatedQuestionIndexes}));
     }
   };
   return <FormSubmitButton onClick={submitFormData}>Submit</FormSubmitButton>;

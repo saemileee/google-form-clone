@@ -7,7 +7,7 @@ import {
   PreviewQuestion,
 } from '../interface/Form';
 
-const isValidateString = (value: string) => {
+export const isValidString = (value: string) => {
   return value.trim() ? true : false;
 };
 
@@ -18,7 +18,7 @@ const isMultipleChoiceFilled = (multipleChoiceAnswer: AnswerMultipleChoice) => {
     return true;
   }
 
-  if (selectedOptionIndex === OTHER_IDX && other && isValidateString(other)) {
+  if (selectedOptionIndex === OTHER_IDX && other && isValidString(other)) {
     return true;
   }
   return false;
@@ -33,7 +33,7 @@ const areCheckboxesFilled = (checkboxesAnswer: AnswerCheckboxes) => {
   if (onlyNumbers.length) {
     return true;
   }
-  if (isOnlyOtherChecked && other && isValidateString(other)) {
+  if (isOnlyOtherChecked && other && isValidString(other)) {
     return true;
   }
   return false;
@@ -44,7 +44,7 @@ const isDropDownFilled = (dropDownAnswer: AnswerDropDown) => {
 };
 
 const isTextAnswerFilled = (answer: AnswerTextAnswer) => {
-  return isValidateString(answer.answer);
+  return isValidString(answer.answer);
 };
 
 export const getUnfilledRequiredIndexes = (questions: PreviewQuestion[]) => {
