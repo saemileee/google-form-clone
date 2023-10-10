@@ -1,12 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
-import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
+import {getPrevFormState} from '../utils/formStateConverter';
 import {OTHER_IDX, QUESTION_TYPES} from '../constants/Form';
 import {initialState as postFormInitialState} from './surveyPostSlice';
 import {formResultStateStorage} from '../store/localStorage';
 import {isValidString} from '../utils/formValidations';
 
-const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(postFormInitialState);
+const initialState: PreviewQuestionForm = getPrevFormState(postFormInitialState);
 
 const initialMultipleChoiceAnswer = {
   selectedOptionIndex: null,
