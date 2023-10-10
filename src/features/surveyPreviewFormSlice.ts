@@ -3,6 +3,7 @@ import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../inte
 import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
 import {OTHER_IDX, QUESTION_TYPES} from '../constants/Form';
 import {initialState as postFormInitialState} from './surveyPostSlice';
+import {formPreviewStateStorage} from '../store/localStorage';
 
 const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(postFormInitialState);
 
@@ -42,6 +43,8 @@ const surveyPreviewFormSlice = createSlice({
       (
         state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
       ).selectedOptionIndex = selectedIdx;
+
+      formPreviewStateStorage.setItem(state);
     },
 
     toggleCheckboxOption: (
@@ -63,6 +66,8 @@ const surveyPreviewFormSlice = createSlice({
           state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
         ).selectedOptionIndexes = [...currentSelects, selectedIdx];
       }
+
+      formPreviewStateStorage.setItem(state);
     },
 
     selectDropDownOption: (
@@ -77,6 +82,8 @@ const surveyPreviewFormSlice = createSlice({
           selectedOptionIndex: null,
         }
       ).selectedOptionIndex = selectedIdx;
+
+      formPreviewStateStorage.setItem(state);
     },
 
     changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
@@ -87,6 +94,8 @@ const surveyPreviewFormSlice = createSlice({
       } else if (state.questions[questionIdx].layout.type === QUESTION_TYPES.paragraph) {
         (state.questions[questionIdx].answer.paragraph || initialTextAnswer).answer = value;
       }
+
+      formPreviewStateStorage.setItem(state);
     },
 
     typeOtherOption: (state, action: {payload: {questionIdx: number; value: string}}) => {
@@ -118,10 +127,14 @@ const surveyPreviewFormSlice = createSlice({
           ).selectedOptionIndexes.push(OTHER_IDX);
         }
       }
+
+      formPreviewStateStorage.setItem(state);
     },
 
     resetForm: state => {
       state.questions = initialState.questions;
+
+      formPreviewStateStorage.setItem(state);
     },
   },
 });
