@@ -44,6 +44,7 @@ const OptionMultipleChoiceItem = ({
         <span>
           <label htmlFor={itemId}>{value}</label>
           <StyledQuestionTextInput
+            disabled={isForResult}
             value={other || ''}
             type='text'
             onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
