@@ -1,5 +1,7 @@
 import {QUESTION_TYPES} from '../constants/Form';
 import {Form, PreviewQuestionForm, QuestionType} from '../interface/Form';
+import {initialPostFormState} from '../features/surveyPostSlice';
+import {formPostStateStorage, formResultStateStorage} from '../store/localStorage';
 
 export const surveyPostFormToPrevFormState = (state: Form): PreviewQuestionForm => {
   const getInitialAnswer = (type: QuestionType) => {
@@ -38,4 +40,16 @@ export const surveyPostFormToPrevFormState = (state: Form): PreviewQuestionForm 
     submitTryCount: 0,
   };
   return previewFormState;
+};
+
+export const getPrevFormState = (state: Form): PreviewQuestionForm => {
+  try {
+    return surveyPostFormToPrevFormState(state);
+  } catch (e) {
+    const prevFormState = surveyPostFormToPrevFormState(initialPostFormState);
+    formPostStateStorage.setItem(initialPostFormState);
+    formResultStateStorage.setItem(prevFormState);
+
+    return prevFormState;
+  }
 };
