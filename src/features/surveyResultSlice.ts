@@ -1,7 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {PreviewQuestionForm} from '../interface/Form';
+import {formPreviewStateStorage} from '../store/localStorage';
 
-const initialState: PreviewQuestionForm = {title: '', description: '', questions: []};
+const cachedState = formPreviewStateStorage.getItem();
+const initialState: PreviewQuestionForm = cachedState || {
+  title: '',
+  description: '',
+  questions: [],
+};
 
 const surveyResultSlice = createSlice({
   name: 'surveyResult',
