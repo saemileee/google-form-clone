@@ -103,7 +103,6 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               );
             case QUESTION_TYPES.dropDown: {
               const selectedIdx = answer.dropDown?.selectedOptionIndex?.toString();
-              console.info(selectedIdx);
 
               return (
                 <StyledDefaultSelectBox disabled value={selectedIdx}>
