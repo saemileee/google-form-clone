@@ -1,5 +1,3 @@
-import {useSelector} from 'react-redux';
-import {RootState} from '../../store/store';
 import {QUESTION_TYPES} from '../../constants/Form';
 import OptionMultipleChoiceItem from '../Global/Option/OptionMultipleChoiceItem';
 import OptionCheckboxesItem from '../Global/Option/OptionCheckboxesItem';
