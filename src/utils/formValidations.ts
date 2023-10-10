@@ -54,22 +54,33 @@ export const getUnfilledRequiredIndexes = (questions: PreviewQuestion[]) => {
       switch (question.layout.type) {
         case QUESTION_TYPES.multipleChoice:
           return (
-            !isMultipleChoiceFilled(question.answer.multipleChoice!) &&
+            question.answer.multipleChoice &&
+            !isMultipleChoiceFilled(question.answer.multipleChoice) &&
             unfilledQuestionIndexes.push(idx)
           );
         case QUESTION_TYPES.checkboxes:
           return (
-            !areCheckboxesFilled(question.answer.checkboxes!) && unfilledQuestionIndexes.push(idx)
+            question.answer.checkboxes &&
+            !areCheckboxesFilled(question.answer.checkboxes) &&
+            unfilledQuestionIndexes.push(idx)
           );
         case QUESTION_TYPES.dropDown:
-          return !isDropDownFilled(question.answer.dropDown!) && unfilledQuestionIndexes.push(idx);
+          return (
+            question.answer.dropDown &&
+            !isDropDownFilled(question.answer.dropDown) &&
+            unfilledQuestionIndexes.push(idx)
+          );
         case QUESTION_TYPES.shortAnswer:
           return (
-            !isTextAnswerFilled(question.answer.shortAnswer!) && unfilledQuestionIndexes.push(idx)
+            question.answer.shortAnswer &&
+            !isTextAnswerFilled(question.answer.shortAnswer) &&
+            unfilledQuestionIndexes.push(idx)
           );
         case QUESTION_TYPES.paragraph:
           return (
-            !isTextAnswerFilled(question.answer.paragraph!) && unfilledQuestionIndexes.push(idx)
+            question.answer.paragraph &&
+            !isTextAnswerFilled(question.answer.paragraph) &&
+            unfilledQuestionIndexes.push(idx)
           );
       }
     }
