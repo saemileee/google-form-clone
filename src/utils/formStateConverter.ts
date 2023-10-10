@@ -34,7 +34,8 @@ export const surveyPostFormToPrevFormState = (state: Form): PreviewQuestionForm 
     title: state.title,
     description: state.description,
     questions: newQuestions,
-    invalidatedQuestions: [],
+    invalidQuestions: [],
+    submitTryCount: 0,
   };
   return previewFormState;
 };

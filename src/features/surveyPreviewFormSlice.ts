@@ -4,6 +4,7 @@ import {surveyPostFormToPrevFormState} from '../utils/formStateConverter';
 import {OTHER_IDX, QUESTION_TYPES} from '../constants/Form';
 import {initialState as postFormInitialState} from './surveyPostSlice';
 import {formResultStateStorage} from '../store/localStorage';
+import {isValidString} from '../utils/formValidations';
 
 const initialState: PreviewQuestionForm = surveyPostFormToPrevFormState(postFormInitialState);
 
@@ -15,6 +16,10 @@ const initialMultipleChoiceAnswer = {
 const initialCheckboxesAnswer = {
   selectedOptionIndexes: [],
   other: null,
+};
+
+const switchToValid = (state: PreviewQuestionForm, questionIdx: number) => {
+  state.invalidQuestions = state.invalidQuestions.filter(idx => questionIdx !== idx);
 };
 
 const surveyPreviewFormSlice = createSlice({
@@ -43,6 +48,8 @@ const surveyPreviewFormSlice = createSlice({
       (
         state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
       ).selectedOptionIndex = selectedIdx;
+
+      switchToValid(state, questionIdx);
     },
 
     toggleCheckboxOption: (
@@ -63,6 +70,7 @@ const surveyPreviewFormSlice = createSlice({
         (
           state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
         ).selectedOptionIndexes = [...currentSelects, selectedIdx];
+        switchToValid(state, questionIdx);
       }
     },
 
@@ -78,11 +86,15 @@ const surveyPreviewFormSlice = createSlice({
           selectedOptionIndex: null,
         }
       ).selectedOptionIndex = selectedIdx;
+      switchToValid(state, questionIdx);
     },
 
     changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
       const {questionIdx, value} = action.payload;
       const initialTextAnswer = {answer: ''};
+      if (isValidString(value)) {
+        switchToValid(state, questionIdx);
+      }
       if (state.questions[questionIdx].layout.type === QUESTION_TYPES.shortAnswer) {
         (state.questions[questionIdx].answer.shortAnswer || initialTextAnswer).answer = value;
       } else if (state.questions[questionIdx].layout.type === QUESTION_TYPES.paragraph) {
@@ -92,6 +104,9 @@ const surveyPreviewFormSlice = createSlice({
 
     typeOtherOption: (state, action: {payload: {questionIdx: number; value: string}}) => {
       const {questionIdx, value} = action.payload;
+
+      switchToValid(state, questionIdx);
+
       if (state.questions[questionIdx].layout.type === QUESTION_TYPES.multipleChoice) {
         (state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer).other =
           value;
@@ -125,9 +140,10 @@ const surveyPreviewFormSlice = createSlice({
       state.questions = initialState.questions;
     },
 
-    setInvalidatedQuestions: (state, action: {payload: {invalidatedQuestionIndexes: number[]}}) => {
+    setInvalidQuestions: (state, action: {payload: {invalidatedQuestionIndexes: number[]}}) => {
       const {invalidatedQuestionIndexes} = action.payload;
-      state.invalidatedQuestions = invalidatedQuestionIndexes;
+      state.invalidQuestions = invalidatedQuestionIndexes;
+      state.submitTryCount += 1;
     },
 
     submitForm: state => {
@@ -143,7 +159,7 @@ export const {
   changeTextAnswer,
   typeOtherOption,
   resetForm,
-  setInvalidatedQuestions,
+  setInvalidQuestions,
   submitForm,
 } = surveyPreviewFormSlice.actions;
 export default surveyPreviewFormSlice.reducer;

@@ -63,5 +63,6 @@ export interface PreviewQuestionForm {
   title: FormTitle;
   description: FormDescription;
   questions: PreviewQuestion[];
-  invalidatedQuestions: number[];
+  invalidQuestions: number[];
+  submitTryCount: number;
 }
