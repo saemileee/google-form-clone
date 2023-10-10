@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {ChangeEvent} from 'react';
+import {ChangeEvent, useEffect, useRef} from 'react';
 import {QUESTION_TYPES, LABELS} from '../../../constants/Form';
 import {selectDropDownOption, changeTextAnswer} from '../../../features/surveyPreviewFormSlice';
 import {RootState} from '../../../store/store';
@@ -14,6 +14,9 @@ import {
 } from '../../../styles/Form';
 import OptionCheckboxesItem from '../../Global/Option/OptionCheckboxesItem';
 import OptionMultipleChoiceItem from '../../Global/Option/OptionMultipleChoiceItem';
+import styled from 'styled-components';
+import {color} from '../../../styles/variables.ts/color';
+import {RiErrorWarningLine} from 'react-icons/ri';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();
@@ -27,6 +30,10 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
     (state: RootState) => state.surveyPreviewForm.questions[questionIdx].layout
   );
   const {type, options, isOtherSelected, isRequired} = layout;
+  const {invalidQuestions, submitTryCount} = useSelector(
+    (state: RootState) => state.surveyPreviewForm
+  );
+  const isInvalid = invalidQuestions.includes(questionIdx);
 
   const multipleChoiceAnswer = answer.multipleChoice || {
     selectedOptionIndex: null,
@@ -47,8 +54,16 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
     dispatch(selectDropDownOption({questionIdx, selectedIdx}));
   };
 
+  const questionFormRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (invalidQuestions[0] === questionIdx) {
+      if (questionFormRef.current)
+        questionFormRef.current.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  }, [submitTryCount]);
+
   return (
-    <StyledGeneralFormContainer $padding={24} $gap={24}>
+    <StyledQuestionFormContainer ref={questionFormRef} $padding={24} $gap={24} $invalid={isInvalid}>
       <StyledQuestionTitle>
         {title}
         {isRequired && <span className='symbol-required'> *</span>}
@@ -134,8 +149,29 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
           }
         })()}
       </StyledOptionWrapper>
-    </StyledGeneralFormContainer>
+      {isInvalid && (
+        <StyledInvalidatedMsg>
+          <RiErrorWarningLine size={24} />
+          This is a required question
+        </StyledInvalidatedMsg>
+      )}
+    </StyledQuestionFormContainer>
   );
 };
 
 export default QuestionForm;
+
+const StyledQuestionFormContainer = styled(StyledGeneralFormContainer)<{$invalid: boolean}>`
+  border-color: ${props => (props.$invalid ? 'red' : color.border)};
+`;
+
+const StyledInvalidatedMsg = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: red;
+  font-size: 10pt;
+  svg {
+    padding-bottom: 3px;
+  }
+`;
