@@ -12,16 +12,16 @@ export const surveyPostFormToPrevFormState = (state: Form): PreviewQuestionForm 
       case QUESTION_TYPES.dropDown:
         return {dropDown: {selectedOptionIndex: null}};
       case QUESTION_TYPES.shortAnswer:
-        return {shortAnswer: {answer: null}};
+        return {shortAnswer: {answer: ''}};
 
       case QUESTION_TYPES.paragraph:
-        return {paragraph: {answer: null}};
+        return {paragraph: {answer: ''}};
       default:
-        return {paragraph: {answer: null}};
+        return {paragraph: {answer: ''}};
     }
   };
 
-  const newQuestions = {...state}.questions.map(question => ({
+  const newQuestions = state.questions.map(question => ({
     title: question.title,
     layout: {
       ...question,
