@@ -100,16 +100,13 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               );
             case QUESTION_TYPES.dropDown: {
               const selectedIdx = answer.dropDown?.selectedOptionIndex?.toString();
+              console.info(selectedIdx);
 
               return (
-                <StyledDefaultSelectBox disabled defaultValue={selectedIdx}>
-                  <option selected={selectedIdx === null}>{'미응답'}</option>
+                <StyledDefaultSelectBox disabled value={selectedIdx}>
+                  <option value=''>{'미응답'}</option>
                   {options.map((option, idx) => (
-                    <option
-                      key={`${questionIdx}-${idx}`}
-                      selected={Number(selectedIdx) === idx}
-                      value={idx}
-                    >
+                    <option key={`${questionIdx}-${idx}`} value={idx}>
                       {option}
                     </option>
                   ))}
