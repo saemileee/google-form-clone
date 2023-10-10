@@ -38,7 +38,7 @@ export interface AnswerDropDown {
   selectedOptionIndex: number | null;
 }
 export interface AnswerTextAnswer {
-  answer: string | null;
+  answer: string;
 }
 
 export interface PreviewQuestion {
