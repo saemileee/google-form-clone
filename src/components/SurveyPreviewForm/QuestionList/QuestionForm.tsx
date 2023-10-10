@@ -56,6 +56,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               return (
                 <StyledPreviewTextInput
                   placeholder='Your answer'
+                  value={(answer.shortAnswer?.answer || '').toString()}
                   onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
                 />
               );
@@ -63,6 +64,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               return (
                 <StyledTextArea
                   placeholder='Your answer'
+                  value={(answer.paragraph?.answer || '').toString()}
                   onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
                 />
               );
@@ -110,13 +112,19 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               );
             case QUESTION_TYPES.dropDown:
               return (
-                <StyledDefaultSelectBox
-                  defaultValue={LABELS.DROP_DOWN}
-                  onChange={onSelectDropDownOption}
-                >
-                  <option>{LABELS.DROP_DOWN}</option>
+                <StyledDefaultSelectBox onChange={onSelectDropDownOption}>
+                  <option
+                    selected={answer.dropDown?.selectedOptionIndex === null}
+                    value={LABELS.DROP_DOWN}
+                  >
+                    {LABELS.DROP_DOWN}
+                  </option>
                   {options.map((option, idx) => (
-                    <option key={`${questionIdx}-${idx}`} value={idx}>
+                    <option
+                      key={`${questionIdx}-${idx}`}
+                      selected={answer.dropDown?.selectedOptionIndex === idx}
+                      value={idx}
+                    >
                       {option}
                     </option>
                   ))}
