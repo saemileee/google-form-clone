@@ -111,6 +111,6 @@ const StyledOptionList = styled.div`
   margin-right: 24px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 12px;
 `;
 export default OptionList;

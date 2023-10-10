@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {OTHER_IDX} from '../../../constants/Form';
+import {LABELS, OTHER_IDX} from '../../../constants/Form';
 import {toggleCheckboxOption, typeOtherOption} from '../../../features/surveyPreviewFormSlice';
 import {AnswerCheckboxes} from '../../../interface/Form';
 import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../styles/Form';
@@ -14,7 +14,7 @@ interface OptionCheckboxesItemProps {
 }
 
 const OptionCheckboxesItem = ({
-  value = OTHER_IDX,
+  value = LABELS.OTHER_OPTION,
   questionIdx,
   questionAnswer,
   optionIdx = OTHER_IDX,
@@ -42,6 +42,8 @@ const OptionCheckboxesItem = ({
         <span>
           <label htmlFor={itemId}>{value}</label>
           <StyledQuestionTextInput
+            id={itemId}
+            name={itemId}
             disabled={isForResult}
             value={other || ''}
             type='text'

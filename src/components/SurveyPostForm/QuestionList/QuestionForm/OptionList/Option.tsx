@@ -7,6 +7,7 @@ import {changeOptionValue, removeQuestionOption} from '../../../../../features/s
 import {RootState} from '../../../../../store/store';
 import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../../../styles/Form';
 import OptionIcon from './OptionIcon';
+import {color} from '../../../../../styles/variables.ts/color';
 
 const MIN_OPTION_LENGTH = 1;
 
@@ -42,9 +43,7 @@ const Option = ({
         <StyledDragButtonH selected={selected} onMouseDown={mouseDown} onMouseUp={mouseUp}>
           <MdDragIndicator size={16} />
         </StyledDragButtonH>
-        <span>
-          <OptionIcon type={type} optionIdx={optionIdx} />
-        </span>
+        <OptionIcon type={type} optionIdx={optionIdx} />
       </StyledLeftIconsWrapper>
       <StyledTextInput
         type='text'
@@ -61,7 +60,7 @@ const Option = ({
           name='remove'
           onClick={() => dispatch(removeQuestionOption({questionIdx, optionIdx}))}
         >
-          <AiOutlineClose size={22} />
+          <AiOutlineClose size={22} color={color.textGrey} />
         </StyledMenuButton>
       )}
     </>

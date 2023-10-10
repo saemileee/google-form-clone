@@ -24,6 +24,8 @@ const Header = () => {
 export default Header;
 
 const StyledHeaderContainer = styled.header`
+  position: fixed;
+  z-index: 999;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;

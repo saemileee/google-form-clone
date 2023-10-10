@@ -63,7 +63,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
   }, [submitTryCount]);
 
   return (
-    <StyledQuestionFormContainer ref={questionFormRef} $padding={24} $gap={24} $invalid={isInvalid}>
+    <StyledQuestionFormContainer ref={questionFormRef} $padding={24} $gap={32} $invalid={isInvalid}>
       <StyledQuestionTitle>
         {title}
         {isRequired && <span className='symbol-required'> *</span>}
@@ -162,6 +162,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
 export default QuestionForm;
 
 const StyledQuestionFormContainer = styled(StyledGeneralFormContainer)<{$invalid: boolean}>`
+  padding-top: 40px;
   border-color: ${props => (props.$invalid ? 'red' : color.border)};
 `;
 
