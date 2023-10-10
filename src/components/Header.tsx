@@ -1,16 +1,10 @@
 import {AiOutlineEye} from 'react-icons/ai';
 import styled from 'styled-components';
 import {StyledMenuButton} from '../styles/Form';
-import {formStateStorage} from '../store/localStorage';
-import {useSelector} from 'react-redux';
-import {RootState} from '../store/store';
 import {color} from '../styles/variables.ts/color';
 
 const Header = () => {
-  const formState = useSelector((state: RootState) => state.questionForm);
-
   const openPreviewTab = () => {
-    formStateStorage.setItem(formState);
     window.open(
       `${window.location.origin}${window.location.pathname}preview`,
       '_blank',
