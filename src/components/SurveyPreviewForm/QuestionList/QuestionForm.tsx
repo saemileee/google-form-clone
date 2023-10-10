@@ -38,8 +38,12 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
     other: null,
   };
 
+  const dropDownAnswerValue = Number.isInteger(answer.dropDown?.selectedOptionIndex)
+    ? answer.dropDown?.selectedOptionIndex?.toString()
+    : LABELS.DROP_DOWN;
+
   const onSelectDropDownOption = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedIdx = isNaN(Number(e.target.value)) ? null : Number(e.target.value);
+    const selectedIdx = Number.isInteger(Number(e.target.value)) ? Number(e.target.value) : null;
     dispatch(selectDropDownOption({questionIdx, selectedIdx}));
   };
 
@@ -112,19 +116,13 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               );
             case QUESTION_TYPES.dropDown:
               return (
-                <StyledDefaultSelectBox onChange={onSelectDropDownOption}>
-                  <option
-                    selected={answer.dropDown?.selectedOptionIndex === null}
-                    value={LABELS.DROP_DOWN}
-                  >
-                    {LABELS.DROP_DOWN}
-                  </option>
+                <StyledDefaultSelectBox
+                  value={dropDownAnswerValue}
+                  onChange={onSelectDropDownOption}
+                >
+                  <option value={LABELS.DROP_DOWN}>{LABELS.DROP_DOWN}</option>
                   {options.map((option, idx) => (
-                    <option
-                      key={`${questionIdx}-${idx}`}
-                      selected={answer.dropDown?.selectedOptionIndex === idx}
-                      value={idx}
-                    >
+                    <option key={`${questionIdx}-${idx}`} value={idx}>
                       {option}
                     </option>
                   ))}
