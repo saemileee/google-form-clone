@@ -8,15 +8,15 @@ import OptionList from '../PostQuestionOptionList';
 import styled from 'styled-components';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
-  const isSelected = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].isSelected
+  const isFocused = useSelector(
+    (state: RootState) => state.questionForm.questions[questionIdx].isFocused
   );
 
   return (
     <StyledQuestionContainer $padding={0}>
       <QuestionFormTop questionIdx={questionIdx} />
       <OptionList questionIdx={questionIdx} />
-      {isSelected && <QuestionBottomMenu questionIdx={questionIdx} />}
+      {isFocused && <QuestionBottomMenu questionIdx={questionIdx} />}
     </StyledQuestionContainer>
   );
 };

@@ -19,7 +19,7 @@ const QuestionFormTop = ({questionIdx}: {questionIdx: number}) => {
   const title = useSelector((state: RootState) => state.questionForm.questions[questionIdx].title);
   const type = useSelector((state: RootState) => state.questionForm.questions[questionIdx].type);
   const isSelected = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].isSelected
+    (state: RootState) => state.questionForm.questions[questionIdx].isFocused
   );
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {

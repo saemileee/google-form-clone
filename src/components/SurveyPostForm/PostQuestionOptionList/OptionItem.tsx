@@ -22,7 +22,7 @@ interface OptionProps {
   mouseDown: () => void;
   focusOption: (optionIdx: number) => void;
 }
-const Option = ({
+const OptionItem = ({
   type,
   value,
   optionIdx,
@@ -32,9 +32,8 @@ const Option = ({
   mouseDown,
   focusOption,
 }: OptionProps) => {
-  const options = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].options
-  );
+  const question = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
+  const options = 'options' in question ? question.options : [];
 
   const dispatch = useDispatch();
 
@@ -78,7 +77,7 @@ const Option = ({
   );
 };
 
-export default Option;
+export default OptionItem;
 
 const StyledLeftIconsWrapper = styled.div`
   display: flex;

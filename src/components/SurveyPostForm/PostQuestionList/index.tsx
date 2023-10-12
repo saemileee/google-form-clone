@@ -3,7 +3,7 @@ import {RootState} from '../../../store/store';
 import {useEffect, useRef, useState} from 'react';
 import {MdDragIndicator} from 'react-icons/md';
 import styled from 'styled-components';
-import {selectQuestion, resortQuestions} from '../../../features/surveyPostSlice';
+import {focusQuestion, resortQuestions} from '../../../features/surveyPostSlice';
 import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
 import {
   StyledFormWrapper,
@@ -29,7 +29,7 @@ const QuestionList = () => {
   }, []);
 
   const onSelectedQuestion = (e: React.MouseEvent<HTMLDivElement>, idx: number) => {
-    dispatch(selectQuestion({questionIdx: idx}));
+    dispatch(focusQuestion({questionIdx: idx}));
     setSideMenuTopValue(e.currentTarget.offsetTop);
   };
 
@@ -41,8 +41,8 @@ const QuestionList = () => {
       <SideMenu topValue={sideMenuTopValue} />
       {questions.map((question, idx) => (
         <StyledGeneralFormContainer
-          selected={question.isSelected}
-          key={idx}
+          selected={question.isFocused}
+          key={question.id}
           onClick={e => onSelectedQuestion(e, idx)}
           draggable={isDraggable}
           onDragStart={() => startDrag(idx)}
@@ -51,10 +51,10 @@ const QuestionList = () => {
             setResortedList(list => dispatch(resortQuestions({questions: list})));
           }}
         >
-          {question.isSelected && <StyledSelectedLine />}
+          {question.isFocused && <StyledSelectedLine />}
           <StyledDragButtonW
             aria-label='move-question'
-            selected={question.isSelected}
+            selected={question.isFocused}
             onMouseDown={mouseDown}
             onMouseUp={mouseUp}
           >
