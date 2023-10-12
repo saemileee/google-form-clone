@@ -90,7 +90,8 @@ const surveyPostSlice = createSlice({
     },
 
     addQuestion: state => {
-      const targetIdx = state.questions.findIndex(question => question.isFocused === true) + 1;
+      const questions = state.questions;
+      const targetIdx = questions.findIndex(question => question.isFocused === true) + 1;
       resetQuestionSelection(state);
       state.questions.splice(targetIdx, 0, {
         ...initialQuestion,
@@ -102,12 +103,13 @@ const surveyPostSlice = createSlice({
 
     deleteQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
       const {questionIdx} = action.payload;
+      const questions = state.questions;
       const nextSelectedQuestionIdx = questionIdx === 0 ? 1 : questionIdx - 1;
 
       resetQuestionSelection(state);
       // 남은 질문이 하나 이상인 경우 자동 선택 될 질문지
-      if (state.questions.length > 1) {
-        state.questions[nextSelectedQuestionIdx].isFocused = true;
+      if (questions.length > 1) {
+        questions[nextSelectedQuestionIdx].isFocused = true;
       }
 
       state.questions.splice(questionIdx, 1);
@@ -116,21 +118,23 @@ const surveyPostSlice = createSlice({
 
     duplicateQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
       const {questionIdx} = action.payload;
-      const {questions} = state;
+      const targetQuestion = state.questions[questionIdx];
 
       const targetIdx = questionIdx + 1;
-      state.questions.splice(targetIdx, 0, questions[questionIdx]);
+      state.questions.splice(targetIdx, 0, targetQuestion);
 
       resetQuestionSelection(state);
-      state.questions[targetIdx].isFocused = true;
+      targetQuestion.isFocused = true;
 
       formPostStateStorage.setItem(state);
     },
 
     toggleRequired: (state, action: PayloadAction<{questionIdx: number}>) => {
       const {questionIdx} = action.payload;
-      const newIsRequired = !state.questions[questionIdx].isRequired;
-      state.questions[questionIdx].isRequired = newIsRequired;
+      const targetQuestion = state.questions[questionIdx];
+
+      const newIsRequired = !targetQuestion.isRequired;
+      targetQuestion.isRequired = newIsRequired;
 
       formPostStateStorage.setItem(state);
     },
