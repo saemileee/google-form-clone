@@ -9,11 +9,10 @@ import {
   StyledFormWrapper,
   StyledGeneralFormContainer,
   StyledDragButtonW,
-  StyledGeneralFormWrapper,
 } from '../../../styles/Form';
 import {color} from '../../../styles/variables.ts/color';
 import SideMenu from '../SideMenu';
-import QuestionForm from './QuestionForm';
+import PostQuestionForm from '../PostQuestionForm';
 
 const QuestionList = () => {
   const questions = useSelector((state: RootState) => state.questionForm.questions);
@@ -60,7 +59,7 @@ const QuestionList = () => {
           >
             <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
           </StyledDragButtonW>
-          <QuestionForm questionIdx={idx} />
+          <PostQuestionForm questionIdx={idx} />
         </StyledGeneralFormContainer>
       ))}
     </StyledFormWrapper>

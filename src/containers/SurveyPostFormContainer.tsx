@@ -1,12 +1,12 @@
-import BasicInfo from '../components/SurveyPostForm/BasicInfo';
-import QuestionList from '../components/SurveyPostForm/QuestionList';
+import PostBasicInfo from '../components/SurveyPostForm/PostBasicInfo';
+import PostQuestionList from '../components/SurveyPostForm/PostQuestionList';
 import {StyledSurveyContainer} from '../styles/Form';
 
 const SurveyPostFormContainer = () => {
   return (
     <StyledSurveyContainer>
-      <BasicInfo />
-      <QuestionList />
+      <PostBasicInfo />
+      <PostQuestionList />
     </StyledSurveyContainer>
   );
 };

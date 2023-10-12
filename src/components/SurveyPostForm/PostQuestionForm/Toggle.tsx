@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {color} from '../../../../styles/variables.ts/color';
+import {color} from '../../../styles/variables.ts/color';
 
 interface ToggleProps<T> {
   isActive: boolean;

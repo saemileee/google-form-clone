@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import {QuestionType} from '../../../../../interface/Form';
+import {QuestionType} from '../../../interface/Form';
 import {useDispatch, useSelector} from 'react-redux';
 import {AiOutlineClose} from 'react-icons/ai';
 import {MdDragIndicator} from 'react-icons/md';
-import {changeOptionValue, removeQuestionOption} from '../../../../../features/surveyPostSlice';
-import {RootState} from '../../../../../store/store';
-import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../../../styles/Form';
+import {changeOptionValue, removeQuestionOption} from '../../../features/surveyPostSlice';
+import {RootState} from '../../../store/store';
+import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../styles/Form';
 import OptionIcon from './OptionIcon';
-import {color} from '../../../../../styles/variables.ts/color';
-import {selectAllText} from '../../../../../utils/textInputControllers';
+import {color} from '../../../styles/variables.ts/color';
+import {selectAllText} from '../../../utils/textInputControllers';
 
 const MIN_OPTION_LENGTH = 1;
 

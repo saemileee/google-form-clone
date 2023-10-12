@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
-import BasicInfo from '../components/SurveyResult/BasicInfo';
-import QuestionList from '../components/SurveyResult/QuestionList';
+import ResultBasicInfo from '../components/SurveyResult/ResultBasicInfo';
+import ResultQuestionList from '../components/SurveyResult/ResultQuestionList';
 import {StyledSurveyContainer} from '../styles/Form';
 
 const SurveyResultContainer = () => {
@@ -9,8 +9,8 @@ const SurveyResultContainer = () => {
   }, []);
   return (
     <StyledSurveyContainer>
-      <BasicInfo />
-      <QuestionList />
+      <ResultBasicInfo />
+      <ResultQuestionList />
     </StyledSurveyContainer>
   );
 };

@@ -2,14 +2,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {BiDuplicate} from 'react-icons/bi';
 import {RiDeleteBinLine} from 'react-icons/ri';
 import styled from 'styled-components';
-import {
-  duplicateQuestion,
-  deleteQuestion,
-  toggleRequired,
-} from '../../../../features/surveyPostSlice';
-import {RootState} from '../../../../store/store';
-import {StyledMenuButton} from '../../../../styles/Form';
-import {color} from '../../../../styles/variables.ts/color';
+import {duplicateQuestion, deleteQuestion, toggleRequired} from '../../../features/surveyPostSlice';
+import {RootState} from '../../../store/store';
+import {StyledMenuButton} from '../../../styles/Form';
+import {color} from '../../../styles/variables.ts/color';
 import Toggle from './Toggle';
 
 const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {

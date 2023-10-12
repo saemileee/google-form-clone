@@ -1,5 +1,5 @@
 import {StyledFormWrapper} from '../../styles/Form';
-import QuestionForm from './QuestionForm';
+import ResultQuestionForm from './ResultQuestionForm';
 import {formResultStateStorage} from '../../store/localStorage';
 import {PreviewQuestion} from '../../interface/Form';
 
@@ -8,7 +8,7 @@ const SurveyPreviewQuestionList = () => {
   return (
     <StyledFormWrapper>
       {questions.map((_, questionIdx) => (
-        <QuestionForm key={`question-${questionIdx}`} questionIdx={questionIdx} />
+        <ResultQuestionForm key={`question-${questionIdx}`} questionIdx={questionIdx} />
       ))}
     </StyledFormWrapper>
   );

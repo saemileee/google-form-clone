@@ -1,15 +1,15 @@
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import {QUESTION_TYPES} from '../../../../../constants/Form';
-import {resortQuestionOptions} from '../../../../../features/surveyPostSlice';
-import useSortableDragNDrop from '../../../../../hooks/useSortableDragNDrop';
-import {RootState} from '../../../../../store/store';
-import {StyledOptionWrapper} from '../../../../../styles/Form';
+import {QUESTION_TYPES} from '../../../constants/Form';
+import {resortQuestionOptions} from '../../../features/surveyPostSlice';
+import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
+import {RootState} from '../../../store/store';
+import {StyledOptionWrapper} from '../../../styles/Form';
 import OptionAddButton from './OptionAddButton';
 import OptionOther from './OptionOther';
 import Option from './Option';
-import TextTypeForm from '../../../Global/TextTypeForm';
+import TextTypeForm from '../PostGlobal/TextTypeForm';
 
 const OptionList = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import {GrRadial} from 'react-icons/gr';
 import {MdOutlineCheckBoxOutlineBlank} from 'react-icons/md';
-import {QUESTION_TYPES} from '../../../../../constants/Form';
-import {QuestionType} from '../../../../../interface/Form';
+import {QUESTION_TYPES} from '../../../constants/Form';
+import {QuestionType} from '../../../interface/Form';
 import styled from 'styled-components';
 
 const OptionIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) => {

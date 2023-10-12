@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import {QUESTION_TYPES, PLACEHOLDERS} from '../../../../constants/Form';
-import {changeQuestionTitle, changeQuestionType} from '../../../../features/surveyPostSlice';
-import {RootState} from '../../../../store/store';
-import {StyledQuestionTitleInput} from '../../../../styles/Form';
+import {QUESTION_TYPES, PLACEHOLDERS} from '../../../constants/Form';
+import {changeQuestionTitle, changeQuestionType} from '../../../features/surveyPostSlice';
+import {RootState} from '../../../store/store';
+import {StyledQuestionTitleInput} from '../../../styles/Form';
 import IconDropDownBox from './IconDropDownBox';
 import TypeIcon from './TypeIcon';
-import {selectAllText} from '../../../../utils/textInputControllers';
+import {selectAllText} from '../../../utils/textInputControllers';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
   icon: <TypeIcon type={type[1]} />,

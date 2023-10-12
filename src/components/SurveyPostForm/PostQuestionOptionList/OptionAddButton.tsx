@@ -1,9 +1,9 @@
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {addQuestionOption, addOtherOption} from '../../../../../features/surveyPostSlice';
-import {QuestionType} from '../../../../../interface/Form';
-import {StyledOptionWrapper} from '../../../../../styles/Form';
-import {color} from '../../../../../styles/variables.ts/color';
+import {addQuestionOption, addOtherOption} from '../../../features/surveyPostSlice';
+import {QuestionType} from '../../../interface/Form';
+import {StyledOptionWrapper} from '../../../styles/Form';
+import {color} from '../../../styles/variables.ts/color';
 import OptionIcon from './OptionIcon';
 
 const OptionAddButton = ({
