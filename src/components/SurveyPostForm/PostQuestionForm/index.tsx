@@ -2,9 +2,9 @@ import {useSelector} from 'react-redux';
 import QuestionBottomMenu from './QuestionBottomMenu';
 import React from 'react';
 import QuestionFormTop from './QuestionFormTop';
-import {RootState} from '../../../../store/store';
-import {StyledQuestionWrapper} from '../../../../styles/Form';
-import OptionList from './OptionList';
+import {RootState} from '../../../store/store';
+import {StyledQuestionWrapper} from '../../../styles/Form';
+import OptionList from '../PostQuestionOptionList';
 import styled from 'styled-components';
 
 const QuestionForm = ({questionIdx}: {questionIdx: number}) => {

@@ -1,14 +1,14 @@
-import SurveyPreviewQuestionList from '../components/SurveyPreviewForm/QuestionList';
+import PreviewQuestionList from '../components/SurveyPreviewForm/PreviewQuestionList';
 import {StyledSurveyContainer} from '../styles/Form';
 import StaticBasicInfo from '../components/Global/StaticBasicInfo';
-import BottomButtons from '../components/SurveyPreviewForm/BottomButtons';
+import PreviewBottomButtons from '../components/SurveyPreviewForm/PreviewBottomButtons';
 
 const PreviewContainer = () => {
   return (
     <StyledSurveyContainer>
       <StaticBasicInfo />
-      <SurveyPreviewQuestionList />
-      <BottomButtons />
+      <PreviewQuestionList />
+      <PreviewBottomButtons />
     </StyledSurveyContainer>
   );
 };
