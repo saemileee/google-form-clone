@@ -33,3 +33,8 @@ export const QUESTION_TYPES = {
   checkboxes: 'Checkboxes',
   dropDown: 'DropDown',
 };
+
+export const ID_PREFIX = {
+  QUESTION: 'Q',
+  OPTION: 'O',
+};
