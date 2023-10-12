@@ -8,23 +8,19 @@ import {RootState} from '../../../store/store';
 import {StyledOptionWrapper} from '../../../styles/Form';
 import OptionAddButton from './OptionAddButton';
 import OptionOther from './OptionOther';
-import Option from './Option';
+import OptionItem from './OptionItem';
 import TextTypeForm from '../PostGlobal/TextTypeForm';
+import {Option} from '../../../interface/Form';
 
 const OptionList = ({questionIdx}: {questionIdx: number}) => {
   const dispatch = useDispatch();
 
-  const isSelected = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].isSelected
-  );
-  const type = useSelector((state: RootState) => state.questionForm.questions[questionIdx].type);
-  const options = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].options
-  );
+  const question = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
 
-  const isOtherSelected = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].isOtherSelected
-  );
+  const {isFocused, type} = question;
+
+  const options = 'options' in question ? question.options : [];
+  const isOtherSelected = 'isOtherSelected' in question ? question.isOtherSelected : false;
 
   const dragNDropOption = useSortableDragNDrop(options);
   const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
@@ -41,14 +37,14 @@ const OptionList = ({questionIdx}: {questionIdx: number}) => {
   const [focusedOptionIdx, setFocusedOptionIdx] = useState<null | number>(null);
 
   const focusOption = (optionIdx: number) => {
-    if (isSelected) {
+    if (isFocused) {
       setFocusedOptionIdx(optionIdx);
     }
   };
 
   const resortOptions = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    setResortedList((list: string[]) =>
+    setResortedList((list: Option[]) =>
       dispatch(resortQuestionOptions({questionIdx, options: list}))
     );
   };
@@ -58,9 +54,9 @@ const OptionList = ({questionIdx}: {questionIdx: number}) => {
       {type === QUESTION_TYPES.paragraph && <TextTypeForm type={QUESTION_TYPES.paragraph} />}
       {isOptionalType && (
         <>
-          {options.map((value, optionIdx) => (
+          {options.map((option, optionIdx) => (
             <StyledOptionWrapper
-              key={`option-${optionIdx}`}
+              key={option.id}
               draggable={isDraggable}
               onDragStart={() => {
                 startDrag(optionIdx);
@@ -77,9 +73,9 @@ const OptionList = ({questionIdx}: {questionIdx: number}) => {
                 setFocusedOptionIdx(null);
               }}
             >
-              <Option
+              <OptionItem
                 type={type}
-                value={value}
+                value={option.value}
                 optionIdx={optionIdx}
                 questionIdx={questionIdx}
                 selected={focusedOptionIdx === optionIdx ? true : false}
