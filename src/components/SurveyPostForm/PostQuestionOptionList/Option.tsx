@@ -41,13 +41,19 @@ const Option = ({
   return (
     <>
       <StyledLeftIconsWrapper>
-        <StyledDragButtonH selected={selected} onMouseDown={mouseDown} onMouseUp={mouseUp}>
+        <StyledDragButtonH
+          aria-label='move-option'
+          selected={selected}
+          onMouseDown={mouseDown}
+          onMouseUp={mouseUp}
+        >
           <MdDragIndicator size={16} />
         </StyledDragButtonH>
         <OptionIcon type={type} optionIdx={optionIdx} />
       </StyledLeftIconsWrapper>
       <StyledTextInput
         type='text'
+        aria-label='question-option'
         value={value}
         onChange={e => {
           const value = e.target.value;
@@ -60,6 +66,7 @@ const Option = ({
       />
       {options.length > MIN_OPTION_LENGTH && (
         <StyledMenuButton
+          aria-label='remove-option'
           $tooltipPosition='bottom'
           name='remove'
           onClick={() => dispatch(removeQuestionOption({questionIdx, optionIdx}))}

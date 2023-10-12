@@ -53,6 +53,7 @@ const QuestionList = () => {
         >
           {question.isSelected && <StyledSelectedLine />}
           <StyledDragButtonW
+            aria-label='move-question'
             selected={question.isSelected}
             onMouseDown={mouseDown}
             onMouseUp={mouseUp}

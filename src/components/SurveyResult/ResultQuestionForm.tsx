@@ -42,6 +42,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             case QUESTION_TYPES.shortAnswer:
               return (
                 <StyledPreviewTextInput
+                  aria-label='answer'
                   disabled
                   value={answer.shortAnswer?.answer ? answer.shortAnswer?.answer : ''}
                 />
@@ -49,6 +50,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             case QUESTION_TYPES.paragraph:
               return (
                 <StyledTextArea
+                  aria-label='answer'
                   disabled
                   value={answer.paragraph?.answer ? answer.paragraph?.answer : ''}
                 />
@@ -103,7 +105,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
               const selectedIdx = answer.dropDown?.selectedOptionIndex?.toString();
 
               return (
-                <StyledDefaultSelectBox disabled value={selectedIdx}>
+                <StyledDefaultSelectBox aria-label='options' disabled value={selectedIdx}>
                   <option value=''>{'미응답'}</option>
                   {options.map((option, idx) => (
                     <option key={`${questionIdx}-${idx}`} value={idx}>

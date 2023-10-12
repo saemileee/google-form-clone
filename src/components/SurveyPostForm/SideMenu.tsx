@@ -9,7 +9,12 @@ const SideMenu = ({topValue = 0}) => {
 
   return (
     <SideMenuWrapper $topValue={topValue}>
-      <StyledMenuButton name='add' $tooltipPosition='right' onClick={() => dispatch(addQuestion())}>
+      <StyledMenuButton
+        aria-label='add-question'
+        name='add'
+        $tooltipPosition='right'
+        onClick={() => dispatch(addQuestion())}
+      >
         <MdAddCircleOutline size={24} />
       </StyledMenuButton>
     </SideMenuWrapper>

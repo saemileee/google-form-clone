@@ -9,7 +9,11 @@ const ClearFormButton = () => {
   const onClearFormClick = () => {
     dispatch(resetForm());
   };
-  return <StyledClearFormButton onClick={onClearFormClick}>Clear form</StyledClearFormButton>;
+  return (
+    <StyledClearFormButton aria-label='clear-form' name='clear-form' onClick={onClearFormClick}>
+      Clear form
+    </StyledClearFormButton>
+  );
 };
 
 export default ClearFormButton;

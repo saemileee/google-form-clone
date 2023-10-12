@@ -74,6 +74,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             case QUESTION_TYPES.shortAnswer:
               return (
                 <StyledPreviewTextInput
+                  aria-label='answer'
                   placeholder='Your answer'
                   value={(answer.shortAnswer?.answer || '').toString()}
                   onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
@@ -82,6 +83,7 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             case QUESTION_TYPES.paragraph:
               return (
                 <StyledTextArea
+                  aria-label='answer'
                   placeholder='Your answer'
                   value={(answer.paragraph?.answer || '').toString()}
                   onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}

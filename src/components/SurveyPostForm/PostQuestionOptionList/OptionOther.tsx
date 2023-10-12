@@ -15,6 +15,7 @@ const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: numb
       <OptionIcon type={type} />
       <StyledOtherOption>Other...</StyledOtherOption>
       <StyledMenuButton
+        aria-label='remove-option'
         name='remove'
         $tooltipPosition='bottom'
         onClick={() => dispatch(removeOtherOption({questionIdx}))}

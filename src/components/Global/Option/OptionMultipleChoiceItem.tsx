@@ -30,6 +30,7 @@ const OptionMultipleChoiceItem = ({
         type='radio'
         id={itemId}
         name={itemId}
+        aria-label={itemId}
         value={value}
         onClick={
           isForResult

@@ -30,5 +30,5 @@ const StyledIndex = styled.span`
   font-weight: 500;
   font-family: monospace;
   font-size: 14pt;
-  opacity: 0.5;
+  padding-bottom: 6px;
 `;
