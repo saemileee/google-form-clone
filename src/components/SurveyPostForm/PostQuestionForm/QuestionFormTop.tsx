@@ -35,6 +35,7 @@ const QuestionFormTop = ({questionIdx}: {questionIdx: number}) => {
   return (
     <StyledTopInfoWrapper>
       <StyledQuestionTitleInput
+        aria-label='question-title'
         onFocus={selectAllText}
         className={isSelected ? 'selected' : undefined}
         type='text'

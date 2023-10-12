@@ -14,7 +14,12 @@ const Header = () => {
   return (
     <StyledHeaderContainer>
       <span>Survey form</span>
-      <StyledMenuButton name='preview' $tooltipPosition='bottom' onClick={openPreviewTab}>
+      <StyledMenuButton
+        aria-label='preview-form'
+        name='preview'
+        $tooltipPosition='bottom'
+        onClick={openPreviewTab}
+      >
         <AiOutlineEye size={24} />
       </StyledMenuButton>
     </StyledHeaderContainer>

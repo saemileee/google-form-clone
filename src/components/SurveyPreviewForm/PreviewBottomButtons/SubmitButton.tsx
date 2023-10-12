@@ -21,7 +21,11 @@ const SubmitButton = () => {
       dispatch(setInvalidQuestions({invalidatedQuestionIndexes}));
     }
   };
-  return <FormSubmitButton onClick={submitFormData}>Submit</FormSubmitButton>;
+  return (
+    <FormSubmitButton aria-label='submit-form' name='submit-form' onClick={submitFormData}>
+      Submit
+    </FormSubmitButton>
+  );
 };
 
 export default SubmitButton;

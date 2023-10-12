@@ -31,6 +31,7 @@ const OptionCheckboxesItem = ({
         type='checkbox'
         id={itemId}
         name={itemId}
+        aria-label={itemId}
         value={value}
         onChange={
           isForResult

@@ -17,6 +17,7 @@ const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
     <StyledMenuWrapper>
       <StyledMenuButton
         name='duplicate'
+        aria-label='duplicate-question'
         $tooltipPosition='bottom'
         onClick={() => {
           dispatch(duplicateQuestion({questionIdx}));
@@ -26,6 +27,7 @@ const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
       </StyledMenuButton>
       <StyledMenuButton
         name='delete'
+        aria-label='delete-question'
         $tooltipPosition='bottom'
         onClick={e => {
           e.stopPropagation();

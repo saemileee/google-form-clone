@@ -1,7 +1,7 @@
 export const color = {
   bg: '#ebf4fa',
   textDefault: 'black',
-  textGrey: '#a1a6ad',
+  textGrey: '#2e2e2e',
   border: '#e1e6ed',
   primary: '#0e5fe3',
   boxShadow: '#efefef',

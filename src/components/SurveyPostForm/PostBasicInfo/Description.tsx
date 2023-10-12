@@ -17,6 +17,7 @@ const Description = () => {
   return (
     <StyledTextInput
       type='text'
+      aria-label='description'
       value={description}
       placeholder={PLACEHOLDERS.DESCRIPTION}
       onChange={onTextInputChange}

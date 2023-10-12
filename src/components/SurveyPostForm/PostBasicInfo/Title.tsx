@@ -10,6 +10,7 @@ const Title = () => {
 
   return (
     <StyledTitleInput
+      aria-label='title'
       onFocus={selectAllText}
       type='text'
       value={title}

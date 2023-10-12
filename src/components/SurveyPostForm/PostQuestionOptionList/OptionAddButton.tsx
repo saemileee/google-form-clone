@@ -24,14 +24,24 @@ const OptionAddButton = ({
   return (
     <StyledAddOptionWrapper>
       <OptionIcon type={type} optionIdx={optionIdx} />
-      <button className='add-option' onClick={() => dispatch(addQuestionOption({questionIdx}))}>
+      <button
+        aria-label='add-option'
+        name='add-option'
+        className='add-option'
+        onClick={() => dispatch(addQuestionOption({questionIdx}))}
+      >
         Add option
       </button>
       {!isOtherSelected && isOtherOptionSelectable && (
         <span>
           {' '}
           or
-          <button onClick={() => dispatch(addOtherOption({questionIdx}))} className='add-other'>
+          <button
+            aria-label='add-other'
+            name='add-other'
+            onClick={() => dispatch(addOtherOption({questionIdx}))}
+            className='add-other'
+          >
             add "Other"
           </button>
         </span>
@@ -56,7 +66,7 @@ const StyledAddOptionWrapper = styled(StyledOptionWrapper)`
 
   .add-option {
     padding: 2px 0 2px 0;
-    color: grey;
+    color: ${color.primary};
     &:hover {
       cursor: text;
       border-bottom: 1px solid ${color.lightgrey};
