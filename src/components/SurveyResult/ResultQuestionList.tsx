@@ -4,7 +4,9 @@ import {formResultStateStorage} from '../../store/localStorage';
 import {Question} from '../../interface/Form';
 
 const SurveyPreviewQuestionList = () => {
-  const questions: Question[] = formResultStateStorage.getItem().questions;
+  const cachedResultForm = formResultStateStorage.getItem();
+
+  const questions: Question[] = cachedResultForm.questions;
   return (
     <StyledFormWrapper>
       {questions.map(question => (
