@@ -1,66 +1,34 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_VALUES, ID_PREFIX} from '../constants/Form';
+import {DEFAULT_VALUES} from '../constants/Form';
 import {
   FormDescription,
   FormTitle,
   QuestionTitle,
   QuestionType,
-  OptionType,
   SurveyForm,
-  MultipleChoice,
   Question,
   Option,
+  OptionalQuestion,
 } from '../interface/Form';
 import {formPostStateStorage} from '../store/localStorage';
-
-const createQuestionId = (currentQuestionLength: number) => {
-  return `${ID_PREFIX.QUESTION}-${currentQuestionLength + 1}`;
-};
-
-const createOptionId = (currentQuestionLength: number) => {
-  return `${ID_PREFIX.OPTION}-${currentQuestionLength + 1}`;
-};
-
-const initialOption: Option = {
-  id: createOptionId(0),
-  value: '',
-  isSelected: false,
-};
-const initialQuestion: MultipleChoice = {
-  id: createQuestionId(0),
-  isFocused: true,
-  title: DEFAULT_VALUES.QUESTION_TITLE,
-  type: DEFAULT_VALUES.QUESTION_TYPE,
-  options: [
-    {id: `${ID_PREFIX.OPTION}-1`, value: `${DEFAULT_VALUES.QUESTION_OPTION} 1`, isSelected: false},
-  ],
-  isOtherSelected: false,
-  isRequired: false,
-  other: '',
-};
-
-export const initialSurveyForm: SurveyForm = {
-  title: DEFAULT_VALUES.TITLE,
-  description: '',
-  questions: [initialQuestion],
-};
+import uuid from 'react-uuid';
+import {
+  resetQuestionSelection,
+  getTargetQuestionIdx,
+  getTargetOptionIdx,
+  convertQuestionForm,
+} from './utils';
+import {initialSurveyForm, initialQuestion, initialOption} from './initialForms';
 
 const cachedSurveyForm = formPostStateStorage.getItem();
 
 export const initialState: SurveyForm = cachedSurveyForm || initialSurveyForm;
 
-const resetQuestionSelection = (state: SurveyForm) => {
-  const newQuestions = state.questions.map(question => ({
-    ...question,
-    isFocused: false,
-  }));
-  state.questions = newQuestions;
-};
-
 const surveyPostSlice = createSlice({
   name: 'surveyPostSlice',
   initialState,
   reducers: {
+    // NOTE: BasicInfo
     changeTitle: (state, action: PayloadAction<{value: FormTitle}>) => {
       const {value} = action.payload;
       state.title = value;
@@ -74,10 +42,11 @@ const surveyPostSlice = createSlice({
       formPostStateStorage.setItem(state);
     },
 
-    focusQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
-      const newQuestions = state.questions.map((question, idx) =>
-        idx === questionIdx
+    // NOTE: Question
+    focusQuestion: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
+      const newQuestions = state.questions.map(question =>
+        question.id === questionId
           ? {...question, isFocused: true}
           : {
               ...question,
@@ -95,47 +64,60 @@ const surveyPostSlice = createSlice({
       resetQuestionSelection(state);
       state.questions.splice(targetIdx, 0, {
         ...initialQuestion,
-        id: createQuestionId(state.questions.length),
+        id: uuid(),
+        options: [{...initialOption, id: uuid()}],
       });
 
       formPostStateStorage.setItem(state);
     },
 
-    deleteQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
+    deleteQuestion: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
       const questions = state.questions;
+      const questionIdx = questions.findIndex(question => question.id === questionId);
       const nextSelectedQuestionIdx = questionIdx === 0 ? 1 : questionIdx - 1;
 
       resetQuestionSelection(state);
-      // 남은 질문이 하나 이상인 경우 자동 선택 될 질문지
+      // NOTE: 남은 질문이 하나 이상인 경우 자동 선택 될 질문지
       if (questions.length > 1) {
-        questions[nextSelectedQuestionIdx].isFocused = true;
+        state.questions[nextSelectedQuestionIdx].isFocused = true;
       }
 
       state.questions.splice(questionIdx, 1);
       formPostStateStorage.setItem(state);
     },
 
-    duplicateQuestion: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
+    duplicateQuestion: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
+      const targetIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetIdx];
 
-      const targetIdx = questionIdx + 1;
-      state.questions.splice(targetIdx, 0, targetQuestion);
+      const newQuestionId = uuid();
+      if ('options' in targetQuestion) {
+        const newOptions = targetQuestion.options.map(option => ({
+          ...option,
+          id: uuid(),
+        }));
+        const newQuestion = {...targetQuestion, id: newQuestionId, options: newOptions};
+        state.questions.splice(targetIdx, 0, newQuestion);
+      } else {
+        const newQuestion = {...targetQuestion, id: newQuestionId};
+        state.questions.splice(targetIdx, 0, newQuestion);
+      }
 
       resetQuestionSelection(state);
-      targetQuestion.isFocused = true;
-
+      state.questions[targetIdx].isFocused = false;
       formPostStateStorage.setItem(state);
     },
 
-    toggleRequired: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
+    toggleRequired: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
+      const targetIdx = getTargetQuestionIdx(state, questionId);
 
-      const newIsRequired = !targetQuestion.isRequired;
-      targetQuestion.isRequired = newIsRequired;
+      const questionIdx = targetIdx;
+      const isRequired = !state.questions[targetIdx].isRequired;
 
+      state.questions[questionIdx].isRequired = isRequired;
       formPostStateStorage.setItem(state);
     },
 
@@ -148,37 +130,40 @@ const surveyPostSlice = createSlice({
 
     changeQuestionTitle: (
       state,
-      action: PayloadAction<{questionIdx: number; value: QuestionTitle}>
+      action: PayloadAction<{questionId: string; value: QuestionTitle}>
     ) => {
-      const {questionIdx, value} = action.payload;
-      state.questions[questionIdx].title = value;
+      const {questionId, value} = action.payload;
+      const targetIdx = getTargetQuestionIdx(state, questionId);
 
+      state.questions[targetIdx].title = value;
       formPostStateStorage.setItem(state);
     },
 
     changeQuestionType: (
       state,
-      action: PayloadAction<{questionIdx: number; value: QuestionType}>
+      action: PayloadAction<{questionId: string; value: QuestionType}>
     ) => {
-      const {questionIdx, value} = action.payload;
+      const {questionId, value} = action.payload;
+      const targetIdx = getTargetQuestionIdx(state, questionId);
 
-      const targetQuestion = state.questions[questionIdx];
-      if ('isOtherSelected' in targetQuestion) {
-        targetQuestion.isOtherSelected = false;
-        targetQuestion.type = value;
-        formPostStateStorage.setItem(state);
-      }
+      const targetQuestion = state.questions[targetIdx];
+      const newQuestion = convertQuestionForm(targetQuestion, value);
+      console.info({newQuestion});
+      state.questions[targetIdx] = newQuestion;
     },
 
-    addQuestionOption: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
+    // NOTE: Question-Option
+    addQuestionOption: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+
+      const targetQuestion = state.questions[targetQuestionIdx];
 
       if ('options' in targetQuestion) {
         const optionLength = targetQuestion.options.length;
         const newOption = {
           ...initialOption,
-          id: createOptionId(optionLength),
+          id: uuid(),
           value: `${DEFAULT_VALUES.QUESTION_OPTION} ${optionLength + 1}`,
         };
 
@@ -189,54 +174,66 @@ const surveyPostSlice = createSlice({
 
     removeQuestionOption: (
       state,
-      action: PayloadAction<{questionIdx: number; optionIdx: number}>
+      action: PayloadAction<{questionId: string; optionId: string}>
     ) => {
-      const {questionIdx, optionIdx} = action.payload;
+      const {questionId, optionId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
 
-      const targetQuestion = state.questions[questionIdx];
+      const targetQuestion = state.questions[targetQuestionIdx];
       if ('options' in targetQuestion) {
-        targetQuestion.options.splice(optionIdx, 1);
+        (state.questions[targetQuestionIdx] as OptionalQuestion).options =
+          targetQuestion.options.filter(option => option.id !== optionId);
         formPostStateStorage.setItem(state);
       }
     },
 
-    addOtherOption: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
+    addOtherOption: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
 
-      if ('isOtherSelected' in targetQuestion) {
-        targetQuestion.isOtherSelected = true;
+      const targetQuestion = state.questions[targetQuestionIdx];
+
+      if ('other' in targetQuestion) {
+        targetQuestion.other.isFormActive = true;
         formPostStateStorage.setItem(state);
       }
     },
 
-    removeOtherOption: (state, action: PayloadAction<{questionIdx: number}>) => {
-      const {questionIdx} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
-      if ('isOtherSelected' in targetQuestion) {
-        targetQuestion.isOtherSelected = false;
+    removeOtherOption: (state, action: PayloadAction<{questionId: string}>) => {
+      const {questionId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+
+      const targetQuestion = state.questions[targetQuestionIdx];
+      if ('other' in targetQuestion) {
+        targetQuestion.other.isFormActive = false;
         formPostStateStorage.setItem(state);
       }
     },
 
     changeOptionValue: (
       state,
-      action: PayloadAction<{questionIdx: number; optionIdx: number; value: OptionType}>
+      action: PayloadAction<{questionId: string; optionId: string; value: string}>
     ) => {
-      const {questionIdx, optionIdx, value} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
-      if ('options' in targetQuestion) {
-        targetQuestion.options[optionIdx].value = value;
+      const {questionId, optionId, value} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+
+      const targetQuestion = state.questions[targetQuestionIdx];
+      const targetOptionIdx = getTargetOptionIdx(state, questionId, optionId);
+
+      if ('options' in targetQuestion && targetOptionIdx !== undefined) {
+        targetQuestion.options[targetOptionIdx].value = value;
         formPostStateStorage.setItem(state);
       }
     },
 
     resortQuestionOptions: (
       state,
-      action: PayloadAction<{questionIdx: number; options: Option[]}>
+      action: PayloadAction<{questionId: string; options: Option[]}>
     ) => {
-      const {options, questionIdx} = action.payload;
-      const targetQuestion = state.questions[questionIdx];
+      const {options, questionId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+
+      const targetQuestion = state.questions[targetQuestionIdx];
       if ('options' in targetQuestion) {
         targetQuestion.options = options;
         formPostStateStorage.setItem(state);
