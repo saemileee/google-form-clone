@@ -7,6 +7,7 @@ import IconDropDownBox from './IconDropDownBox';
 import TypeIcon from './TypeIcon';
 import {selectAllText} from '../../../utils/textInputControllers';
 import {Question} from '../../../interface/Form';
+import useTempSave from '../../../hooks/useTempSave';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
   icon: <TypeIcon type={type[1]} />,
@@ -15,11 +16,18 @@ const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
 
 const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
+  const saveTempForm = useTempSave();
   const {id, title, type, isFocused} = questionForm;
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     dispatch(changeQuestionTitle({questionId: id, value}));
+    saveTempForm();
+  };
+
+  const selectOptionType = (value: string) => {
+    dispatch(changeQuestionType({questionId: id, value}));
+    saveTempForm();
   };
 
   const defaultOptionType = {
@@ -41,7 +49,7 @@ const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
       <IconDropDownBox
         options={optionTypes}
         defaultOption={defaultOptionType}
-        valueChangeHandler={value => dispatch(changeQuestionType({questionId: id, value}))}
+        valueChangeHandler={selectOptionType}
       />
     </StyledTopInfoWrapper>
   );

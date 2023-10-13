@@ -6,9 +6,16 @@ import {QuestionType} from '../../../interface/Form';
 import {StyledMenuButton, StyledOptionWrapper} from '../../../styles/Form';
 import {color} from '../../../styles/variables.ts/color';
 import OptionIcon from './OptionIcon';
+import useTempSave from '../../../hooks/useTempSave';
 
 const OptionOther = ({type, questionId}: {type: QuestionType; questionId: string}) => {
   const dispatch = useDispatch();
+  const saveTempForm = useTempSave();
+
+  const removeOther = () => {
+    dispatch(removeOtherOption({questionId}));
+    saveTempForm();
+  };
 
   return (
     <StyledOtherOptionWrapper>
@@ -18,7 +25,7 @@ const OptionOther = ({type, questionId}: {type: QuestionType; questionId: string
         aria-label='remove-option'
         name='remove'
         $tooltipPosition='bottom'
-        onClick={() => dispatch(removeOtherOption({questionId}))}
+        onClick={removeOther}
       >
         <AiOutlineClose size={22} color={color.textGrey} />
       </StyledMenuButton>

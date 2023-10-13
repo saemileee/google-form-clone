@@ -7,14 +7,14 @@ interface Option {
   value: string;
 }
 
-const IconDropDownBox = <T extends object>({
+const IconDropDownBox = ({
   options,
   defaultOption,
   valueChangeHandler,
 }: {
   options: Option[];
   defaultOption: Option;
-  valueChangeHandler: (value: string) => T;
+  valueChangeHandler: (value: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);

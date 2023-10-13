@@ -1,12 +1,12 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {BiDuplicate} from 'react-icons/bi';
 import {RiDeleteBinLine} from 'react-icons/ri';
 import styled from 'styled-components';
 import {duplicateQuestion, deleteQuestion, toggleRequired} from '../../../features/surveyPostSlice';
-import {RootState} from '../../../store/store';
 import {StyledMenuButton} from '../../../styles/Form';
 import {color} from '../../../styles/variables.ts/color';
 import Toggle from './Toggle';
+import useTempSave from '../../../hooks/useTempSave';
 
 const QuestionBottomMenu = ({
   questionId,
@@ -16,6 +16,23 @@ const QuestionBottomMenu = ({
   isRequired: boolean;
 }) => {
   const dispatch = useDispatch();
+  const saveTempForm = useTempSave();
+
+  const duplicateQuestionForm = () => {
+    dispatch(duplicateQuestion({questionId}));
+    saveTempForm();
+  };
+
+  const deleteQuestionForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    dispatch(deleteQuestion({questionId}));
+    saveTempForm();
+  };
+
+  const toggleRequire = () => {
+    dispatch(toggleRequired({questionId}));
+    saveTempForm();
+  };
 
   return (
     <StyledMenuWrapper>
@@ -23,9 +40,7 @@ const QuestionBottomMenu = ({
         name='duplicate'
         aria-label='duplicate-question'
         $tooltipPosition='bottom'
-        onClick={() => {
-          dispatch(duplicateQuestion({questionId}));
-        }}
+        onClick={duplicateQuestionForm}
       >
         <BiDuplicate size={22} />
       </StyledMenuButton>
@@ -33,15 +48,12 @@ const QuestionBottomMenu = ({
         name='delete'
         aria-label='delete-question'
         $tooltipPosition='bottom'
-        onClick={e => {
-          e.stopPropagation();
-          dispatch(deleteQuestion({questionId}));
-        }}
+        onClick={deleteQuestionForm}
       >
         <RiDeleteBinLine size={22} />
       </StyledMenuButton>
       <div className='divider'></div>
-      <Toggle isActive={isRequired} toggleHandler={() => dispatch(toggleRequired({questionId}))} />
+      <Toggle isActive={isRequired} toggleHandler={toggleRequire} />
     </StyledMenuWrapper>
   );
 };

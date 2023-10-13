@@ -9,11 +9,13 @@ import {resortQuestionOptions} from '../../../features/surveyPostSlice';
 import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
 import {Question, Option} from '../../../interface/Form';
 import {initialOther} from '../../../features/initialForms';
+import useTempSave from '../../../hooks/useTempSave';
 
 const MIN_OPTION_LENGTH = 1;
 
 const OptionalItemList = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
+  const saveTempForm = useTempSave();
 
   const {id: questionId, type, isFocused} = questionForm;
   const options = 'options' in questionForm ? questionForm.options : [];
@@ -36,9 +38,10 @@ const OptionalItemList = ({questionForm}: {questionForm: Question}) => {
 
   const resortOptions = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    setResortedList((list: Option[]) =>
-      dispatch(resortQuestionOptions({questionId, options: list}))
-    );
+    setResortedList((list: Option[]) => {
+      dispatch(resortQuestionOptions({questionId, options: list}));
+      saveTempForm();
+    });
   };
 
   return (
