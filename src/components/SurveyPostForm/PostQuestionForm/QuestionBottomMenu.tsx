@@ -8,11 +8,15 @@ import {StyledMenuButton} from '../../../styles/Form';
 import {color} from '../../../styles/variables.ts/color';
 import Toggle from './Toggle';
 
-const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
-  const formData = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
+const QuestionBottomMenu = ({
+  questionId,
+  isRequired,
+}: {
+  questionId: string;
+  isRequired: boolean;
+}) => {
   const dispatch = useDispatch();
 
-  const {isRequired} = formData;
   return (
     <StyledMenuWrapper>
       <StyledMenuButton
@@ -20,7 +24,7 @@ const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
         aria-label='duplicate-question'
         $tooltipPosition='bottom'
         onClick={() => {
-          dispatch(duplicateQuestion({questionIdx}));
+          dispatch(duplicateQuestion({questionId}));
         }}
       >
         <BiDuplicate size={22} />
@@ -31,13 +35,13 @@ const QuestionBottomMenu = ({questionIdx}: {questionIdx: number}) => {
         $tooltipPosition='bottom'
         onClick={e => {
           e.stopPropagation();
-          dispatch(deleteQuestion({questionIdx}));
+          dispatch(deleteQuestion({questionId}));
         }}
       >
         <RiDeleteBinLine size={22} />
       </StyledMenuButton>
       <div className='divider'></div>
-      <Toggle isActive={isRequired} toggleHandler={() => dispatch(toggleRequired({questionIdx}))} />
+      <Toggle isActive={isRequired} toggleHandler={() => dispatch(toggleRequired({questionId}))} />
     </StyledMenuWrapper>
   );
 };

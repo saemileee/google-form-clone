@@ -1,22 +1,18 @@
-import {useSelector} from 'react-redux';
 import QuestionBottomMenu from './QuestionBottomMenu';
 import React from 'react';
 import QuestionFormTop from './QuestionFormTop';
-import {RootState} from '../../../store/store';
 import {StyledQuestionWrapper} from '../../../styles/Form';
 import OptionList from '../PostQuestionOptionList';
 import styled from 'styled-components';
+import {Question} from '../../../interface/Form';
 
-const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
-  const isFocused = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].isFocused
-  );
-
+const QuestionForm = ({questionForm}: {questionForm: Question}) => {
+  const {id, isFocused, isRequired} = questionForm;
   return (
     <StyledQuestionContainer $padding={0}>
-      <QuestionFormTop questionIdx={questionIdx} />
-      <OptionList questionIdx={questionIdx} />
-      {isFocused && <QuestionBottomMenu questionIdx={questionIdx} />}
+      <QuestionFormTop questionForm={questionForm} />
+      <OptionList questionForm={questionForm} />
+      {isFocused && <QuestionBottomMenu questionId={id} isRequired={isRequired} />}
     </StyledQuestionContainer>
   );
 };
