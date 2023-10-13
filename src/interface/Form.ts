@@ -67,6 +67,8 @@ export interface SurveyForm {
   title: FormTitle;
   description: FormDescription;
   questions: Question[];
+  timer: NodeJS.Timer | null;
+  saveTime: string | null;
 }
 
 export interface SurveyPreviewForm extends SurveyForm {
