@@ -6,7 +6,7 @@ export type FormDescription = string;
 
 export type QuestionTitle = string;
 
-export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES];
+export type QuestionType = keyof typeof QUESTION_TYPES;
 
 export type OptionType = string;
 

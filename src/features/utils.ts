@@ -1,5 +1,5 @@
 import {QUESTION_TYPES} from '../constants/Form';
-import {MultipleChoice, Question, SurveyForm} from '../interface/Form';
+import {MultipleChoice, Question, QuestionType, SurveyForm} from '../interface/Form';
 import {
   initialDropDown,
   initialMultipleChoice,
@@ -26,7 +26,7 @@ export const getTargetOptionIdx = (state: SurveyForm, questionId: string, option
   }
 };
 
-export const convertQuestionForm = (question: Question, targetType: string) => {
+export const convertQuestionForm = (question: Question, targetType: QuestionType): Question => {
   switch (question.type) {
     case QUESTION_TYPES.multipleChoice:
     case QUESTION_TYPES.checkboxes:
@@ -71,7 +71,7 @@ export const convertQuestionForm = (question: Question, targetType: string) => {
       switch (targetType) {
         case QUESTION_TYPES.multipleChoice:
         case QUESTION_TYPES.checkboxes:
-          return {...question, type: targetType, isOtherSelected: false, other: initialOther};
+          return {...question, type: targetType, other: initialOther};
         case QUESTION_TYPES.shortAnswer:
         case QUESTION_TYPES.paragraph: {
           const newQuestion = {

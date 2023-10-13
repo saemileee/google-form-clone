@@ -6,12 +6,12 @@ import {StyledQuestionTitleInput} from '../../../styles/Form';
 import IconDropDownBox from './IconDropDownBox';
 import TypeIcon from './TypeIcon';
 import {selectAllText} from '../../../utils/textInputControllers';
-import {Question} from '../../../interface/Form';
+import {Question, QuestionType} from '../../../interface/Form';
 import useTempSave from '../../../hooks/useTempSave';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
-  icon: <TypeIcon type={type[1]} />,
-  value: type[1],
+  icon: <TypeIcon type={type[1] as QuestionType} />,
+  value: type[1] as QuestionType,
 }));
 
 const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
@@ -25,7 +25,7 @@ const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
     saveTempForm();
   };
 
-  const selectOptionType = (value: string) => {
+  const selectOptionType = (value: QuestionType) => {
     dispatch(changeQuestionType({questionId: id, value}));
     saveTempForm();
   };
