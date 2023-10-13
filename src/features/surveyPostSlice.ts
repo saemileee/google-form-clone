@@ -89,15 +89,20 @@ const surveyPostSlice = createSlice({
           ...option,
           id: uuid(),
         }));
-        const newQuestion = {...targetQuestion, id: newQuestionId, options: newOptions};
+        const newQuestion = {
+          ...targetQuestion,
+          id: newQuestionId,
+          options: newOptions,
+          isFocused: true,
+        };
         state.questions.splice(targetIdx, 0, newQuestion);
       } else {
-        const newQuestion = {...targetQuestion, id: newQuestionId};
+        const newQuestion = {...targetQuestion, id: newQuestionId, isFocused: true};
         state.questions.splice(targetIdx, 0, newQuestion);
       }
 
       resetQuestionSelection(state);
-      state.questions[targetIdx].isFocused = false;
+      state.questions[targetIdx + 1].isFocused = true;
     },
 
     toggleRequired: (state, action: PayloadAction<{questionId: string}>) => {
