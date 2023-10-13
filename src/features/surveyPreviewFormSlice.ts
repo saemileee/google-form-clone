@@ -1,25 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AnswerDropDown, AnswerMultipleChoice, PreviewQuestionForm} from '../interface/Form';
-import {getPrevFormState} from '../utils/formStateConverter';
-import {OTHER_IDX, QUESTION_TYPES} from '../constants/Form';
+import {ShortAnswer, SurveyPreviewForm} from '../interface/Form';
 import {initialState as postFormInitialState} from './surveyPostSlice';
 import {formResultStateStorage} from '../store/localStorage';
 import {isValidString} from '../utils/formValidations';
+import {getTargetOptionIdx, getTargetQuestionIdx} from './utils';
+import {QUESTION_TYPES} from '../constants/Form';
 
-const initialState: PreviewQuestionForm = getPrevFormState(postFormInitialState);
-
-const initialMultipleChoiceAnswer = {
-  selectedOptionIndex: null,
-  other: null,
+const initialState: SurveyPreviewForm = {
+  ...postFormInitialState,
+  invalidQuestions: [],
+  submitTryCount: 0,
 };
 
-const initialCheckboxesAnswer = {
-  selectedOptionIndexes: [],
-  other: null,
-};
-
-const switchToValid = (state: PreviewQuestionForm, questionIdx: number) => {
-  state.invalidQuestions = state.invalidQuestions.filter(idx => questionIdx !== idx);
+const switchToValid = (state: SurveyPreviewForm, questionId: string) => {
+  state.invalidQuestions = state.invalidQuestions.filter(id => questionId !== id);
 };
 
 const surveyPreviewFormSlice = createSlice({
@@ -29,125 +23,126 @@ const surveyPreviewFormSlice = createSlice({
     toggleMultipleOption: (
       state,
       action: {
-        payload: {questionIdx: number; selectedIdx: AnswerMultipleChoice['selectedOptionIndex']};
+        payload: {questionId: string; selectedId: string};
       }
     ) => {
-      const {questionIdx, selectedIdx} = action.payload;
+      const {questionId, selectedId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetQuestionIdx];
 
-      const currentSelect = (
-        state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
-      ).selectedOptionIndex;
+      if ('options' in targetQuestion) {
+        const targetOptionIdx = getTargetOptionIdx(state, questionId, selectedId);
+        const isOptionSelected =
+          targetOptionIdx !== undefined && targetQuestion.options[targetOptionIdx].isSelected;
 
-      if (selectedIdx === currentSelect) {
-        (
-          state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
-        ).selectedOptionIndex = null;
-        return;
+        if (isOptionSelected) {
+          targetQuestion.options.forEach(option => (option.isSelected = false));
+        } else {
+          targetQuestion.options.forEach(option =>
+            option.id === selectedId ? (option.isSelected = true) : (option.isSelected = false)
+          );
+        }
+
+        if ('other' in targetQuestion) {
+          targetQuestion.other.isSelected = false;
+          switchToValid(state, questionId);
+        }
       }
-
-      (
-        state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
-      ).selectedOptionIndex = selectedIdx;
-
-      switchToValid(state, questionIdx);
     },
 
-    toggleCheckboxOption: (
-      state,
-      action: {payload: {questionIdx: number; selectedIdx: number | typeof OTHER_IDX}}
-    ) => {
-      const {questionIdx, selectedIdx} = action.payload;
+    toggleCheckboxOption: (state, action: {payload: {questionId: string; selectedId: string}}) => {
+      const {questionId, selectedId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetQuestionIdx];
 
-      const currentSelects = (
-        state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
-      ).selectedOptionIndexes;
+      if ('options' in targetQuestion) {
+        targetQuestion.options.forEach(option =>
+          option.id === selectedId ? (option.isSelected = !option.isSelected) : null
+        );
+      }
+    },
 
-      if (currentSelects.includes(selectedIdx)) {
-        (
-          state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
-        ).selectedOptionIndexes = currentSelects.filter(select => select !== selectedIdx);
-      } else {
-        (
-          state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
-        ).selectedOptionIndexes = [...currentSelects, selectedIdx];
-        switchToValid(state, questionIdx);
+    toggleOtherOption: (state, action: {payload: {questionId: string}}) => {
+      const {questionId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetQuestionIdx];
+
+      if ('other' in targetQuestion) {
+        const questionType = targetQuestion.type;
+        if (questionType === QUESTION_TYPES.multipleChoice) {
+          const isOtherSelected = targetQuestion.other.isSelected;
+          if (!isOtherSelected) {
+            targetQuestion.options.forEach(option => (option.isSelected = false));
+          }
+        }
+
+        targetQuestion.other.isSelected = !targetQuestion.other.isSelected;
+        switchToValid(state, questionId);
+      }
+    },
+
+    typeOtherOption: (state, action: {payload: {questionId: string; value: string}}) => {
+      const {questionId, value} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetQuestionIdx];
+
+      if ('options' in targetQuestion && 'other' in targetQuestion) {
+        const questionType = targetQuestion.type;
+        if (questionType === QUESTION_TYPES.multipleChoice) {
+          targetQuestion.options.forEach(option => (option.isSelected = false));
+        }
+
+        targetQuestion.other.isSelected = true;
+        targetQuestion.other.value = value;
+
+        switchToValid(state, questionId);
       }
     },
 
     selectDropDownOption: (
       state,
       action: {
-        payload: {questionIdx: number; selectedIdx: AnswerDropDown['selectedOptionIndex']};
+        payload: {questionId: string; selectedId: string};
       }
     ) => {
-      const {questionIdx, selectedIdx} = action.payload;
-      (
-        state.questions[questionIdx].answer.dropDown || {
-          selectedOptionIndex: null,
-        }
-      ).selectedOptionIndex = selectedIdx;
-      switchToValid(state, questionIdx);
-    },
+      const {questionId, selectedId} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetQuestionIdx];
 
-    changeTextAnswer: (state, action: {payload: {questionIdx: number; value: string}}) => {
-      const {questionIdx, value} = action.payload;
-      const initialTextAnswer = {answer: ''};
-      if (isValidString(value)) {
-        switchToValid(state, questionIdx);
-      }
-      if (state.questions[questionIdx].layout.type === QUESTION_TYPES.shortAnswer) {
-        (state.questions[questionIdx].answer.shortAnswer || initialTextAnswer).answer = value;
-      } else if (state.questions[questionIdx].layout.type === QUESTION_TYPES.paragraph) {
-        (state.questions[questionIdx].answer.paragraph || initialTextAnswer).answer = value;
+      if ('options' in targetQuestion) {
+        targetQuestion.options.forEach(option =>
+          option.id === selectedId ? (option.isSelected = true) : (option.isSelected = false)
+        );
       }
     },
 
-    typeOtherOption: (state, action: {payload: {questionIdx: number; value: string}}) => {
-      const {questionIdx, value} = action.payload;
+    changeTextAnswer: (state, action: {payload: {questionId: string; value: string}}) => {
+      const {questionId, value} = action.payload;
+      const targetQuestionIdx = getTargetQuestionIdx(state, questionId);
+      const targetQuestion = state.questions[targetQuestionIdx];
 
-      switchToValid(state, questionIdx);
-
-      if (state.questions[questionIdx].layout.type === QUESTION_TYPES.multipleChoice) {
-        (state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer).other =
-          value;
-
-        const currentSelected = (
-          state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
-        ).selectedOptionIndex;
-        if (currentSelected !== OTHER_IDX && value.length > 0) {
-          (
-            state.questions[questionIdx].answer.multipleChoice || initialMultipleChoiceAnswer
-          ).selectedOptionIndex = OTHER_IDX;
-        }
-      }
-
-      if (state.questions[questionIdx].layout.type === QUESTION_TYPES.checkboxes) {
-        (state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer).other = value;
-
-        const currentSelected = (
-          state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
-        ).selectedOptionIndexes;
-
-        if (!currentSelected.includes(OTHER_IDX) && value.length > 0) {
-          (
-            state.questions[questionIdx].answer.checkboxes || initialCheckboxesAnswer
-          ).selectedOptionIndexes.push(OTHER_IDX);
+      if ('answer' in targetQuestion) {
+        (state.questions[targetQuestionIdx] as ShortAnswer).answer = value;
+        if (isValidString(value)) {
+          switchToValid(state, questionId);
         }
       }
     },
 
-    resetForm: state => {
-      state.questions = initialState.questions;
-    },
-
-    setInvalidQuestions: (state, action: {payload: {invalidatedQuestionIndexes: number[]}}) => {
-      const {invalidatedQuestionIndexes} = action.payload;
-      state.invalidQuestions = invalidatedQuestionIndexes;
+    setInvalidQuestions: (state, action: {payload: {invalidatedQuestionIds: string[]}}) => {
+      const {invalidatedQuestionIds} = action.payload;
+      state.invalidQuestions = invalidatedQuestionIds;
       state.submitTryCount += 1;
     },
 
     submitForm: state => {
       formResultStateStorage.setItem(state);
+    },
+
+    resetForm: state => {
+      state.questions = initialState.questions;
+      state.submitTryCount = initialState.submitTryCount;
+      state.invalidQuestions = initialState.invalidQuestions;
     },
   },
 });
@@ -157,6 +152,7 @@ export const {
   toggleCheckboxOption,
   selectDropDownOption,
   changeTextAnswer,
+  toggleOtherOption,
   typeOtherOption,
   resetForm,
   setInvalidQuestions,
