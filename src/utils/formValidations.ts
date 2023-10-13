@@ -1,90 +1,82 @@
-import {OTHER_IDX, QUESTION_TYPES} from '../constants/Form';
+import {QUESTION_TYPES} from '../constants/Form';
 import {
-  AnswerCheckboxes,
-  AnswerDropDown,
-  AnswerMultipleChoice,
-  AnswerTextAnswer,
-  PreviewQuestion,
+  Checkboxes,
+  DropDown,
+  MultipleChoice,
+  Paragraph,
+  Question,
+  ShortAnswer,
 } from '../interface/Form';
 
 export const isValidString = (value: string) => {
   return value.trim() ? true : false;
 };
 
-const isMultipleChoiceFilled = (multipleChoiceAnswer: AnswerMultipleChoice) => {
-  const {selectedOptionIndex, other} = multipleChoiceAnswer;
+const isMultipleChoiceFilled = (multipleChoiceQuestion: MultipleChoice) => {
+  const {options, other} = multipleChoiceQuestion;
 
-  if (Number.isInteger(selectedOptionIndex)) {
+  const isOptionSelected = options.some(option => option.isSelected);
+
+  if (isOptionSelected) {
     return true;
   }
 
-  if (selectedOptionIndex === OTHER_IDX && other && isValidString(other)) {
-    return true;
-  }
-  return false;
-};
-
-const areCheckboxesFilled = (checkboxesAnswer: AnswerCheckboxes) => {
-  const {selectedOptionIndexes, other} = checkboxesAnswer;
-  const onlyNumbers = selectedOptionIndexes.filter(index => Number.isInteger(index));
-  const isOnlyOtherChecked =
-    selectedOptionIndexes.includes(OTHER_IDX) && selectedOptionIndexes.length === 1;
-
-  if (onlyNumbers.length) {
-    return true;
-  }
-  if (isOnlyOtherChecked && other && isValidString(other)) {
+  if (other.isSelected && other.value && isValidString(other.value)) {
     return true;
   }
   return false;
 };
 
-const isDropDownFilled = (dropDownAnswer: AnswerDropDown) => {
-  return Number.isInteger(dropDownAnswer.selectedOptionIndex) ? true : false;
+const areCheckboxesFilled = (checkboxesQuestion: Checkboxes) => {
+  const {options, other} = checkboxesQuestion;
+
+  const isOptionSelected = options.some(option => option.isSelected);
+
+  if (isOptionSelected) {
+    return true;
+  }
+
+  if (other.isSelected && other.value && isValidString(other.value)) {
+    return true;
+  }
+  return false;
 };
 
-const isTextAnswerFilled = (answer: AnswerTextAnswer) => {
-  return isValidString(answer.answer);
+const isDropDownFilled = (dropDownQuestion: DropDown) => {
+  return dropDownQuestion.options.some(option => option.isSelected);
 };
 
-export const getUnfilledRequiredIndexes = (questions: PreviewQuestion[]) => {
-  const unfilledQuestionIndexes: number[] = [];
-  questions.forEach((question, idx) => {
-    if (question.layout.isRequired) {
-      switch (question.layout.type) {
+const isTextAnswerFilled = (question: ShortAnswer | Paragraph) => {
+  return isValidString(question.answer);
+};
+
+export const getUnfilledRequiredIds = (questions: Question[]) => {
+  const unfilledQuestionIds: string[] = [];
+  questions.forEach(question => {
+    if (question.isRequired) {
+      switch (question.type) {
         case QUESTION_TYPES.multipleChoice:
           return (
-            question.answer.multipleChoice &&
-            !isMultipleChoiceFilled(question.answer.multipleChoice) &&
-            unfilledQuestionIndexes.push(idx)
+            !isMultipleChoiceFilled(question as MultipleChoice) &&
+            unfilledQuestionIds.push(question.id)
           );
         case QUESTION_TYPES.checkboxes:
           return (
-            question.answer.checkboxes &&
-            !areCheckboxesFilled(question.answer.checkboxes) &&
-            unfilledQuestionIndexes.push(idx)
+            !areCheckboxesFilled(question as Checkboxes) && unfilledQuestionIds.push(question.id)
           );
         case QUESTION_TYPES.dropDown:
-          return (
-            question.answer.dropDown &&
-            !isDropDownFilled(question.answer.dropDown) &&
-            unfilledQuestionIndexes.push(idx)
-          );
+          return !isDropDownFilled(question as DropDown) && unfilledQuestionIds.push(question.id);
         case QUESTION_TYPES.shortAnswer:
           return (
-            question.answer.shortAnswer &&
-            !isTextAnswerFilled(question.answer.shortAnswer) &&
-            unfilledQuestionIndexes.push(idx)
+            !isTextAnswerFilled(question as ShortAnswer) && unfilledQuestionIds.push(question.id)
           );
         case QUESTION_TYPES.paragraph:
           return (
-            question.answer.paragraph &&
-            !isTextAnswerFilled(question.answer.paragraph) &&
-            unfilledQuestionIndexes.push(idx)
+            !isTextAnswerFilled(question as Paragraph) && unfilledQuestionIds.push(question.id)
           );
       }
     }
   });
 
-  return unfilledQuestionIndexes;
+  return unfilledQuestionIds;
 };
