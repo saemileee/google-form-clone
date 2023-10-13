@@ -8,7 +8,7 @@ export type QuestionTitle = string;
 
 export type QuestionType = keyof typeof QUESTION_TYPES;
 
-export type OptionType = string;
+export type OptionValue = string;
 
 // NOTE: Option
 export interface Option {
