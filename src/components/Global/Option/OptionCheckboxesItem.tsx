@@ -61,7 +61,7 @@ const OptionCheckboxesItem = ({
           />
         </span>
       ) : (
-        <label htmlFor={id}>{value}</label>
+        <label htmlFor={isOtherItem ? otherItemId : id}>{value}</label>
       )}
     </StyledPreviewOptionWrapper>
   );
