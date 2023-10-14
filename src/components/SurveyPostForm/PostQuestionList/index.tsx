@@ -28,8 +28,8 @@ const QuestionList = () => {
     }
   }, []);
 
-  const onSelectedQuestion = (e: React.MouseEvent<HTMLDivElement>, idx: number) => {
-    dispatch(focusQuestion({questionIdx: idx}));
+  const onSelectedQuestion = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+    dispatch(focusQuestion({questionId: id}));
     setSideMenuTopValue(e.currentTarget.offsetTop);
   };
 
@@ -43,7 +43,7 @@ const QuestionList = () => {
         <StyledGeneralFormContainer
           selected={question.isFocused}
           key={question.id}
-          onClick={e => onSelectedQuestion(e, idx)}
+          onClick={e => !question.isFocused && onSelectedQuestion(e, question.id)}
           draggable={isDraggable}
           onDragStart={() => startDrag(idx)}
           onDragEnter={() => enterTarget(idx)}
@@ -60,7 +60,7 @@ const QuestionList = () => {
           >
             <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
           </StyledDragButtonW>
-          <PostQuestionForm questionIdx={idx} />
+          <PostQuestionForm questionForm={question} />
         </StyledGeneralFormContainer>
       ))}
     </StyledFormWrapper>

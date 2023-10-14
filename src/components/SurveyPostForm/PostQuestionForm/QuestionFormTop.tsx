@@ -1,30 +1,25 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import {QUESTION_TYPES, PLACEHOLDERS} from '../../../constants/Form';
 import {changeQuestionTitle, changeQuestionType} from '../../../features/surveyPostSlice';
-import {RootState} from '../../../store/store';
 import {StyledQuestionTitleInput} from '../../../styles/Form';
 import IconDropDownBox from './IconDropDownBox';
 import TypeIcon from './TypeIcon';
 import {selectAllText} from '../../../utils/textInputControllers';
+import {Question} from '../../../interface/Form';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
   icon: <TypeIcon type={type[1]} />,
   value: type[1],
 }));
 
-const QuestionFormTop = ({questionIdx}: {questionIdx: number}) => {
+const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
-
-  const title = useSelector((state: RootState) => state.questionForm.questions[questionIdx].title);
-  const type = useSelector((state: RootState) => state.questionForm.questions[questionIdx].type);
-  const isSelected = useSelector(
-    (state: RootState) => state.questionForm.questions[questionIdx].isFocused
-  );
+  const {id, title, type, isFocused} = questionForm;
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    dispatch(changeQuestionTitle({questionIdx, value}));
+    dispatch(changeQuestionTitle({questionId: id, value}));
   };
 
   const defaultOptionType = {
@@ -37,7 +32,7 @@ const QuestionFormTop = ({questionIdx}: {questionIdx: number}) => {
       <StyledQuestionTitleInput
         aria-label='question-title'
         onFocus={selectAllText}
-        className={isSelected ? 'selected' : undefined}
+        className={isFocused ? 'selected' : undefined}
         type='text'
         value={title}
         placeholder={PLACEHOLDERS.QUESTION}
@@ -46,7 +41,7 @@ const QuestionFormTop = ({questionIdx}: {questionIdx: number}) => {
       <IconDropDownBox
         options={optionTypes}
         defaultOption={defaultOptionType}
-        valueChangeHandler={value => dispatch(changeQuestionType({questionIdx, value}))}
+        valueChangeHandler={value => dispatch(changeQuestionType({questionId: id, value}))}
       />
     </StyledTopInfoWrapper>
   );
