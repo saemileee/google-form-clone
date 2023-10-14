@@ -13,14 +13,14 @@ import {
 import {color} from '../../../styles/variables.ts/color';
 import SideMenu from '../SideMenu';
 import PostQuestionForm from '../PostQuestionForm';
+import useTempSave from '../../../hooks/useTempSave';
 
 const QuestionList = () => {
   const questions = useSelector((state: RootState) => state.questionForm.questions);
   const dispatch = useDispatch();
-
-  const [sideMenuTopValue, setSideMenuTopValue] = useState(0);
-
-  const questionListRef = useRef<HTMLDivElement>(null);
+  const saveTempForm = useTempSave();
+  const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
+    useSortableDragNDrop(questions);
 
   useEffect(() => {
     if (questionListRef.current) {
@@ -28,13 +28,20 @@ const QuestionList = () => {
     }
   }, []);
 
+  const [sideMenuTopValue, setSideMenuTopValue] = useState(0);
+
+  const questionListRef = useRef<HTMLDivElement>(null);
+
   const onSelectedQuestion = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
     dispatch(focusQuestion({questionId: id}));
     setSideMenuTopValue(e.currentTarget.offsetTop);
+    saveTempForm();
   };
 
-  const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
-    useSortableDragNDrop(questions);
+  const endSorting = () => {
+    setResortedList(list => dispatch(resortQuestions({questions: list})));
+    saveTempForm();
+  };
 
   return (
     <StyledFormWrapper ref={questionListRef}>
@@ -47,9 +54,7 @@ const QuestionList = () => {
           draggable={isDraggable}
           onDragStart={() => startDrag(idx)}
           onDragEnter={() => enterTarget(idx)}
-          onDragEnd={() => {
-            setResortedList(list => dispatch(resortQuestions({questions: list})));
-          }}
+          onDragEnd={endSorting}
         >
           {question.isFocused && <StyledSelectedLine />}
           <StyledDragButtonW

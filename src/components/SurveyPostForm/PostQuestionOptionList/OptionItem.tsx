@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import {Option, QuestionType} from '../../../interface/Form';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {AiOutlineClose} from 'react-icons/ai';
 import {MdDragIndicator} from 'react-icons/md';
 import {changeOptionValue, removeQuestionOption} from '../../../features/surveyPostSlice';
-import {RootState} from '../../../store/store';
 import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../styles/Form';
 import OptionIcon from './OptionIcon';
 import {color} from '../../../styles/variables.ts/color';
 import {selectAllText} from '../../../utils/textInputControllers';
+import useTempSave from '../../../hooks/useTempSave';
 
 interface OptionProps {
   type: QuestionType;
@@ -33,7 +33,22 @@ const OptionItem = ({
   isRemoveBtnActive,
 }: OptionProps) => {
   const dispatch = useDispatch();
+  const saveTempForm = useTempSave();
+
   const {id, value} = option;
+  const typeOptionValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatch(changeOptionValue({questionId, optionId: id, value}));
+    saveTempForm();
+  };
+  const focusInput = (e: React.FocusEvent<HTMLInputElement>) => {
+    selectAllText(e);
+    focusOption(optionIdx);
+  };
+  const removeOption = () => {
+    dispatch(removeQuestionOption({questionId, optionId: id}));
+    saveTempForm();
+  };
 
   return (
     <>
@@ -52,21 +67,15 @@ const OptionItem = ({
         type='text'
         aria-label='question-option'
         value={value}
-        onChange={e => {
-          const value = e.target.value;
-          dispatch(changeOptionValue({questionId, optionId: id, value}));
-        }}
-        onFocus={e => {
-          selectAllText(e);
-          focusOption(optionIdx);
-        }}
+        onChange={typeOptionValue}
+        onFocus={focusInput}
       />
       {isRemoveBtnActive && (
         <StyledMenuButton
           aria-label='remove-option'
           $tooltipPosition='bottom'
           name='remove'
-          onClick={() => dispatch(removeQuestionOption({questionId, optionId: id}))}
+          onClick={removeOption}
         >
           <AiOutlineClose size={22} color={color.textGrey} />
         </StyledMenuButton>

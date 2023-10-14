@@ -5,6 +5,7 @@ import {QuestionType} from '../../../interface/Form';
 import {StyledOptionWrapper} from '../../../styles/Form';
 import {color} from '../../../styles/variables.ts/color';
 import OptionIcon from './OptionIcon';
+import useTempSave from '../../../hooks/useTempSave';
 
 const OptionAddButton = ({
   type,
@@ -20,6 +21,17 @@ const OptionAddButton = ({
   isOtherOptionSelectable: boolean;
 }) => {
   const dispatch = useDispatch();
+  const saveTempForm = useTempSave();
+
+  const addQuestionOptionItem = () => {
+    dispatch(addQuestionOption({questionId}));
+    saveTempForm();
+  };
+
+  const addOtherOptionItem = () => {
+    dispatch(addOtherOption({questionId}));
+    saveTempForm();
+  };
 
   return (
     <StyledAddOptionWrapper>
@@ -28,7 +40,7 @@ const OptionAddButton = ({
         aria-label='add-option'
         name='add-option'
         className='add-option'
-        onClick={() => dispatch(addQuestionOption({questionId}))}
+        onClick={addQuestionOptionItem}
       >
         Add option
       </button>
@@ -39,7 +51,7 @@ const OptionAddButton = ({
           <button
             aria-label='add-other'
             name='add-other'
-            onClick={() => dispatch(addOtherOption({questionId}))}
+            onClick={addOtherOptionItem}
             className='add-other'
           >
             add "Other"

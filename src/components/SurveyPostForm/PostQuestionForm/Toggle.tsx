@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import {color} from '../../../styles/variables.ts/color';
 
-interface ToggleProps<T> {
+interface ToggleProps {
   isActive: boolean;
-  toggleHandler: () => T;
+  toggleHandler: () => void;
 }
 
-const Toggle = <T extends object>({isActive, toggleHandler}: ToggleProps<T>) => {
+const Toggle = ({isActive, toggleHandler}: ToggleProps) => {
   return (
     <div onClick={() => toggleHandler()}>
       <StyledToggleLabel>
