@@ -1,4 +1,4 @@
-import {QUESTION_TYPES, OTHER_IDX} from '../constants/Form';
+import {QUESTION_TYPES} from '../constants/Form';
 
 export type FormTitle = string;
 
@@ -10,62 +10,20 @@ export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES];
 
 export type OptionType = string;
 
-export interface Form {
-  title: FormTitle;
-  description: FormDescription;
-  questions: Question[];
-}
-
-export interface AnswerMultipleChoice {
-  selectedOptionIndex: number | typeof OTHER_IDX | null;
-  other: string | null;
-}
-
-export interface AnswerCheckboxes {
-  selectedOptionIndexes: (number | 'other')[];
-  other: string | null;
-}
-export interface AnswerDropDown {
-  selectedOptionIndex: number | null;
-}
-export interface AnswerTextAnswer {
-  answer: string;
-}
-
-export interface PreviewQuestion {
-  title: QuestionTitle;
-  layout: {
-    isSelected: boolean;
-    type: QuestionType;
-    options: OptionType[];
-    isOtherSelected: boolean;
-    isRequired: boolean;
-  };
-  answer: {
-    multipleChoice?: AnswerMultipleChoice;
-    checkboxes?: AnswerCheckboxes;
-    dropDown?: AnswerDropDown;
-    shortAnswer?: AnswerTextAnswer;
-    paragraph?: AnswerTextAnswer;
-  };
-}
-
-export interface PreviewQuestionForm {
-  title: FormTitle;
-  description: FormDescription;
-  questions: PreviewQuestion[];
-  invalidQuestions: number[];
-  submitTryCount: number;
-}
-
-// Option
+// NOTE: Option
 export interface Option {
   id: string;
   value: string;
   isSelected: boolean;
 }
 
-// Question
+export interface Other {
+  isFormActive: boolean;
+  isSelected: boolean;
+  value: string;
+}
+
+// NOTE: Question
 interface DefaultQuestion {
   id: string;
   type: QuestionType;
@@ -76,33 +34,42 @@ interface DefaultQuestion {
 
 export interface MultipleChoice extends DefaultQuestion {
   options: Option[];
-  isOtherSelected: boolean;
-  other: string;
+  other: Other;
 }
 
-interface Checkboxes extends DefaultQuestion {
+export interface Checkboxes extends DefaultQuestion {
   options: Option[];
-  isOtherSelected: boolean;
-  other: string;
+  other: Other;
 }
 
-interface DropDown extends DefaultQuestion {
+export interface DropDown extends DefaultQuestion {
   options: Option[];
 }
 
-interface ShortAnswer extends DefaultQuestion {
+export interface ShortAnswer extends DefaultQuestion {
   answer: string;
 }
 
-interface Paragraph extends DefaultQuestion {
+export interface Paragraph extends DefaultQuestion {
   answer: string;
 }
 
 export type Question = MultipleChoice | Checkboxes | DropDown | ShortAnswer | Paragraph;
 
-// Form
+export type OptionalQuestion = MultipleChoice | Checkboxes | DropDown;
+
+export type OtherTypeQuestion = MultipleChoice | Checkboxes;
+
+export type TextTypeQuestion = ShortAnswer | Paragraph;
+
+// NOTE: Form
 export interface SurveyForm {
   title: FormTitle;
   description: FormDescription;
   questions: Question[];
+}
+
+export interface SurveyPreviewForm extends SurveyForm {
+  invalidQuestions: string[];
+  submitTryCount: number;
 }
