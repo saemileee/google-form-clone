@@ -67,4 +67,6 @@ export const initialSurveyForm: SurveyForm = {
   title: DEFAULT_VALUES.TITLE,
   description: '',
   questions: [initialQuestion],
+  timer: null,
+  saveTime: null,
 };
