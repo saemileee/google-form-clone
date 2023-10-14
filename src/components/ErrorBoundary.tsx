@@ -1,4 +1,6 @@
-import React, {Component, ReactNode} from 'react';
+import {Component, ReactNode} from 'react';
+import {formPostStateStorage, formResultStateStorage} from '../store/localStorage';
+import NotFound from '../containers/NotFound';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -18,15 +20,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     };
   }
 
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
+  componentDidCatch(error: Error) {
+    console.error(error);
     this.setState({hasError: true});
-
-    console.error('에러가 발생했습니다:', error, info);
+    formPostStateStorage.setItem('');
+    formResultStateStorage.setItem('');
   }
 
   render() {
     if (this.state.hasError) {
-      window.location.href = '/';
+      return <NotFound />;
     }
 
     return this.props.children;
