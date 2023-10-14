@@ -32,14 +32,10 @@ const surveyPostSlice = createSlice({
     changeTitle: (state, action: PayloadAction<{value: FormTitle}>) => {
       const {value} = action.payload;
       state.title = value;
-
-      formPostStateStorage.setItem(state);
     },
     changeDescription: (state, action: PayloadAction<{value: FormDescription}>) => {
       const {value} = action.payload;
       state.description = value;
-
-      formPostStateStorage.setItem(state);
     },
 
     // NOTE: Question
@@ -54,8 +50,6 @@ const surveyPostSlice = createSlice({
             }
       );
       state.questions = newQuestions;
-
-      formPostStateStorage.setItem(state);
     },
 
     addQuestion: state => {
@@ -67,8 +61,6 @@ const surveyPostSlice = createSlice({
         id: uuid(),
         options: [{...initialOption, id: uuid()}],
       });
-
-      formPostStateStorage.setItem(state);
     },
 
     deleteQuestion: (state, action: PayloadAction<{questionId: string}>) => {
@@ -84,7 +76,6 @@ const surveyPostSlice = createSlice({
       }
 
       state.questions.splice(questionIdx, 1);
-      formPostStateStorage.setItem(state);
     },
 
     duplicateQuestion: (state, action: PayloadAction<{questionId: string}>) => {
@@ -107,7 +98,6 @@ const surveyPostSlice = createSlice({
 
       resetQuestionSelection(state);
       state.questions[targetIdx].isFocused = false;
-      formPostStateStorage.setItem(state);
     },
 
     toggleRequired: (state, action: PayloadAction<{questionId: string}>) => {
@@ -118,14 +108,11 @@ const surveyPostSlice = createSlice({
       const isRequired = !state.questions[targetIdx].isRequired;
 
       state.questions[questionIdx].isRequired = isRequired;
-      formPostStateStorage.setItem(state);
     },
 
     resortQuestions: (state, action: PayloadAction<{questions: Question[]}>) => {
       const {questions} = action.payload;
       state.questions = questions;
-
-      formPostStateStorage.setItem(state);
     },
 
     changeQuestionTitle: (
@@ -136,7 +123,6 @@ const surveyPostSlice = createSlice({
       const targetIdx = getTargetQuestionIdx(state, questionId);
 
       state.questions[targetIdx].title = value;
-      formPostStateStorage.setItem(state);
     },
 
     changeQuestionType: (
@@ -148,7 +134,6 @@ const surveyPostSlice = createSlice({
 
       const targetQuestion = state.questions[targetIdx];
       const newQuestion = convertQuestionForm(targetQuestion, value);
-      console.info({newQuestion});
       state.questions[targetIdx] = newQuestion;
     },
 
@@ -168,7 +153,6 @@ const surveyPostSlice = createSlice({
         };
 
         targetQuestion.options.push(newOption);
-        formPostStateStorage.setItem(state);
       }
     },
 
@@ -183,7 +167,6 @@ const surveyPostSlice = createSlice({
       if ('options' in targetQuestion) {
         (state.questions[targetQuestionIdx] as OptionalQuestion).options =
           targetQuestion.options.filter(option => option.id !== optionId);
-        formPostStateStorage.setItem(state);
       }
     },
 
@@ -195,7 +178,6 @@ const surveyPostSlice = createSlice({
 
       if ('other' in targetQuestion) {
         targetQuestion.other.isFormActive = true;
-        formPostStateStorage.setItem(state);
       }
     },
 
@@ -206,7 +188,6 @@ const surveyPostSlice = createSlice({
       const targetQuestion = state.questions[targetQuestionIdx];
       if ('other' in targetQuestion) {
         targetQuestion.other.isFormActive = false;
-        formPostStateStorage.setItem(state);
       }
     },
 
@@ -222,7 +203,6 @@ const surveyPostSlice = createSlice({
 
       if ('options' in targetQuestion && targetOptionIdx !== undefined) {
         targetQuestion.options[targetOptionIdx].value = value;
-        formPostStateStorage.setItem(state);
       }
     },
 
@@ -236,8 +216,26 @@ const surveyPostSlice = createSlice({
       const targetQuestion = state.questions[targetQuestionIdx];
       if ('options' in targetQuestion) {
         targetQuestion.options = options;
-        formPostStateStorage.setItem(state);
       }
+    },
+
+    saveSurveyForm: state => {
+      formPostStateStorage.setItem(state);
+      state.saveTime = new Date().toLocaleString();
+    },
+
+    saveTempTimer: (state, action) => {
+      state.timer && clearTimeout(state.timer);
+      state.timer = action.payload;
+    },
+
+    clearPostForm: state => {
+      const {title, description, timer, saveTime, questions} = initialSurveyForm;
+      state.title = title;
+      state.description = description;
+      state.timer = timer;
+      state.saveTime = saveTime;
+      state.questions = questions;
     },
   },
 });
@@ -263,5 +261,8 @@ export const {
 
   changeOptionValue,
   resortQuestionOptions,
+  saveSurveyForm,
+  saveTempTimer,
+  clearPostForm,
 } = surveyPostSlice.actions;
 export default surveyPostSlice.reducer;
