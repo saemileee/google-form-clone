@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {QuestionType} from '../../../interface/Form';
+import {Option, QuestionType} from '../../../interface/Form';
 import {useDispatch, useSelector} from 'react-redux';
 import {AiOutlineClose} from 'react-icons/ai';
 import {MdDragIndicator} from 'react-icons/md';
@@ -10,32 +10,30 @@ import OptionIcon from './OptionIcon';
 import {color} from '../../../styles/variables.ts/color';
 import {selectAllText} from '../../../utils/textInputControllers';
 
-const MIN_OPTION_LENGTH = 1;
-
 interface OptionProps {
   type: QuestionType;
-  value: string;
+  option: Option;
   optionIdx: number;
-  questionIdx: number;
+  questionId: string;
   selected: boolean;
   mouseUp: () => void;
   mouseDown: () => void;
   focusOption: (optionIdx: number) => void;
+  isRemoveBtnActive: boolean;
 }
 const OptionItem = ({
   type,
-  value,
+  option,
   optionIdx,
-  questionIdx,
+  questionId,
   selected,
   mouseUp,
   mouseDown,
   focusOption,
+  isRemoveBtnActive,
 }: OptionProps) => {
-  const question = useSelector((state: RootState) => state.questionForm.questions[questionIdx]);
-  const options = 'options' in question ? question.options : [];
-
   const dispatch = useDispatch();
+  const {id, value} = option;
 
   return (
     <>
@@ -56,19 +54,19 @@ const OptionItem = ({
         value={value}
         onChange={e => {
           const value = e.target.value;
-          dispatch(changeOptionValue({questionIdx, optionIdx, value}));
+          dispatch(changeOptionValue({questionId, optionId: id, value}));
         }}
         onFocus={e => {
           selectAllText(e);
           focusOption(optionIdx);
         }}
       />
-      {options.length > MIN_OPTION_LENGTH && (
+      {isRemoveBtnActive && (
         <StyledMenuButton
           aria-label='remove-option'
           $tooltipPosition='bottom'
           name='remove'
-          onClick={() => dispatch(removeQuestionOption({questionIdx, optionIdx}))}
+          onClick={() => dispatch(removeQuestionOption({questionId, optionId: id}))}
         >
           <AiOutlineClose size={22} color={color.textGrey} />
         </StyledMenuButton>

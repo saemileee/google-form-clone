@@ -7,7 +7,7 @@ import {StyledMenuButton, StyledOptionWrapper} from '../../../styles/Form';
 import {color} from '../../../styles/variables.ts/color';
 import OptionIcon from './OptionIcon';
 
-const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: number}) => {
+const OptionOther = ({type, questionId}: {type: QuestionType; questionId: string}) => {
   const dispatch = useDispatch();
 
   return (
@@ -18,7 +18,7 @@ const OptionOther = ({type, questionIdx}: {type: QuestionType; questionIdx: numb
         aria-label='remove-option'
         name='remove'
         $tooltipPosition='bottom'
-        onClick={() => dispatch(removeOtherOption({questionIdx}))}
+        onClick={() => dispatch(removeOtherOption({questionId}))}
       >
         <AiOutlineClose size={22} color={color.textGrey} />
       </StyledMenuButton>

@@ -9,14 +9,14 @@ import OptionIcon from './OptionIcon';
 const OptionAddButton = ({
   type,
   optionIdx,
-  questionIdx,
-  isOtherSelected,
+  questionId,
+  isOtherActive,
   isOtherOptionSelectable,
 }: {
   type: QuestionType;
   optionIdx: number;
-  questionIdx: number;
-  isOtherSelected: boolean;
+  questionId: string;
+  isOtherActive: boolean;
   isOtherOptionSelectable: boolean;
 }) => {
   const dispatch = useDispatch();
@@ -28,18 +28,18 @@ const OptionAddButton = ({
         aria-label='add-option'
         name='add-option'
         className='add-option'
-        onClick={() => dispatch(addQuestionOption({questionIdx}))}
+        onClick={() => dispatch(addQuestionOption({questionId}))}
       >
         Add option
       </button>
-      {!isOtherSelected && isOtherOptionSelectable && (
+      {!isOtherActive && isOtherOptionSelectable && (
         <span>
           {' '}
           or
           <button
             aria-label='add-other'
             name='add-other'
-            onClick={() => dispatch(addOtherOption({questionIdx}))}
+            onClick={() => dispatch(addOtherOption({questionId}))}
             className='add-other'
           >
             add "Other"
