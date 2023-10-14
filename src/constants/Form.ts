@@ -1,10 +1,10 @@
-import {OptionType, FormDescription, FormTitle, QuestionType} from '../interface/Form';
+import {OptionValue, FormDescription, FormTitle, QuestionType} from '../interface/Form';
 
 interface DefaultValues {
   TITLE: FormTitle;
   QUESTION_TITLE: FormDescription;
   QUESTION_TYPE: QuestionType;
-  QUESTION_OPTION: OptionType;
+  QUESTION_OPTION: OptionValue;
 }
 
 export const LABELS = {
