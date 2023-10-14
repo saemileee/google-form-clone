@@ -7,13 +7,6 @@ interface DefaultValues {
   QUESTION_OPTION: OptionType;
 }
 
-export const DEFAULT_VALUES: DefaultValues = {
-  TITLE: 'Untitled form',
-  QUESTION_TITLE: 'Untitled Question',
-  QUESTION_TYPE: 'MultipleChoice',
-  QUESTION_OPTION: 'Option',
-};
-
 export const LABELS = {
   DROP_DOWN: 'Choose',
   OTHER_OPTION: 'Other: ',
@@ -32,6 +25,13 @@ export const QUESTION_TYPES = {
   multipleChoice: 'MultipleChoice',
   checkboxes: 'Checkboxes',
   dropDown: 'DropDown',
+};
+
+export const DEFAULT_VALUES: DefaultValues = {
+  TITLE: 'Untitled form',
+  QUESTION_TITLE: 'Untitled Question',
+  QUESTION_TYPE: QUESTION_TYPES.multipleChoice as QuestionType,
+  QUESTION_OPTION: 'Option',
 };
 
 export const ID_PREFIX = {

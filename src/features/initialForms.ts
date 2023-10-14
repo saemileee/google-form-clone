@@ -1,6 +1,13 @@
 import uuid from 'react-uuid';
 import {DEFAULT_VALUES, QUESTION_TYPES} from '../constants/Form';
-import {Option, MultipleChoice, SurveyForm, Checkboxes, DropDown} from '../interface/Form';
+import {
+  Option,
+  MultipleChoice,
+  SurveyForm,
+  Checkboxes,
+  DropDown,
+  QuestionType,
+} from '../interface/Form';
 
 export const initialOption: Option = {
   id: uuid(),
@@ -18,7 +25,7 @@ export const initialMultipleChoice: MultipleChoice = {
   id: uuid(),
   isFocused: true,
   title: DEFAULT_VALUES.QUESTION_TITLE,
-  type: QUESTION_TYPES.multipleChoice,
+  type: QUESTION_TYPES.multipleChoice as QuestionType,
   options: [initialOption],
   other: initialOther,
   isRequired: false,
@@ -28,7 +35,7 @@ export const initialCheckboxes: Checkboxes = {
   id: uuid(),
   isFocused: true,
   title: DEFAULT_VALUES.QUESTION_TITLE,
-  type: QUESTION_TYPES.checkboxes,
+  type: QUESTION_TYPES.checkboxes as QuestionType,
   options: [initialOption],
   other: initialOther,
   isRequired: false,
@@ -38,7 +45,7 @@ export const initialDropDown: DropDown = {
   id: uuid(),
   isFocused: true,
   title: DEFAULT_VALUES.QUESTION_TITLE,
-  type: QUESTION_TYPES.dropDown,
+  type: QUESTION_TYPES.dropDown as QuestionType,
   options: [initialOption],
   isRequired: false,
 };

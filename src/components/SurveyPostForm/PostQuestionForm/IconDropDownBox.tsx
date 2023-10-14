@@ -1,10 +1,11 @@
-import {ReactNode, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {MdArrowDropDown} from 'react-icons/md';
 import styled from 'styled-components';
+import {QuestionType} from '../../../interface/Form';
 
 interface Option {
-  icon: ReactNode;
-  value: string;
+  icon: JSX.Element;
+  value: QuestionType;
 }
 
 const IconDropDownBox = ({
@@ -14,7 +15,7 @@ const IconDropDownBox = ({
 }: {
   options: Option[];
   defaultOption: Option;
-  valueChangeHandler: (value: string) => void;
+  valueChangeHandler: (value: QuestionType) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
