@@ -17,46 +17,31 @@ import OptionMultipleChoiceItem from '../../Global/Option/OptionMultipleChoiceIt
 import styled from 'styled-components';
 import {color} from '../../../styles/variables.ts/color';
 import {RiErrorWarningLine} from 'react-icons/ri';
+import {Question} from '../../../interface/Form';
+import {initialOther} from '../../../features/initialForms';
 
-const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
+const QuestionForm = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
-  const title = useSelector(
-    (state: RootState) => state.surveyPreviewForm.questions[questionIdx].title
-  );
-  const answer = useSelector(
-    (state: RootState) => state.surveyPreviewForm.questions[questionIdx].answer
-  );
-  const layout = useSelector(
-    (state: RootState) => state.surveyPreviewForm.questions[questionIdx].layout
-  );
-  const {type, options, isOtherSelected, isRequired} = layout;
+
   const {invalidQuestions, submitTryCount} = useSelector(
     (state: RootState) => state.surveyPreviewForm
   );
-  const isInvalid = invalidQuestions.includes(questionIdx);
+  const {id, title, type, isRequired} = questionForm;
 
-  const multipleChoiceAnswer = answer.multipleChoice || {
-    selectedOptionIndex: null,
-    other: null,
-  };
-
-  const checkboxesAnswer = answer.checkboxes || {
-    selectedOptionIndexes: [],
-    other: null,
-  };
-
-  const dropDownAnswerValue = Number.isInteger(answer.dropDown?.selectedOptionIndex)
-    ? answer.dropDown?.selectedOptionIndex?.toString()
-    : LABELS.DROP_DOWN;
-
+  const options = 'options' in questionForm ? questionForm.options : [];
+  const other = 'other' in questionForm ? questionForm.other : initialOther;
+  const answer = 'answer' in questionForm ? questionForm.answer : '';
+  const dropDownValue = options.find(option => option.isSelected === true)?.id || LABELS.DROP_DOWN;
   const onSelectDropDownOption = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedIdx = Number.isInteger(Number(e.target.value)) ? Number(e.target.value) : null;
-    dispatch(selectDropDownOption({questionIdx, selectedIdx}));
+    const selectedId = e.target.value;
+    dispatch(selectDropDownOption({questionId: id, selectedId}));
   };
 
+  const isInvalid = invalidQuestions.includes(id);
   const questionFormRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (invalidQuestions[0] === questionIdx) {
+    if (invalidQuestions[0] === id) {
       if (questionFormRef.current)
         questionFormRef.current.scrollIntoView({behavior: 'smooth', block: 'start'});
     }
@@ -76,8 +61,10 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
                 <StyledPreviewTextInput
                   aria-label='answer'
                   placeholder='Your answer'
-                  value={(answer.shortAnswer?.answer || '').toString()}
-                  onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
+                  value={answer}
+                  onChange={e =>
+                    dispatch(changeTextAnswer({questionId: id, value: e.target.value}))
+                  }
                 />
               );
             case QUESTION_TYPES.paragraph:
@@ -85,27 +72,25 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
                 <StyledTextArea
                   aria-label='answer'
                   placeholder='Your answer'
-                  value={(answer.paragraph?.answer || '').toString()}
-                  onChange={e => dispatch(changeTextAnswer({questionIdx, value: e.target.value}))}
+                  value={answer}
+                  onChange={e =>
+                    dispatch(changeTextAnswer({questionId: id, value: e.target.value}))
+                  }
                 />
               );
             case QUESTION_TYPES.multipleChoice:
               return (
                 <StyledOptionList>
-                  {options.map((option, optionIdx) => (
-                    <OptionMultipleChoiceItem
-                      key={`${questionIdx}-${optionIdx}`}
-                      value={option}
-                      questionIdx={questionIdx}
-                      optionIdx={optionIdx}
-                      questionAnswer={multipleChoiceAnswer}
-                    />
+                  {options.map(option => (
+                    <OptionMultipleChoiceItem key={option.id} questionId={id} option={option} />
                   ))}
-                  {isOtherSelected && (
+                  {other.isFormActive && (
                     <OptionMultipleChoiceItem
-                      key={`${questionIdx}-other`}
-                      questionIdx={questionIdx}
-                      questionAnswer={multipleChoiceAnswer}
+                      isOtherItem
+                      isOtherSelected={other.isSelected}
+                      other={other.value}
+                      key='other'
+                      questionId={id}
                     />
                   )}
                 </StyledOptionList>
@@ -113,34 +98,27 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
             case QUESTION_TYPES.checkboxes:
               return (
                 <StyledOptionList>
-                  {options.map((option, optionIdx) => (
-                    <OptionCheckboxesItem
-                      key={`${questionIdx}-${optionIdx}`}
-                      value={option}
-                      questionIdx={questionIdx}
-                      optionIdx={optionIdx}
-                      questionAnswer={checkboxesAnswer}
-                    />
+                  {options.map(option => (
+                    <OptionCheckboxesItem key={option.id} questionId={id} option={option} />
                   ))}
-                  {isOtherSelected && (
+                  {other.isFormActive && (
                     <OptionCheckboxesItem
-                      key={`${questionIdx}-other`}
-                      questionIdx={questionIdx}
-                      questionAnswer={checkboxesAnswer}
+                      isOtherItem
+                      isOtherSelected={other.isSelected}
+                      other={other.value}
+                      key='other'
+                      questionId={id}
                     />
                   )}
                 </StyledOptionList>
               );
             case QUESTION_TYPES.dropDown:
               return (
-                <StyledDefaultSelectBox
-                  value={dropDownAnswerValue}
-                  onChange={onSelectDropDownOption}
-                >
+                <StyledDefaultSelectBox value={dropDownValue} onChange={onSelectDropDownOption}>
                   <option value={LABELS.DROP_DOWN}>{LABELS.DROP_DOWN}</option>
-                  {options.map((option, idx) => (
-                    <option key={`${questionIdx}-${idx}`} value={idx}>
-                      {option}
+                  {options.map(option => (
+                    <option key={option.id} value={option.id}>
+                      {option.value}
                     </option>
                   ))}
                 </StyledDefaultSelectBox>

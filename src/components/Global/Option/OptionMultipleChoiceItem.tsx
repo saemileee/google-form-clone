@@ -1,62 +1,70 @@
 import {useDispatch} from 'react-redux';
-import {LABELS, OTHER_IDX} from '../../../constants/Form';
-import {toggleMultipleOption, typeOtherOption} from '../../../features/surveyPreviewFormSlice';
-import {AnswerMultipleChoice} from '../../../interface/Form';
+import {
+  toggleMultipleOption,
+  toggleOtherOption,
+  typeOtherOption,
+} from '../../../features/surveyPreviewFormSlice';
 import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../styles/Form';
 import {selectAllText} from '../../../utils/textInputControllers';
+import {Option} from '../../../interface/Form';
 
 interface OptionMultipleChoiceItemProps {
-  value?: string;
-  questionIdx: number;
-  optionIdx?: AnswerMultipleChoice['selectedOptionIndex'];
-  questionAnswer: AnswerMultipleChoice;
+  questionId: string;
+  optionIdx?: number;
   isForResult?: boolean;
+  isOtherItem?: boolean;
+  isOtherSelected?: boolean;
+  option?: Option;
+  other?: string;
 }
 
 const OptionMultipleChoiceItem = ({
-  value = LABELS.OTHER_OPTION,
-  questionIdx,
-  questionAnswer,
-  optionIdx = OTHER_IDX,
+  questionId,
   isForResult = false,
+  isOtherItem = false,
+  isOtherSelected = false,
+  option = {id: questionId, isSelected: false, value: ''},
+  other = '',
 }: OptionMultipleChoiceItemProps) => {
   const dispatch = useDispatch();
-  const itemId = `question-${questionIdx}-${value}`;
-  const {selectedOptionIndex, other} = questionAnswer;
+
+  const {id, isSelected, value} = option;
+  const otherItemId = `${id}-other`;
+
   return (
     <StyledPreviewOptionWrapper>
       <input
         disabled={isForResult}
         type='radio'
-        id={itemId}
-        name={itemId}
-        aria-label={itemId}
+        id={isOtherItem ? otherItemId : id}
+        name={isOtherItem ? otherItemId : id}
+        aria-label={value}
         value={value}
         onClick={
-          isForResult
-            ? undefined
-            : () => dispatch(toggleMultipleOption({questionIdx, selectedIdx: optionIdx}))
+          isOtherItem
+            ? () => dispatch(toggleOtherOption({questionId}))
+            : () => dispatch(toggleMultipleOption({questionId, selectedId: id}))
         }
         onChange={() => {
           return;
         }}
-        checked={selectedOptionIndex === optionIdx}
+        checked={isOtherItem ? isOtherSelected : isSelected}
       />
-      {optionIdx === OTHER_IDX ? (
+      {isOtherItem ? (
         <span>
-          <label htmlFor={itemId}>{value}</label>
+          <label htmlFor={otherItemId}>Other: </label>
           <StyledQuestionTextInput
-            id={itemId}
-            name={itemId}
+            id={otherItemId}
+            name={otherItemId}
             disabled={isForResult}
-            value={other || ''}
+            value={other}
             type='text'
-            onChange={e => dispatch(typeOtherOption({questionIdx, value: e.target.value}))}
+            onChange={e => dispatch(typeOtherOption({questionId, value: e.target.value}))}
             onFocus={selectAllText}
           />
         </span>
       ) : (
-        <label htmlFor={itemId}>{value}</label>
+        <label htmlFor={id}>{value}</label>
       )}
     </StyledPreviewOptionWrapper>
   );

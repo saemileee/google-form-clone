@@ -3,8 +3,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {RootState} from '../../../store/store';
 import {color} from '../../../styles/variables.ts/color';
-import {getUnfilledRequiredIndexes} from '../../../utils/formValidations';
+
 import {setInvalidQuestions, submitForm} from '../../../features/surveyPreviewFormSlice';
+import {getUnfilledRequiredIds} from '../../../utils/formValidations';
 
 const SubmitButton = () => {
   const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);
@@ -12,13 +13,13 @@ const SubmitButton = () => {
   const navigate = useNavigate();
 
   const submitFormData = () => {
-    const invalidatedQuestionIndexes = getUnfilledRequiredIndexes(questions);
-    const isValidatedForm = invalidatedQuestionIndexes.length === 0;
+    const invalidatedQuestionIds = getUnfilledRequiredIds(questions);
+    const isValidatedForm = invalidatedQuestionIds.length === 0;
     if (isValidatedForm) {
       dispatch(submitForm());
       navigate('/result');
     } else {
-      dispatch(setInvalidQuestions({invalidatedQuestionIndexes}));
+      dispatch(setInvalidQuestions({invalidatedQuestionIds}));
     }
   };
   return (

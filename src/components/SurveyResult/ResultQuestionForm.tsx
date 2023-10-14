@@ -1,4 +1,4 @@
-import {QUESTION_TYPES} from '../../constants/Form';
+import {LABELS, QUESTION_TYPES} from '../../constants/Form';
 import OptionMultipleChoiceItem from '../Global/Option/OptionMultipleChoiceItem';
 import OptionCheckboxesItem from '../Global/Option/OptionCheckboxesItem';
 import {
@@ -10,25 +10,15 @@ import {
   StyledQuestionTitle,
   StyledTextArea,
 } from '../../styles/Form';
-import {PreviewQuestion} from '../../interface/Form';
-import {formResultStateStorage} from '../../store/localStorage';
+import {Question} from '../../interface/Form';
+import {initialOther} from '../../features/initialForms';
 
-const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
-  const question: PreviewQuestion = formResultStateStorage.getItem().questions[questionIdx];
-
-  const {title, answer, layout} = question;
-
-  const {type, options, isOtherSelected, isRequired} = layout;
-
-  const multipleChoiceAnswer = answer.multipleChoice || {
-    selectedOptionIndex: null,
-    other: null,
-  };
-
-  const checkboxesAnswer = answer.checkboxes || {
-    selectedOptionIndexes: [],
-    other: null,
-  };
+const QuestionForm = ({questionForm}: {questionForm: Question}) => {
+  const {id, title, type, isRequired} = questionForm;
+  const options = 'options' in questionForm ? questionForm.options : [];
+  const other = 'other' in questionForm ? questionForm.other : initialOther;
+  const answer = 'answer' in questionForm ? questionForm.answer : '';
+  const dropDownValue = options.find(option => option.isSelected === true)?.id || LABELS.DROP_DOWN;
 
   return (
     <StyledGeneralFormContainer $padding={24} $gap={24}>
@@ -40,76 +30,58 @@ const QuestionForm = ({questionIdx}: {questionIdx: number}) => {
         {(() => {
           switch (type) {
             case QUESTION_TYPES.shortAnswer:
-              return (
-                <StyledPreviewTextInput
-                  aria-label='answer'
-                  disabled
-                  value={answer.shortAnswer?.answer ? answer.shortAnswer?.answer : ''}
-                />
-              );
+              return <StyledPreviewTextInput aria-label='answer' disabled value={answer} />;
             case QUESTION_TYPES.paragraph:
-              return (
-                <StyledTextArea
-                  aria-label='answer'
-                  disabled
-                  value={answer.paragraph?.answer ? answer.paragraph?.answer : ''}
-                />
-              );
+              return <StyledTextArea aria-label='answer' disabled value={answer} />;
             case QUESTION_TYPES.multipleChoice:
               return (
                 <StyledOptionList>
-                  {options.map((option, optionIdx) => (
+                  {options.map(option => (
                     <OptionMultipleChoiceItem
                       isForResult
-                      key={`${questionIdx}-${optionIdx}`}
-                      value={option}
-                      questionIdx={questionIdx}
-                      optionIdx={optionIdx}
-                      questionAnswer={multipleChoiceAnswer}
+                      key={option.id}
+                      questionId={id}
+                      option={option}
                     />
                   ))}
-                  {isOtherSelected && (
-                    <OptionMultipleChoiceItem
-                      isForResult
-                      key={`${questionIdx}-other`}
-                      questionIdx={questionIdx}
-                      questionAnswer={multipleChoiceAnswer}
-                    />
-                  )}
+                  <OptionMultipleChoiceItem
+                    isForResult
+                    isOtherItem
+                    isOtherSelected={other.isSelected}
+                    key='other'
+                    other={other.value}
+                    questionId={id}
+                  />
                 </StyledOptionList>
               );
             case QUESTION_TYPES.checkboxes:
               return (
                 <StyledOptionList>
-                  {options.map((option, optionIdx) => (
+                  {options.map(option => (
                     <OptionCheckboxesItem
                       isForResult
-                      key={`${questionIdx}-${optionIdx}`}
-                      value={option}
-                      questionIdx={questionIdx}
-                      optionIdx={optionIdx}
-                      questionAnswer={checkboxesAnswer}
+                      key={option.id}
+                      questionId={id}
+                      option={option}
                     />
                   ))}
-                  {isOtherSelected && (
-                    <OptionCheckboxesItem
-                      isForResult
-                      key={`${questionIdx}-other`}
-                      questionIdx={questionIdx}
-                      questionAnswer={checkboxesAnswer}
-                    />
-                  )}
+                  <OptionCheckboxesItem
+                    isForResult
+                    isOtherItem
+                    isOtherSelected={other.isSelected}
+                    key='other'
+                    other={other.value}
+                    questionId={id}
+                  />
                 </StyledOptionList>
               );
             case QUESTION_TYPES.dropDown: {
-              const selectedIdx = answer.dropDown?.selectedOptionIndex?.toString();
-
               return (
-                <StyledDefaultSelectBox aria-label='options' disabled value={selectedIdx}>
-                  <option value=''>{'미응답'}</option>
-                  {options.map((option, idx) => (
-                    <option key={`${questionIdx}-${idx}`} value={idx}>
-                      {option}
+                <StyledDefaultSelectBox aria-label='options' disabled value={dropDownValue}>
+                  <option value={LABELS.DROP_DOWN}>{'미응답'}</option>
+                  {options.map(option => (
+                    <option key={option.id} value={option.id}>
+                      {option.value}
                     </option>
                   ))}
                 </StyledDefaultSelectBox>
