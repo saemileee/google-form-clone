@@ -1,13 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ShortAnswer, SurveyPreviewForm} from '../interface/Form';
-import {initialState as postFormInitialState} from './surveyBuilderSlice';
-import {formResultStateStorage} from '../store/localStorage';
+import {formBuilderStateStorage, formResultStateStorage} from '../store/localStorage';
 import {isValidString} from '../utils/formValidations';
 import {getTargetOptionIdx, getTargetQuestionIdx} from './utils';
 import {QUESTION_TYPES} from '../constants/Form';
+import {initialSurveyForm} from './initialForms';
 
-const initialState: SurveyPreviewForm = {
-  ...postFormInitialState,
+const previewSurveyForm = formBuilderStateStorage.getItem() || initialSurveyForm;
+
+export const initialState: SurveyPreviewForm = {
+  ...previewSurveyForm,
   invalidQuestions: [],
   submitTryCount: 0,
 };
