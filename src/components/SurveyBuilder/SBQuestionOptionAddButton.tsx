@@ -1,13 +1,13 @@
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {addQuestionOption, addOtherOption} from '../../../features/surveyPostSlice';
-import {QuestionType} from '../../../interface/Form';
-import {StyledOptionWrapper} from '../../../styles/Form';
-import {color} from '../../../styles/variables.ts/color';
-import OptionIcon from './OptionIcon';
-import useTempSave from '../../../hooks/useTempSave';
+import {addQuestionOption, addOtherOption} from '../../features/surveyBuilderSlice';
+import useTempSave from '../../hooks/useTempSave';
+import {QuestionType} from '../../interface/Form';
+import {StyledOptionWrapper} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
+import SBQuestionOptionIcon from './SBQuestionOptionIcon';
 
-const OptionAddButton = ({
+const SBQuestionOptionAddButton = ({
   type,
   optionIdx,
   questionId,
@@ -35,7 +35,7 @@ const OptionAddButton = ({
 
   return (
     <StyledAddOptionWrapper>
-      <OptionIcon type={type} optionIdx={optionIdx} />
+      <SBQuestionOptionIcon type={type} optionIdx={optionIdx} />
       <button
         aria-label='add-option'
         name='add-option'
@@ -62,7 +62,7 @@ const OptionAddButton = ({
   );
 };
 
-export default OptionAddButton;
+export default SBQuestionOptionAddButton;
 
 const StyledAddOptionWrapper = styled(StyledOptionWrapper)`
   padding: 0 24px 0 24px;

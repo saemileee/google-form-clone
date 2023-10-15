@@ -1,19 +1,20 @@
-import {useDispatch} from 'react-redux';
-import {StyledOptionWrapper} from '../../../styles/Form';
-import OptionAddButton from './OptionAddButton';
-import OptionOther from './OptionOther';
-import OptionItem from './OptionItem';
 import {useState} from 'react';
-import {QUESTION_TYPES} from '../../../constants/Form';
-import {resortQuestionOptions} from '../../../features/surveyPostSlice';
-import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
-import {Question, Option} from '../../../interface/Form';
-import {initialOther} from '../../../features/initialForms';
-import useTempSave from '../../../hooks/useTempSave';
+import {useDispatch} from 'react-redux';
+import styled from 'styled-components';
+import {QUESTION_TYPES} from '../../constants/Form';
+import {initialOther} from '../../features/initialForms';
+import {resortQuestionOptions} from '../../features/surveyBuilderSlice';
+import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
+import useTempSave from '../../hooks/useTempSave';
+import {Question, Option} from '../../interface/Form';
+import {StyledOptionWrapper} from '../../styles/Form';
+import OptionOther from './SBQuestionOptionOther';
+import SBQuestionOption from './SBQuestionOption';
+import SBQuestionOptionAddButton from './SBQuestionOptionAddButton';
 
 const MIN_OPTION_LENGTH = 1;
 
-const OptionalItemList = ({questionForm}: {questionForm: Question}) => {
+const SBQuestionOptionList = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
   const saveTempForm = useTempSave();
 
@@ -45,7 +46,7 @@ const OptionalItemList = ({questionForm}: {questionForm: Question}) => {
   };
 
   return (
-    <>
+    <StyledOptionList>
       {options.map((option, optionIdx) => (
         <StyledOptionWrapper
           key={option.id}
@@ -65,7 +66,7 @@ const OptionalItemList = ({questionForm}: {questionForm: Question}) => {
             setFocusedOptionIdx(null);
           }}
         >
-          <OptionItem
+          <SBQuestionOption
             type={type}
             option={option}
             optionIdx={optionIdx}
@@ -80,15 +81,22 @@ const OptionalItemList = ({questionForm}: {questionForm: Question}) => {
       ))}
 
       {other && other.isFormActive && <OptionOther type={type} questionId={questionId} />}
-      <OptionAddButton
+      <SBQuestionOptionAddButton
         type={type}
         optionIdx={options.length}
         questionId={questionId}
         isOtherActive={other.isFormActive}
         isOtherOptionSelectable={isOtherOptionSelectable}
       />
-    </>
+    </StyledOptionList>
   );
 };
 
-export default OptionalItemList;
+const StyledOptionList = styled.div`
+  margin-left: 6px;
+  margin-right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+export default SBQuestionOptionList;

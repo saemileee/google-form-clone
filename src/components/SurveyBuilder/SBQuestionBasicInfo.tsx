@@ -1,20 +1,20 @@
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {QUESTION_TYPES, PLACEHOLDERS} from '../../../constants/Form';
-import {changeQuestionTitle, changeQuestionType} from '../../../features/surveyPostSlice';
-import {StyledQuestionTitleInput} from '../../../styles/Form';
-import IconDropDownBox from './IconDropDownBox';
-import TypeIcon from './TypeIcon';
-import {selectAllText} from '../../../utils/textInputControllers';
-import {Question, QuestionType} from '../../../interface/Form';
-import useTempSave from '../../../hooks/useTempSave';
+import {QUESTION_TYPES, PLACEHOLDERS} from '../../constants/Form';
+import {changeQuestionTitle, changeQuestionType} from '../../features/surveyBuilderSlice';
+import useTempSave from '../../hooks/useTempSave';
+import {QuestionType, Question} from '../../interface/Form';
+import {StyledQuestionTitleInput} from '../../styles/Form';
+import {selectAllText} from '../../utils/textInputControllers';
+import QuestionTypeSelectBox from '../common/IconDropDownBox';
+import SBQuestionTypeIcon from './SBQuestionTypeIcon';
 
 const optionTypes = Object.entries(QUESTION_TYPES).map(type => ({
-  icon: <TypeIcon type={type[1] as QuestionType} />,
+  icon: <SBQuestionTypeIcon type={type[1] as QuestionType} />,
   value: type[1] as QuestionType,
 }));
 
-const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
+const SBQuestionBasicInfo = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
   const saveTempForm = useTempSave();
   const {id, title, type, isFocused} = questionForm;
@@ -31,7 +31,7 @@ const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
   };
 
   const defaultOptionType = {
-    icon: <TypeIcon type={type} />,
+    icon: <SBQuestionTypeIcon type={type} />,
     value: type,
   };
 
@@ -46,7 +46,7 @@ const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
         placeholder={PLACEHOLDERS.QUESTION}
         onChange={changeTitle}
       />
-      <IconDropDownBox
+      <QuestionTypeSelectBox
         options={optionTypes}
         defaultOption={defaultOptionType}
         valueChangeHandler={selectOptionType}
@@ -55,7 +55,7 @@ const QuestionFormTop = ({questionForm}: {questionForm: Question}) => {
   );
 };
 
-export default QuestionFormTop;
+export default SBQuestionBasicInfo;
 
 const StyledTopInfoWrapper = styled.div`
   padding: 0 28px 0 28px;

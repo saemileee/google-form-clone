@@ -2,19 +2,13 @@ import {useDispatch} from 'react-redux';
 import {BiDuplicate} from 'react-icons/bi';
 import {RiDeleteBinLine} from 'react-icons/ri';
 import styled from 'styled-components';
-import {duplicateQuestion, deleteQuestion, toggleRequired} from '../../../features/surveyPostSlice';
-import {StyledMenuButton} from '../../../styles/Form';
-import {color} from '../../../styles/variables.ts/color';
-import Toggle from './Toggle';
-import useTempSave from '../../../hooks/useTempSave';
+import {duplicateQuestion, deleteQuestion, toggleRequired} from '../../features/surveyBuilderSlice';
+import useTempSave from '../../hooks/useTempSave';
+import {StyledMenuButton} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
+import RequiredToggle from '../common/Toggle';
 
-const QuestionBottomMenu = ({
-  questionId,
-  isRequired,
-}: {
-  questionId: string;
-  isRequired: boolean;
-}) => {
+const SBQuestionPanel = ({questionId, isRequired}: {questionId: string; isRequired: boolean}) => {
   const dispatch = useDispatch();
   const saveTempForm = useTempSave();
 
@@ -53,12 +47,12 @@ const QuestionBottomMenu = ({
         <RiDeleteBinLine size={22} />
       </StyledMenuButton>
       <div className='divider'></div>
-      <Toggle isActive={isRequired} toggleHandler={toggleRequire} />
+      <RequiredToggle label='Required' isActive={isRequired} toggleHandler={toggleRequire} />
     </StyledMenuWrapper>
   );
 };
 
-export default QuestionBottomMenu;
+export default SBQuestionPanel;
 
 const StyledMenuWrapper = styled.div`
   display: flex;

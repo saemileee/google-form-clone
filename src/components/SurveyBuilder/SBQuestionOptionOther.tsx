@@ -1,14 +1,14 @@
 import {AiOutlineClose} from 'react-icons/ai';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {removeOtherOption} from '../../../features/surveyPostSlice';
-import {QuestionType} from '../../../interface/Form';
-import {StyledMenuButton, StyledOptionWrapper} from '../../../styles/Form';
-import {color} from '../../../styles/variables.ts/color';
-import OptionIcon from './OptionIcon';
-import useTempSave from '../../../hooks/useTempSave';
+import {removeOtherOption} from '../../features/surveyBuilderSlice';
+import useTempSave from '../../hooks/useTempSave';
+import {QuestionType} from '../../interface/Form';
+import {StyledMenuButton, StyledOptionWrapper} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
+import SBQuestionOptionIcon from './SBQuestionOptionIcon';
 
-const OptionOther = ({type, questionId}: {type: QuestionType; questionId: string}) => {
+const SBQuestionOptionOther = ({type, questionId}: {type: QuestionType; questionId: string}) => {
   const dispatch = useDispatch();
   const saveTempForm = useTempSave();
 
@@ -19,7 +19,7 @@ const OptionOther = ({type, questionId}: {type: QuestionType; questionId: string
 
   return (
     <StyledOtherOptionWrapper>
-      <OptionIcon type={type} />
+      <SBQuestionOptionIcon type={type} />
       <StyledOtherOption>Other...</StyledOtherOption>
       <StyledMenuButton
         aria-label='remove-option'
@@ -33,7 +33,7 @@ const OptionOther = ({type, questionId}: {type: QuestionType; questionId: string
   );
 };
 
-export default OptionOther;
+export default SBQuestionOptionOther;
 
 const StyledOtherOptionWrapper = styled(StyledOptionWrapper)`
   box-sizing: border-box;

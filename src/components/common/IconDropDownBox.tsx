@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {MdArrowDropDown} from 'react-icons/md';
 import styled from 'styled-components';
-import {QuestionType} from '../../../interface/Form';
+import {QuestionType} from '../../interface/Form';
 
 interface Option {
   icon: JSX.Element;

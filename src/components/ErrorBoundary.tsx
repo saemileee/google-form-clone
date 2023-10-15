@@ -1,5 +1,5 @@
 import {Component, ReactNode} from 'react';
-import {formPostStateStorage, formResultStateStorage} from '../store/localStorage';
+import {formBuilderStateStorage, formResultStateStorage} from '../store/localStorage';
 import NotFound from '../containers/NotFound';
 
 interface ErrorBoundaryProps {
@@ -23,7 +23,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   componentDidCatch(error: Error) {
     console.error(error);
     this.setState({hasError: true});
-    formPostStateStorage.setItem('');
+    formBuilderStateStorage.setItem('');
     formResultStateStorage.setItem('');
   }
 

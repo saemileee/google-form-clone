@@ -8,7 +8,7 @@ import {setInvalidQuestions, submitForm} from '../../../features/surveyPreviewFo
 import {getUnfilledRequiredIds} from '../../../utils/formValidations';
 
 const SubmitButton = () => {
-  const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);
+  const questions = useSelector((state: RootState) => state.surveyPreview.questions);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

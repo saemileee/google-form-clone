@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {saveSurveyForm, saveTempTimer} from '../features/surveyPostSlice';
+import {saveSurveyForm, saveTempTimer} from '../features/surveyBuilderSlice';
 
 const DEBOUNCE_TIME = 1000 * 5;
 

@@ -1,6 +1,6 @@
 import {createBrowserRouter} from 'react-router-dom';
 import App from './App';
-import {default as Main} from './containers/SurveyPostFormContainer';
+import {default as Main} from './containers/SurveyBuilderContainer';
 import {default as Preview} from './containers/SurveyPreviewFormContainer';
 import {default as Result} from './containers/SurveyResultContainer';
 

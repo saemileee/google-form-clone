@@ -1,22 +1,18 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../store/store';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {MdDragIndicator} from 'react-icons/md';
+import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {focusQuestion, resortQuestions} from '../../../features/surveyPostSlice';
-import useSortableDragNDrop from '../../../hooks/useSortableDragNDrop';
-import {
-  StyledFormWrapper,
-  StyledGeneralFormContainer,
-  StyledDragButtonW,
-} from '../../../styles/Form';
-import {color} from '../../../styles/variables.ts/color';
-import SideMenu from '../SideMenu';
-import PostQuestionForm from '../PostQuestionForm';
-import useTempSave from '../../../hooks/useTempSave';
+import {focusQuestion, resortQuestions} from '../../features/surveyBuilderSlice';
+import useSortableDragNDrop from '../../hooks/useSortableDragNDrop';
+import useTempSave from '../../hooks/useTempSave';
+import {RootState} from '../../store/store';
+import {StyledFormWrapper, StyledGeneralFormContainer, StyledDragButtonW} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
+import SBSidePanel from './SBSidePanel';
+import SBQuestion from './SBQuestion';
 
-const QuestionList = () => {
-  const questions = useSelector((state: RootState) => state.questionForm.questions);
+const SBQuestionList = () => {
+  const questions = useSelector((state: RootState) => state.surveyBuilder.questions);
   const dispatch = useDispatch();
   const saveTempForm = useTempSave();
   const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
@@ -45,7 +41,7 @@ const QuestionList = () => {
 
   return (
     <StyledFormWrapper ref={questionListRef}>
-      <SideMenu topValue={sideMenuTopValue} />
+      <SBSidePanel topValue={sideMenuTopValue} />
       {questions.map((question, idx) => (
         <StyledGeneralFormContainer
           selected={question.isFocused}
@@ -65,14 +61,14 @@ const QuestionList = () => {
           >
             <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
           </StyledDragButtonW>
-          <PostQuestionForm questionForm={question} />
+          <SBQuestion questionForm={question} />
         </StyledGeneralFormContainer>
       ))}
     </StyledFormWrapper>
   );
 };
 
-export default QuestionList;
+export default SBQuestionList;
 
 const StyledSelectedLine = styled.div`
   left: 0px;

@@ -10,7 +10,7 @@ import {
   Option,
   OptionalQuestion,
 } from '../interface/Form';
-import {formPostStateStorage} from '../store/localStorage';
+import {formBuilderStateStorage} from '../store/localStorage';
 import uuid from 'react-uuid';
 import {
   resetQuestionSelection,
@@ -20,12 +20,12 @@ import {
 } from './utils';
 import {initialSurveyForm, initialQuestion, initialOption} from './initialForms';
 
-const cachedSurveyForm = formPostStateStorage.getItem();
+const cachedSurveyForm = formBuilderStateStorage.getItem();
 
 export const initialState: SurveyForm = cachedSurveyForm || initialSurveyForm;
 
-const surveyPostSlice = createSlice({
-  name: 'surveyPostSlice',
+const surveyBuilderSlice = createSlice({
+  name: 'surveyBuilderSlice',
   initialState,
   reducers: {
     // NOTE: BasicInfo
@@ -225,7 +225,7 @@ const surveyPostSlice = createSlice({
     },
 
     saveSurveyForm: state => {
-      formPostStateStorage.setItem(state);
+      formBuilderStateStorage.setItem(state);
       state.saveTime = new Date().toLocaleString();
     },
 
@@ -234,7 +234,7 @@ const surveyPostSlice = createSlice({
       state.timer = action.payload;
     },
 
-    clearPostForm: state => {
+    clearBuilderForm: state => {
       const {title, description, timer, saveTime, questions} = initialSurveyForm;
       state.title = title;
       state.description = description;
@@ -268,6 +268,6 @@ export const {
   resortQuestionOptions,
   saveSurveyForm,
   saveTempTimer,
-  clearPostForm,
-} = surveyPostSlice.actions;
-export default surveyPostSlice.reducer;
+  clearBuilderForm,
+} = surveyBuilderSlice.actions;
+export default surveyBuilderSlice.reducer;

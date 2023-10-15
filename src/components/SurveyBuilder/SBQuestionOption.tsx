@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import {Option, QuestionType} from '../../../interface/Form';
 import {useDispatch} from 'react-redux';
 import {AiOutlineClose} from 'react-icons/ai';
 import {MdDragIndicator} from 'react-icons/md';
-import {changeOptionValue, removeQuestionOption} from '../../../features/surveyPostSlice';
-import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../../styles/Form';
-import OptionIcon from './OptionIcon';
-import {color} from '../../../styles/variables.ts/color';
-import {selectAllText} from '../../../utils/textInputControllers';
-import useTempSave from '../../../hooks/useTempSave';
+import {changeOptionValue, removeQuestionOption} from '../../features/surveyBuilderSlice';
+import useTempSave from '../../hooks/useTempSave';
+import {QuestionType, Option} from '../../interface/Form';
+import {StyledDragButtonH, StyledTextInput, StyledMenuButton} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
+import {selectAllText} from '../../utils/textInputControllers';
+import SBQuestionOptionIcon from './SBQuestionOptionIcon';
 
 interface OptionProps {
   type: QuestionType;
@@ -21,7 +21,7 @@ interface OptionProps {
   focusOption: (optionIdx: number) => void;
   isRemoveBtnActive: boolean;
 }
-const OptionItem = ({
+const SBQuestionOption = ({
   type,
   option,
   optionIdx,
@@ -61,7 +61,7 @@ const OptionItem = ({
         >
           <MdDragIndicator size={16} />
         </StyledDragButtonH>
-        <OptionIcon type={type} optionIdx={optionIdx} />
+        <SBQuestionOptionIcon type={type} optionIdx={optionIdx} />
       </StyledLeftIconsWrapper>
       <StyledTextInput
         type='text'
@@ -84,7 +84,7 @@ const OptionItem = ({
   );
 };
 
-export default OptionItem;
+export default SBQuestionOption;
 
 const StyledLeftIconsWrapper = styled.div`
   display: flex;

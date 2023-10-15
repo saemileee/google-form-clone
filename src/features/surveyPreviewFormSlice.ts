@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ShortAnswer, SurveyPreviewForm} from '../interface/Form';
-import {initialState as postFormInitialState} from './surveyPostSlice';
+import {initialState as postFormInitialState} from './surveyBuilderSlice';
 import {formResultStateStorage} from '../store/localStorage';
 import {isValidString} from '../utils/formValidations';
 import {getTargetOptionIdx, getTargetQuestionIdx} from './utils';

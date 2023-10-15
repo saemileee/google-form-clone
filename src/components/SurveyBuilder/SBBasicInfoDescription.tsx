@@ -1,13 +1,13 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {PLACEHOLDERS} from '../../../constants/Form';
-import {changeDescription} from '../../../features/surveyPostSlice';
-import {RootState} from '../../../store/store';
-import {StyledTextInput} from '../../../styles/Form';
-import {selectAllText} from '../../../utils/textInputControllers';
-import useTempSave from '../../../hooks/useTempSave';
+import {PLACEHOLDERS} from '../../constants/Form';
+import useTempSave from '../../hooks/useTempSave';
+import {RootState} from '../../store/store';
+import {StyledTextInput} from '../../styles/Form';
+import {selectAllText} from '../../utils/textInputControllers';
+import {changeDescription} from '../../features/surveyBuilderSlice';
 
-const Description = () => {
-  const description = useSelector((state: RootState) => state.questionForm.description);
+const SBBasicInfoDescription = () => {
+  const description = useSelector((state: RootState) => state.surveyBuilder.description);
   const dispatch = useDispatch();
   const saveTempForm = useTempSave();
 
@@ -29,4 +29,4 @@ const Description = () => {
   );
 };
 
-export default Description;
+export default SBBasicInfoDescription;

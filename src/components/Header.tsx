@@ -5,10 +5,10 @@ import {StyledMenuButton} from '../styles/Form';
 import {color} from '../styles/variables.ts/color';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store/store';
-import {clearPostForm, saveSurveyForm} from '../features/surveyPostSlice';
+import {clearBuilderForm, saveSurveyForm} from '../features/surveyBuilderSlice';
 
 const Header = () => {
-  const saveTime = useSelector((state: RootState) => state.questionForm.saveTime);
+  const saveTime = useSelector((state: RootState) => state.surveyBuilder.saveTime);
 
   const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ const Header = () => {
 
   const clearForm = () => {
     if (window.confirm('모든 폼이 초기화됩니다.')) {
-      dispatch(clearPostForm());
+      dispatch(clearBuilderForm());
     }
   };
   const openPreviewTab = () => {

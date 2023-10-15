@@ -1,10 +1,10 @@
 import {GrRadial} from 'react-icons/gr';
 import {MdOutlineCheckBoxOutlineBlank} from 'react-icons/md';
-import {QUESTION_TYPES} from '../../../constants/Form';
-import {QuestionType} from '../../../interface/Form';
 import styled from 'styled-components';
+import {QUESTION_TYPES} from '../../constants/Form';
+import {QuestionType} from '../../interface/Form';
 
-const OptionIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) => {
+const SBQuestionOptionIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number}) => {
   const getIcon = (type: QuestionType) => {
     switch (type) {
       case QUESTION_TYPES.multipleChoice:
@@ -24,7 +24,7 @@ const OptionIcon = ({type, optionIdx}: {type: QuestionType; optionIdx?: number})
   return getIcon(type);
 };
 
-export default OptionIcon;
+export default SBQuestionOptionIcon;
 
 const StyledIndex = styled.span`
   font-weight: 500;

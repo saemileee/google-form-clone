@@ -2,20 +2,20 @@ import {
   StyledGeneralFormContainer,
   StyledFormInfoLine,
   StyledGeneralFormWrapper,
-} from '../../../styles/Form';
-import Description from './Description';
-import Title from './Title';
+} from '../../styles/Form';
+import SBBasicInfoDescription from './SBBasicInfoDescription';
+import SBBasicInfoTitle from './SBBasicInfoTitle';
 
-const BasicInfo = () => {
+const SBBasicInfo = () => {
   return (
     <StyledGeneralFormContainer>
       <StyledFormInfoLine />
       <StyledGeneralFormWrapper>
-        <Title />
-        <Description />
+        <SBBasicInfoTitle />
+        <SBBasicInfoDescription />
       </StyledGeneralFormWrapper>
     </StyledGeneralFormContainer>
   );
 };
 
-export default BasicInfo;
+export default SBBasicInfo;

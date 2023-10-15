@@ -4,7 +4,7 @@ import {RootState} from '../../../store/store';
 import {StyledFormWrapper} from '../../../styles/Form';
 
 const SurveyPreviewQuestionList = () => {
-  const questions = useSelector((state: RootState) => state.surveyPreviewForm.questions);
+  const questions = useSelector((state: RootState) => state.surveyPreview.questions);
   return (
     <StyledFormWrapper>
       {questions.map(question => (

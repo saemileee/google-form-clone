@@ -23,9 +23,7 @@ import {initialOther} from '../../../features/initialForms';
 const QuestionForm = ({questionForm}: {questionForm: Question}) => {
   const dispatch = useDispatch();
 
-  const {invalidQuestions, submitTryCount} = useSelector(
-    (state: RootState) => state.surveyPreviewForm
-  );
+  const {invalidQuestions, submitTryCount} = useSelector((state: RootState) => state.surveyPreview);
   const {id, title, type, isRequired} = questionForm;
 
   const options = 'options' in questionForm ? questionForm.options : [];

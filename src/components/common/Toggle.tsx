@@ -1,17 +1,20 @@
 import styled from 'styled-components';
-import {color} from '../../../styles/variables.ts/color';
+import {color} from '../../styles/variables.ts/color';
 
 interface ToggleProps {
+  label?: string;
   isActive: boolean;
   toggleHandler: () => void;
 }
 
-const Toggle = ({isActive, toggleHandler}: ToggleProps) => {
+const Toggle = ({label, isActive, toggleHandler}: ToggleProps) => {
   return (
     <div onClick={() => toggleHandler()}>
-      <StyledToggleLabel>
-        <span>Required</span>
-      </StyledToggleLabel>
+      {label && (
+        <StyledToggleLabel>
+          <span>{label}</span>
+        </StyledToggleLabel>
+      )}
       <StyledToggleEl>
         <StyledToggleTrack $active={isActive} />
         <StyledToggleInk className='toggle-ink ' $active={isActive} />

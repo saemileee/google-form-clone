@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import {QUESTION_TYPES} from '../../../constants/Form';
-import {QuestionType} from '../../../interface/Form';
-import {color} from '../../../styles/variables.ts/color';
+import {QUESTION_TYPES} from '../../constants/Form';
+import {QuestionType} from '../../interface/Form';
+import {color} from '../../styles/variables.ts/color';
 
-const TextTypeForm = ({type}: {type: QuestionType}) => {
+const SBQuestionTextTypeForm = ({type}: {type: QuestionType}) => {
   const getTextTypeForm = () => {
     switch (type) {
       case QUESTION_TYPES.shortAnswer:
@@ -18,7 +18,7 @@ const TextTypeForm = ({type}: {type: QuestionType}) => {
   return getTextTypeForm();
 };
 
-export default TextTypeForm;
+export default SBQuestionTextTypeForm;
 
 const StyledShortAnswerTypeForm = styled.div`
   margin: 0 24px 32px 24px;
