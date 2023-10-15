@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import {
-  StyledGeneralFormContainer,
   StyledFormInfoLine,
+  StyledGeneralFormContainer,
   StyledGeneralFormWrapper,
-} from '../../../styles/Form';
-import SurveyPreviewDescription from './Description';
-import SurveyPreviewTitle from './Title';
-import {color} from '../../../styles/variables.ts/color';
+} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
+import SurveyPreviewDescription from '../common/StaticBasicInfo/Description';
+import SurveyPreviewTitle from '../common/StaticBasicInfo/Title';
 
-const BasicInfo = () => {
+const SPBasicInfo = () => {
   return (
     <StyledGeneralFormContainer>
       <StyledFormInfoLine />
@@ -22,7 +22,7 @@ const BasicInfo = () => {
   );
 };
 
-export default BasicInfo;
+export default SPBasicInfo;
 
 const StyledMsg = styled.p`
   border-top: 1px solid ${color.border};

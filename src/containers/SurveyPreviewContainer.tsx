@@ -1,12 +1,12 @@
+import SPBasicInfo from '../components/SurveyPreview/SPBasicInfo';
 import SPBottomButtons from '../components/SurveyPreview/SPBottomButtons';
 import SPQuestionList from '../components/SurveyPreview/SPQuestionList';
-import StaticBasicInfo from '../components/common/StaticBasicInfo';
 import {StyledSurveyContainer} from '../styles/Form';
 
 const SurveyPreviewContainer = () => {
   return (
     <StyledSurveyContainer>
-      <StaticBasicInfo />
+      <SPBasicInfo />
       <SPQuestionList />
       <SPBottomButtons />
     </StyledSurveyContainer>
