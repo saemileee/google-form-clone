@@ -12,19 +12,17 @@ export const LABELS = {
   OTHER_OPTION: 'Other: ',
 };
 
-export const OTHER_IDX = 'other' as const;
-
 export const PLACEHOLDERS = {
   DESCRIPTION: 'Form description',
   QUESTION: 'Question',
 };
 
 export const QUESTION_TYPES = {
-  shortAnswer: 'ShortAnswer',
-  paragraph: 'Paragraph',
-  multipleChoice: 'MultipleChoice',
-  checkboxes: 'Checkboxes',
-  dropDown: 'DropDown',
+  shortAnswer: 'shortAnswer',
+  paragraph: 'paragraph',
+  multipleChoice: 'multipleChoice',
+  checkboxes: 'checkboxes',
+  dropDown: 'dropDown',
 };
 
 export const DEFAULT_VALUES: DefaultValues = {
@@ -32,9 +30,4 @@ export const DEFAULT_VALUES: DefaultValues = {
   QUESTION_TITLE: 'Untitled Question',
   QUESTION_TYPE: QUESTION_TYPES.multipleChoice as QuestionType,
   QUESTION_OPTION: 'Option',
-};
-
-export const ID_PREFIX = {
-  QUESTION: 'Q',
-  OPTION: 'O',
 };
