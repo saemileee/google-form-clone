@@ -4,9 +4,10 @@ import {RiErrorWarningLine} from 'react-icons/ri';
 import styled from 'styled-components';
 import {Question} from '../../interface/Form';
 import {RootState} from '../../store/store';
-import {StyledQuestionTitle, StyledGeneralFormContainer} from '../../styles/Form';
+import {StyledGeneralFormContainer} from '../../styles/Form';
 import {color} from '../../styles/variables.ts/color';
 import QuestionForm from '../common/Question/QuestionForm';
+import QuestionTitle from '../common/Question/QuestionTitle';
 
 const SPQuestion = ({questionForm}: {questionForm: Question}) => {
   const {invalidQuestions, submitTryCount} = useSelector((state: RootState) => state.surveyPreview);
@@ -24,10 +25,7 @@ const SPQuestion = ({questionForm}: {questionForm: Question}) => {
 
   return (
     <StyledQuestionFormContainer ref={questionFormRef} $padding={24} $gap={32} $invalid={isInvalid}>
-      <StyledQuestionTitle>
-        {title}
-        {isRequired && <span className='symbol-required'> *</span>}
-      </StyledQuestionTitle>
+      <QuestionTitle title={title} isRequired={isRequired} />
       <QuestionForm questionForm={questionForm} />
       {isInvalid && (
         <StyledInvalidatedMsg>
