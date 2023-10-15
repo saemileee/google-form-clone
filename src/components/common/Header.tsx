@@ -1,11 +1,11 @@
 import {AiOutlineClear, AiOutlineEye} from 'react-icons/ai';
 import {BsSave} from 'react-icons/bs';
+import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components';
-import {StyledMenuButton} from '../styles/Form';
-import {color} from '../styles/variables.ts/color';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../store/store';
-import {clearBuilderForm, saveSurveyForm} from '../features/surveyBuilderSlice';
+import {saveSurveyForm, clearBuilderForm} from '../../features/surveyBuilderSlice';
+import {RootState} from '../../store/store';
+import {StyledMenuButton} from '../../styles/Form';
+import {color} from '../../styles/variables.ts/color';
 
 const Header = () => {
   const saveTime = useSelector((state: RootState) => state.surveyBuilder.saveTime);

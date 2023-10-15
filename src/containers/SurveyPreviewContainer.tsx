@@ -3,7 +3,7 @@ import SPQuestionList from '../components/SurveyPreview/SPQuestionList';
 import StaticBasicInfo from '../components/common/StaticBasicInfo';
 import {StyledSurveyContainer} from '../styles/Form';
 
-const PreviewContainer = () => {
+const SurveyPreviewContainer = () => {
   return (
     <StyledSurveyContainer>
       <StaticBasicInfo />
@@ -13,4 +13,4 @@ const PreviewContainer = () => {
   );
 };
 
-export default PreviewContainer;
+export default SurveyPreviewContainer;

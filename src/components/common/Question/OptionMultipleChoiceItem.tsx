@@ -1,14 +1,15 @@
 import {useDispatch} from 'react-redux';
 import {
+  toggleMultipleOption,
   toggleOtherOption,
-  toggleCheckboxOption,
   typeOtherOption,
-} from '../../../features/surveyPreviewFormSlice';
+} from '../../../features/surveyPreviewSlice';
 import {StyledPreviewOptionWrapper, StyledQuestionTextInput} from '../../../styles/Form';
-import {Option} from '../../../interface/Form';
 import {selectAllText} from '../../../utils/textInputControllers';
+import {Option} from '../../../interface/Form';
+import {LABELS} from '../../../constants/Form';
 
-interface OptionCheckboxesItemProps {
+interface OptionMultipleChoiceItemProps {
   questionId: string;
   optionIdx?: number;
   isForResult?: boolean;
@@ -18,14 +19,14 @@ interface OptionCheckboxesItemProps {
   other?: string;
 }
 
-const OptionCheckboxesItem = ({
+const OptionMultipleChoiceItem = ({
   questionId,
   isForResult = false,
   isOtherItem = false,
   isOtherSelected = false,
   option = {id: questionId, isSelected: false, value: ''},
   other = '',
-}: OptionCheckboxesItemProps) => {
+}: OptionMultipleChoiceItemProps) => {
   const dispatch = useDispatch();
 
   const {id, isSelected, value} = option;
@@ -35,21 +36,24 @@ const OptionCheckboxesItem = ({
     <StyledPreviewOptionWrapper>
       <input
         disabled={isForResult}
-        type='checkbox'
+        type='radio'
         id={isOtherItem ? otherItemId : id}
         name={isOtherItem ? otherItemId : id}
         aria-label={value}
         value={value}
-        onChange={
+        onClick={
           isOtherItem
             ? () => dispatch(toggleOtherOption({questionId}))
-            : () => dispatch(toggleCheckboxOption({questionId, selectedId: id}))
+            : () => dispatch(toggleMultipleOption({questionId, selectedId: id}))
         }
+        onChange={() => {
+          return;
+        }}
         checked={isOtherItem ? isOtherSelected : isSelected}
       />
       {isOtherItem ? (
         <span>
-          <label htmlFor={otherItemId}>Other: </label>
+          <label htmlFor={otherItemId}>{LABELS.OTHER_OPTION} </label>
           <StyledQuestionTextInput
             id={otherItemId}
             name={otherItemId}
@@ -67,4 +71,4 @@ const OptionCheckboxesItem = ({
   );
 };
 
-export default OptionCheckboxesItem;
+export default OptionMultipleChoiceItem;

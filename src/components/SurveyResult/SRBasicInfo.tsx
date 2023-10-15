@@ -6,7 +6,7 @@ import {
 import Description from '../common/StaticBasicInfo/Description';
 import Title from '../common/StaticBasicInfo/Title';
 
-const BasicInfo = () => {
+const SRBasicInfo = () => {
   return (
     <StyledGeneralFormContainer>
       <StyledFormInfoLine />
@@ -19,4 +19,4 @@ const BasicInfo = () => {
   );
 };
 
-export default BasicInfo;
+export default SRBasicInfo;

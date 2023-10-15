@@ -16,8 +16,8 @@ const switchToValid = (state: SurveyPreviewForm, questionId: string) => {
   state.invalidQuestions = state.invalidQuestions.filter(id => questionId !== id);
 };
 
-const surveyPreviewFormSlice = createSlice({
-  name: 'surveyPreviewForm',
+const surveyPreviewSlice = createSlice({
+  name: 'surveyPreviewSlice',
   initialState,
   reducers: {
     toggleMultipleOption: (
@@ -157,5 +157,5 @@ export const {
   resetForm,
   setInvalidQuestions,
   submitForm,
-} = surveyPreviewFormSlice.actions;
-export default surveyPreviewFormSlice.reducer;
+} = surveyPreviewSlice.actions;
+export default surveyPreviewSlice.reducer;

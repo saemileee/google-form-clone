@@ -1,21 +1,26 @@
-import {type} from '@testing-library/user-event/dist/type';
-import {QUESTION_TYPES, LABELS} from '../../constants/Form';
-import {changeTextAnswer, selectDropDownOption} from '../../features/surveyPreviewFormSlice';
+import {ChangeEvent} from 'react';
+import {useDispatch} from 'react-redux';
+import {LABELS, QUESTION_TYPES} from '../../../constants/Form';
+import {initialOther} from '../../../features/initialForms';
+import {selectDropDownOption, changeTextAnswer} from '../../../features/surveyPreviewSlice';
+import {Question} from '../../../interface/Form';
 import {
   StyledOptionWrapper,
   StyledPreviewTextInput,
   StyledTextArea,
   StyledOptionList,
   StyledDefaultSelectBox,
-} from '../../styles/Form';
-import OptionCheckboxesItem from '../common/Option/OptionCheckboxesItem';
-import OptionMultipleChoiceItem from '../common/Option/OptionMultipleChoiceItem';
-import {Question} from '../../interface/Form';
-import {ChangeEvent} from 'react';
-import {initialOther} from '../../features/initialForms';
-import {useDispatch} from 'react-redux';
+} from '../../../styles/Form';
+import OptionCheckboxesItem from './OptionCheckboxesItem';
+import OptionMultipleChoiceItem from './OptionMultipleChoiceItem';
 
-const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
+const QuestionForm = ({
+  questionForm,
+  isForResult = false,
+}: {
+  questionForm: Question;
+  isForResult?: boolean;
+}) => {
   const dispatch = useDispatch();
 
   const {id, type} = questionForm;
@@ -39,6 +44,7 @@ const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
                 placeholder='Your answer'
                 value={answer}
                 onChange={e => dispatch(changeTextAnswer({questionId: id, value: e.target.value}))}
+                disabled={isForResult}
               />
             );
           case QUESTION_TYPES.paragraph:
@@ -48,13 +54,19 @@ const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
                 placeholder='Your answer'
                 value={answer}
                 onChange={e => dispatch(changeTextAnswer({questionId: id, value: e.target.value}))}
+                disabled={isForResult}
               />
             );
           case QUESTION_TYPES.multipleChoice:
             return (
               <StyledOptionList>
                 {options.map(option => (
-                  <OptionMultipleChoiceItem key={option.id} questionId={id} option={option} />
+                  <OptionMultipleChoiceItem
+                    key={option.id}
+                    questionId={id}
+                    option={option}
+                    isForResult={isForResult}
+                  />
                 ))}
                 {other.isFormActive && (
                   <OptionMultipleChoiceItem
@@ -63,6 +75,7 @@ const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
                     other={other.value}
                     key='other'
                     questionId={id}
+                    isForResult={isForResult}
                   />
                 )}
               </StyledOptionList>
@@ -71,7 +84,12 @@ const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
             return (
               <StyledOptionList>
                 {options.map(option => (
-                  <OptionCheckboxesItem key={option.id} questionId={id} option={option} />
+                  <OptionCheckboxesItem
+                    key={option.id}
+                    questionId={id}
+                    option={option}
+                    isForResult={isForResult}
+                  />
                 ))}
                 {other.isFormActive && (
                   <OptionCheckboxesItem
@@ -80,14 +98,21 @@ const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
                     other={other.value}
                     key='other'
                     questionId={id}
+                    isForResult={isForResult}
                   />
                 )}
               </StyledOptionList>
             );
           case QUESTION_TYPES.dropDown:
             return (
-              <StyledDefaultSelectBox value={dropDownValue} onChange={onSelectDropDownOption}>
-                <option value={LABELS.DROP_DOWN}>{LABELS.DROP_DOWN}</option>
+              <StyledDefaultSelectBox
+                disabled={isForResult}
+                value={dropDownValue}
+                onChange={onSelectDropDownOption}
+              >
+                <option value={LABELS.DROP_DOWN}>
+                  {isForResult ? '미응답' : LABELS.DROP_DOWN}
+                </option>
                 {options.map(option => (
                   <option key={option.id} value={option.id}>
                     {option.value}
@@ -104,4 +129,4 @@ const SPQuestionForm = ({questionForm}: {questionForm: Question}) => {
   );
 };
 
-export default SPQuestionForm;
+export default QuestionForm;

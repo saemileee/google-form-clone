@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {useDispatch} from 'react-redux';
-import {resetForm} from '../../features/surveyPreviewFormSlice';
+import {resetForm} from '../../features/surveyPreviewSlice';
 import {color} from '../../styles/variables.ts/color';
 
 const SPClearFormButton = () => {

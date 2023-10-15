@@ -6,7 +6,7 @@ import {Question} from '../../interface/Form';
 import {RootState} from '../../store/store';
 import {StyledQuestionTitle, StyledGeneralFormContainer} from '../../styles/Form';
 import {color} from '../../styles/variables.ts/color';
-import SPQuestionForm from './SPQuestionForm';
+import QuestionForm from '../common/Question/QuestionForm';
 
 const SPQuestion = ({questionForm}: {questionForm: Question}) => {
   const {invalidQuestions, submitTryCount} = useSelector((state: RootState) => state.surveyPreview);
@@ -28,9 +28,7 @@ const SPQuestion = ({questionForm}: {questionForm: Question}) => {
         {title}
         {isRequired && <span className='symbol-required'> *</span>}
       </StyledQuestionTitle>
-
-      <SPQuestionForm questionForm={questionForm} />
-
+      <QuestionForm questionForm={questionForm} />
       {isInvalid && (
         <StyledInvalidatedMsg>
           <RiErrorWarningLine size={24} />

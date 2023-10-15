@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import surveyBuilderSlice from '../features/surveyBuilderSlice';
-import surveyPreviewFormSlice from '../features/surveyPreviewFormSlice';
+import surveyPreviewSlice from '../features/surveyPreviewSlice';
 
 export const store = configureStore({
   reducer: {
     surveyBuilder: surveyBuilderSlice,
-    surveyPreview: surveyPreviewFormSlice,
+    surveyPreview: surveyPreviewSlice,
   },
 });
 

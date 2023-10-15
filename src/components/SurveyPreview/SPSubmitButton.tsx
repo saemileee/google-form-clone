@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {submitForm, setInvalidQuestions} from '../../features/surveyPreviewFormSlice';
+import {submitForm, setInvalidQuestions} from '../../features/surveyPreviewSlice';
 import {RootState} from '../../store/store';
 import {color} from '../../styles/variables.ts/color';
 import {getUnfilledRequiredIds} from '../../utils/formValidations';
