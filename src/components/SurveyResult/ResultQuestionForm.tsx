@@ -1,6 +1,6 @@
 import {LABELS, QUESTION_TYPES} from '../../constants/Form';
-import OptionMultipleChoiceItem from '../Global/Option/OptionMultipleChoiceItem';
-import OptionCheckboxesItem from '../Global/Option/OptionCheckboxesItem';
+import OptionMultipleChoiceItem from '../common/Option/OptionMultipleChoiceItem';
+import OptionCheckboxesItem from '../common/Option/OptionCheckboxesItem';
 import {
   StyledDefaultSelectBox,
   StyledGeneralFormContainer,

@@ -3,8 +3,8 @@ import {
   StyledFormInfoLine,
   StyledGeneralFormWrapper,
 } from '../../styles/Form';
-import Description from '../Global/StaticBasicInfo/Description';
-import Title from '../Global/StaticBasicInfo/Title';
+import Description from '../common/StaticBasicInfo/Description';
+import Title from '../common/StaticBasicInfo/Title';
 
 const BasicInfo = () => {
   return (

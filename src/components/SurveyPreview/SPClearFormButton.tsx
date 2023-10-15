@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import {useDispatch} from 'react-redux';
-import {resetForm} from '../../../features/surveyPreviewFormSlice';
-import {color} from '../../../styles/variables.ts/color';
+import {resetForm} from '../../features/surveyPreviewFormSlice';
+import {color} from '../../styles/variables.ts/color';
 
-const ClearFormButton = () => {
+const SPClearFormButton = () => {
   const dispatch = useDispatch();
 
   const onClearFormClick = () => {
@@ -16,7 +16,7 @@ const ClearFormButton = () => {
   );
 };
 
-export default ClearFormButton;
+export default SPClearFormButton;
 
 const StyledClearFormButton = styled.button`
   margin-top: 24px;

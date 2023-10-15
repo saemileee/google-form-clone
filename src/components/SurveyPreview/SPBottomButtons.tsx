@@ -1,17 +1,16 @@
 import styled from 'styled-components';
-import ClearFormButton from './ClearFormButton';
-import SubmitButton from './SubmitButton';
-
-const BottomButtons = () => {
+import SPClearFormButton from './SPClearFormButton';
+import SPSubmitButton from './SPSubmitButton';
+const SPBottomButtons = () => {
   return (
     <StyledBottomButtonWrapper>
-      <SubmitButton />
-      <ClearFormButton />
+      <SPSubmitButton />
+      <SPClearFormButton />
     </StyledBottomButtonWrapper>
   );
 };
 
-export default BottomButtons;
+export default SPBottomButtons;
 
 const StyledBottomButtonWrapper = styled.div`
   margin-top: 20px;
