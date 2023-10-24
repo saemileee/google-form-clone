@@ -1,19 +1,12 @@
 {
-  "name": "classum-이새미-survey",
+  "name": "google-form",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.18.57",
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
-    "eslint-config-prettier": "^9.0.0",
-    "husky": "^8.0.3",
-    "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
@@ -54,6 +47,12 @@
   },
   "devDependencies": {
     "eslint": "^8.50.0",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
+    "@types/jest": "^27.5.2"
   }
 }
