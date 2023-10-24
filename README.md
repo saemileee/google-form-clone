@@ -120,7 +120,7 @@ $npm run start
 
 - **✅ 사용자 친화적인 UI/UX**
 
-      <img src="https://i.postimg.cc/Prw1dqvs/07.gif" alt="사용자 친화적인 UI/UX" width="500"/>
+  <img src="https://i.postimg.cc/Prw1dqvs/07.gif" alt="사용자 친화적인 UI/UX" width="500"/>
 
     - `툴팁`으로 사용자는 보다 명확하게 기능을 인지할 수 있습니다.
     - 텍스트 인풋 선택 시 `전체 텍스트가 선택`되어 편리하게 수정할 수 있습니다.
