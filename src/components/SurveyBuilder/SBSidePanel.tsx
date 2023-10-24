@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import {addQuestion} from '../../features/surveyBuilderSlice';
 import {StyledMenuButton} from '../../styles/Form';
 
-const SBSidePanel = ({topValue = 0}) => {
+const SBSidePanel = () => {
   const dispatch = useDispatch();
 
   return (
-    <SideMenuWrapper $topValue={topValue}>
+    <SideMenuWrapper>
       <StyledMenuButton
         aria-label='add-question'
         name='add'
@@ -22,22 +22,16 @@ const SBSidePanel = ({topValue = 0}) => {
 };
 export default SBSidePanel;
 
-const SideMenuWrapper = styled.div<{$topValue: number}>`
-  position: absolute;
+const SideMenuWrapper = styled.div`
+  position: sticky;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 48px;
-  box-shadow:
-    0 2px 1px -1px rgb(0 0 0 / 20%),
-    0 1px 1px 0 rgb(0 0 0 / 14%),
-    0 1px 3px 0 rgb(0 0 0 / 12%);
-  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fff;
   border: 1px solid #dadce0;
   border-radius: 8px;
-  top: 0;
-  right: -80px;
+  top: 300px;
   padding: 6px 0;
-  transform: ${props => `translateY(${props.$topValue}px)`};
 `;

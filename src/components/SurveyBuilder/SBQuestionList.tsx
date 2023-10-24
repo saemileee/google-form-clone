@@ -1,4 +1,3 @@
-import {useEffect, useState, useRef} from 'react';
 import {MdDragIndicator} from 'react-icons/md';
 import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components';
@@ -18,19 +17,8 @@ const SBQuestionList = () => {
   const {isDraggable, startDrag, enterTarget, setResortedList, mouseDown, mouseUp} =
     useSortableDragNDrop(questions);
 
-  useEffect(() => {
-    if (questionListRef.current) {
-      setSideMenuTopValue(questionListRef.current.clientTop);
-    }
-  }, []);
-
-  const [sideMenuTopValue, setSideMenuTopValue] = useState(0);
-
-  const questionListRef = useRef<HTMLDivElement>(null);
-
   const onSelectedQuestion = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
     dispatch(focusQuestion({questionId: id}));
-    setSideMenuTopValue(e.currentTarget.offsetTop);
     saveTempForm();
   };
 
@@ -40,31 +28,33 @@ const SBQuestionList = () => {
   };
 
   return (
-    <StyledFormWrapper ref={questionListRef}>
-      <SBSidePanel topValue={sideMenuTopValue} />
-      {questions.map((question, idx) => (
-        <StyledGeneralFormContainer
-          selected={question.isFocused}
-          key={question.id}
-          onClick={e => !question.isFocused && onSelectedQuestion(e, question.id)}
-          draggable={isDraggable}
-          onDragStart={() => startDrag(idx)}
-          onDragEnter={() => enterTarget(idx)}
-          onDragEnd={endSorting}
-        >
-          {question.isFocused && <StyledSelectedLine />}
-          <StyledDragButtonW
-            aria-label='move-question'
+    <StyledQuestionListWrapper>
+      <StyledQuestionList>
+        {questions.map((question, idx) => (
+          <StyledGeneralFormContainer
             selected={question.isFocused}
-            onMouseDown={mouseDown}
-            onMouseUp={mouseUp}
+            key={question.id}
+            onClick={e => !question.isFocused && onSelectedQuestion(e, question.id)}
+            draggable={isDraggable}
+            onDragStart={() => startDrag(idx)}
+            onDragEnter={() => enterTarget(idx)}
+            onDragEnd={endSorting}
           >
-            <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
-          </StyledDragButtonW>
-          <SBQuestion questionForm={question} />
-        </StyledGeneralFormContainer>
-      ))}
-    </StyledFormWrapper>
+            {question.isFocused && <StyledSelectedLine />}
+            <StyledDragButtonW
+              aria-label='move-question'
+              selected={question.isFocused}
+              onMouseDown={mouseDown}
+              onMouseUp={mouseUp}
+            >
+              <MdDragIndicator fontSize={18} style={{rotate: '90deg'}} />
+            </StyledDragButtonW>
+            <SBQuestion questionForm={question} />
+          </StyledGeneralFormContainer>
+        ))}
+      </StyledQuestionList>
+      <SBSidePanel />
+    </StyledQuestionListWrapper>
   );
 };
 
@@ -77,4 +67,20 @@ const StyledSelectedLine = styled.div`
   height: 100%;
   background-color: ${color.primary};
   border-radius: 8px 0 0 8px;
+`;
+
+const StyledQuestionListWrapper = styled.div`
+  position: relative;
+  margin-top: 24px;
+  display: flex;
+  gap: 18px;
+  width: 108.5%;
+`;
+
+const StyledQuestionList = styled.div`
+  position: relative;
+  display: flex;
+  gap: 18px;
+  flex-direction: column;
+  width: 100%;
 `;
